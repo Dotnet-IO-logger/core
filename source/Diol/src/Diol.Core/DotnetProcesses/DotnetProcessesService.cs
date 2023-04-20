@@ -1,0 +1,54 @@
+﻿using System.Diagnostics;
+
+namespace Diol.Core.DotnetProcesses
+{
+    public class DotnetProcessesService
+    {
+        public ICollection<DotnetProcessInfo> GetCollection() 
+        {
+            var processes = Process.GetProcesses();
+
+            return processes.Select(x => new DotnetProcessInfo() 
+            {
+                Id = x.Id,
+                Name = x.ProcessName
+            }).ToList();
+        }
+
+        public ICollection<DotnetProcessInfo> GetCollection(string name)
+        {
+            var processes = Process.GetProcessesByName(name);
+            return processes.Select(x => new DotnetProcessInfo()
+            {
+                Id = x.Id,
+                Name = x.ProcessName
+            }).ToList();
+        }
+
+        public DotnetProcessInfo? GetItemOrDefault(string name) 
+        {
+            var process = Process.GetProcessesByName(name)
+                .Select(x => new DotnetProcessInfo() 
+                {
+                    Id = x.Id,
+                    Name = x.ProcessName
+                })
+                .FirstOrDefault();
+
+            return process;
+        }
+
+        public DotnetProcessInfo GetItem(string name)
+        {
+            var process = Process.GetProcessesByName(name)
+                .Select(x => new DotnetProcessInfo()
+                {
+                    Id = x.Id,
+                    Name = x.ProcessName
+                })
+                .First();
+
+            return process;
+        }
+    }
+}
