@@ -24,9 +24,9 @@ Diol is Dotnet IO logger.
 
 ### Core functionality
 
-[Share](/source/Diol/src/share/) - a project for all DTO and consts (.net standard)
+[Share](/source/Diol/src/Diol.Share/) - a project for all DTO and consts (.net standard)
 
-[Core](/source/Diol/src/core/) - a project for mail logic
+[Core](/source/Diol/src/Diol.Core/) - a project for mail logic
 
 ### Applications
 
