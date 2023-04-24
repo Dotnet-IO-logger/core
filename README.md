@@ -24,9 +24,9 @@ Diol is Dotnet IO logger.
 
 ### Core functionality
 
-[Share](source/Diol/src/share/) - a project for all DTO and consts (.net standard)
+[Share](/source/Diol/src/share/) - a project for all DTO and consts (.net standard)
 
-[Core](source/Diol/src/core/) - a project for mail logic
+[Core](/source/Diol/src/core/) - a project for mail logic
 
 ### Applications
 
@@ -34,7 +34,7 @@ In the repo you can find several applications.
 
 #### Playground api
 
-This is an example of general [asp.net core api app](source/Diol/src/applications/Diol.applications.PlaygroundApi/) with different scenarios of logs generation:
+This is an example of general [asp.net core api app](/source/Diol/src/applications/Diol.applications.PlaygroundApi/) with different scenarios of logs generation:
 
 * Http call with default client
 * Http call with named client
@@ -45,13 +45,13 @@ You can use this app as an example how to setup consumer app (`appsettings.json`
 
 #### Console client
 
-This is [an example](source/Diol/src/applications/Diol.applications.ConsoleClient/) how to read logs outside of a process in realtime.
+This is [an example](/source/Diol/src/applications/Diol.applications.ConsoleClient/) how to read logs outside of a process in realtime.
 
 You can use it as a reference to build your own solution.
 
 #### Signalr client
 
-This is [the SignalR project](source/Diol/src/applications/Diol.applications.SignalrClient/). You can subscribe from your app to the hub and receive all required logs and make a really good UX. 
+This is [the SignalR project](/source/Diol/src/applications/Diol.applications.SignalrClient/). You can subscribe from your app to the hub and receive all required logs and make a really good UX. 
 
 ### Tests
 
@@ -64,9 +64,9 @@ No additional action is required. you can build it with VS.
 ## How to run
 
 Sample demo:
-1. Open [PlaygroundApi](source/Diol/src/applications/Diol.applications.PlaygroundApi/) from a terminal and run it with command: `dotnet run`. You should see the link for a web app. 
+1. Open [PlaygroundApi](/source/Diol/src/applications/Diol.applications.PlaygroundApi/) from a terminal and run it with command: `dotnet run`. You should see the link for a web app. 
 2. Navigate to swagger page: `localhost:[your-port]/swagger`
-3. Open [ConsoleClient](source/Diol/src/applications/Diol.applications.ConsoleClient/) from a terminal and run it with command: `dotnet run`
+3. Open [ConsoleClient](/source/Diol/src/applications/Diol.applications.ConsoleClient/) from a terminal and run it with command: `dotnet run`
 4. From swagger page call any API. 
 5. in `ConsoleClient` terminal you should see logs.
 
