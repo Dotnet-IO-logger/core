@@ -9,11 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{82EF7528
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "applications", "applications", "{EA282770-C145-4DDB-8394-A3D1FAF6890A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diol.Share", "src\Diol.Share\Diol.Share.csproj", "{AF5B91C1-A64D-407C-AFA8-5067777A3C1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diol.Share", "src\Diol.Share\Diol.Share.csproj", "{AF5B91C1-A64D-407C-AFA8-5067777A3C1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diol.Core", "src\Diol.Core\Diol.Core.csproj", "{6A30ABC6-F57A-4172-B079-48520CE7BFE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diol.Core", "src\Diol.Core\Diol.Core.csproj", "{6A30ABC6-F57A-4172-B079-48520CE7BFE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diol.applications.ConsoleClient", "src\applications\Diol.applications.ConsoleClient\Diol.applications.ConsoleClient.csproj", "{2A1DA117-7632-4434-92A2-19151A460AD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diol.applications.ConsoleClient", "src\applications\Diol.applications.ConsoleClient\Diol.applications.ConsoleClient.csproj", "{2A1DA117-7632-4434-92A2-19151A460AD6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit", "unit", "{F686F4B3-FBCF-4FC3-9DD0-B52D65C4D7FB}"
 EndProject
@@ -21,9 +21,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integration", "integration"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "functional", "functional", "{1528B197-7430-4831-87B1-747F6FB002C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diol.applications.PlaygroundApi", "src\applications\Diol.applications.PlaygroundApi\Diol.applications.PlaygroundApi.csproj", "{12E93527-A4CC-40FC-81A7-6ACBBAAE9FA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diol.applications.PlaygroundApi", "src\applications\Diol.applications.PlaygroundApi\Diol.applications.PlaygroundApi.csproj", "{12E93527-A4CC-40FC-81A7-6ACBBAAE9FA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diol.applications.SignalrClient", "src\applications\Diol.applications.SignalrClient\Diol.applications.SignalrClient.csproj", "{B4B281E3-CA30-498C-81EA-CC5962D47EC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diol.applications.SignalrClient", "src\applications\Diol.applications.SignalrClient\Diol.applications.SignalrClient.csproj", "{B4B281E3-CA30-498C-81EA-CC5962D47EC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

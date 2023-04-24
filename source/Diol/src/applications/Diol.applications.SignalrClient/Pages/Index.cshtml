@@ -1,0 +1,138 @@
+﻿@page
+@model Diol.applications.SignalrClient.Pages.IndexModel
+@{
+}
+
+<html>
+<head>
+    <title>Diol signal r client</title>
+</head>
+<body>
+    
+    <h1>Welcome to Diol signal r client</h1>
+
+    <section>
+
+        <p>Before starting we need to connect to signal R hub.</p>
+
+        <button id="btn_connect_to_signalr"
+            onclick="connectToSignalR()">Connect to signal r</button>
+        <span id="status_span"></span>
+
+    </section>
+
+    <section>
+
+        <p>Then, we need to connect to the process by id. You can find an id by specific endpoint.</p>
+
+        <input id="processId" type="text" />
+        <button id="btn_connect_to_process"
+            onclick="connectToProcess()">Connect to the process</button>
+    </section>
+
+    <section>
+        <p>Now new data should come. you can always clear the table</p>
+
+        <button id="btn_clear"
+                onclick="refreshTable()">
+            Clear
+        </button>
+
+        <hr />
+
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Event</th>
+                        <th>Correlation</th>
+                        <th>Body</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script type="text/javascript">
+        
+        // create connection
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/logsHub")
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+        
+        // utils
+        function setStatusMessage(message) {
+            document.getElementById("status_span").innerHTML = message;
+        }
+
+        function getProcessId() {
+            return document.getElementById("processId").value
+        }
+
+        function getTable() {
+            return document.getElementById("table-body");
+        }
+
+        function connectToSignalR() {
+            console.log('connectToSignalR');
+            connection.start();
+        }
+
+        function connectToProcess() {
+            var processId = parseInt(getProcessId());
+            console.log('connectToProcess', processId);
+            connection.invoke('Subscribe', processId);
+        }
+
+        function refreshTable() {
+            getTable().replaceChildren();
+        }
+
+        function addRow(category, event, correlationId, dataAsJson) {
+            let row = document.createElement('tr');
+            
+            let c1 = document.createElement('td');
+            c1.innerHTML = category;
+
+            [ category, event, correlationId, dataAsJson ].forEach(function (item) {
+                let c = document.createElement('td');
+                c.innerHTML = item;
+                row.appendChild(c);
+            });
+
+            getTable().appendChild(row)
+        }
+
+        // setup
+        connection.onclose(function() {
+            setStatusMessage("connection failed");
+        });
+
+        connection.on('AspnetCore', function(eventAsJson) {
+            let data = JSON.parse(eventAsJson);
+            let category = data.CategoryName;
+            let event = data.EventName;
+            let correlationId = data.CorrelationId;
+            console.info('AspnetCore', data);
+            addRow(category, event, correlationId, eventAsJson);
+        });
+
+        connection.on('HttpClient', function (eventAsJson) {
+            let data = JSON.parse(eventAsJson);
+            let category = data.CategoryName;
+            let event = data.EventName;
+            let correlationId = data.CorrelationId;
+            console.info('HttpClient', data);
+            addRow(category, event, correlationId, eventAsJson);
+        });
+
+
+
+    </script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 ﻿using Diol.Core.TraceEventProcessors;
 using Microsoft.Diagnostics.NETCore.Client;
 using Microsoft.Diagnostics.Tracing;
+using System.Diagnostics;
 
 namespace Diol.Core.DiagnosticClients
 {
@@ -8,11 +9,9 @@ namespace Diol.Core.DiagnosticClients
     {
         private readonly EventPipeEventSourceBuilder builder;
 
-        private DiagnosticsClient client;
-        private EventPipeSession session;
-        private EventPipeEventSource source;
-
         private TraceEventRouter traceEventRouter;
+
+        private EventPipeEventSource source;
 
         public EventPipeEventSourceWrapper(
             EventPipeEventSourceBuilder builder,
@@ -21,24 +20,19 @@ namespace Diol.Core.DiagnosticClients
             this.traceEventRouter = traceEventRouter;
 
             this.builder = builder;
-
-            this.client = new DiagnosticsClient(this.builder.ProcessId);
-            this.session = this.client.StartEventPipeSession(this.builder.Providers);
-            this.source = new EventPipeEventSource(this.session.EventStream);
-
-            this.source.Dynamic.All += Dynamic_All;
-        }
-
-        private void Dynamic_All(TraceEvent obj)
-        {
-            this.traceEventRouter.TraceEvent(obj);
         }
 
         public void Start()
         {
             try 
             {
-                this.source.Process();
+                var client = new DiagnosticsClient(this.builder.ProcessId);
+                using var session = client.StartEventPipeSession(this.builder.Providers);
+                this.source = new EventPipeEventSource(session.EventStream);
+
+                this.source.Dynamic.All += this.traceEventRouter.TraceEvent;
+
+                source.Process();
             }
             catch (Exception ex) 
             {
@@ -46,12 +40,20 @@ namespace Diol.Core.DiagnosticClients
             }
         }
 
+        public void Stop() 
+        {
+            try
+            {
+                this.source.StopProcessing();
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.ToString());
+            }
+        }
+
         public void Dispose()
         {
-            this.source.Dynamic.All -= Dynamic_All;
-
-            this.session?.Dispose();
-
             this.source?.Dispose();
         }
     }
