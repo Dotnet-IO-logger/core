@@ -1,4 +1,5 @@
-﻿using Diol.applications.WpfClient.ViewModels;
+﻿using Diol.applications.WpfClient.Features.Https;
+using Diol.applications.WpfClient.ViewModels;
 using Diol.Core.Consumers;
 using Diol.Share.Features;
 using Prism.Events;
@@ -13,11 +14,11 @@ namespace Diol.applications.WpfClient.Services
 {
     public class LogsConsumer : IConsumer
     {
-        private IEventAggregator eventAggregator;
+        private HttpService httpService;
 
-        public LogsConsumer(IEventAggregator eventAggregator)
+        public LogsConsumer(HttpService httpService)
         {
-            this.eventAggregator = eventAggregator;
+            this.httpService = httpService;
         }
 
         public void OnCompleted()
@@ -39,7 +40,10 @@ namespace Diol.applications.WpfClient.Services
             Debug.WriteLine($"{nameof(LogsConsumer)} | {nameof(OnNext)}");
             Debug.WriteLine($"{value.CorrelationId} | {value.CategoryName} | {nameof(value.EventName)}");
 
-            this.eventAggregator.GetEvent<LogsEvent>().Publish(json);
+            if (value.CategoryName == "HttpClient") 
+            {
+                this.httpService.Update(value);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Diol.applications.WpfClient.Services;
+﻿using Diol.applications.WpfClient.Features.Https;
+using Diol.applications.WpfClient.Services;
 using Diol.Core.DiagnosticClients;
 using Diol.Core.DotnetProcesses;
 using Prism.Commands;
@@ -16,25 +17,73 @@ namespace Diol.applications.WpfClient.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private DotnetProcessesService dotnetService;
+        private IProcessInfoProvider dotnetService;
         private LoggerBuilder builder;
+        private HttpService httpService;
         private IEventAggregator eventAggregator;
 
         public MainWindowViewModel(
-            DotnetProcessesService dotnetService,
+            IProcessInfoProvider dotnetService,
             LoggerBuilder builder,
+            HttpService httpService,
             IEventAggregator eventAggregator)
         {
             this.dotnetService = dotnetService;
             this.builder = builder;
+            this.httpService = httpService;
+
             this.eventAggregator = eventAggregator;
 
-            this.eventAggregator.GetEvent<LogsEvent>().Subscribe(ShowLog, ThreadOption.UIThread);
+            this.eventAggregator
+                .GetEvent<HttpRequestStartedEvent>()
+                .Subscribe(HandleHttpRequestStartedEvent, ThreadOption.UIThread);
+
+            this.eventAggregator
+                .GetEvent<HttpRequestEndedEvent>()
+                .Subscribe(HandleHttpRequestEndedEvent, ThreadOption.UIThread);
         }
 
+        private void HandleHttpRequestStartedEvent(string obj)
+        {
+            var item = this.httpService.GetItemOrDefault(obj);
 
-        public ObservableCollection<string> Logs { get; private set; } =
-            new ObservableCollection<string>();
+            if (item == null) 
+            {
+                return;
+            }
+
+            var vm = new HttpViewModel() 
+            {
+                Key = item?.Key,
+                Uri = item?.Request?.Uri,
+                Method = item?.Request?.HttpMethod
+            };
+
+            this.HttpLogs.Add(vm);
+        }
+
+        private void HandleHttpRequestEndedEvent(string obj)
+        {
+            var item = this.httpService.GetItemOrDefault(obj);
+
+            if (item == null)
+            {
+                return;
+            }
+
+            var vm = this.HttpLogs.FirstOrDefault(x => x.Key == obj);
+
+            if(vm == null) 
+            {
+                return;
+            }
+
+            vm.ResponseStatusCode = item?.Response?.StatusCode;
+            vm.DurationInMiliSeconds = item?.Response?.ElapsedMilliseconds;
+        }
+
+        public ObservableCollection<HttpViewModel> HttpLogs { get; private set; } =
+            new ObservableCollection<HttpViewModel>();
 
         private DelegateCommand _startCommand = null;
         public DelegateCommand StartCommand =>
@@ -42,19 +91,17 @@ namespace Diol.applications.WpfClient.ViewModels
 
         private void StartExecute()
         {
-            // we expect that the process is running (Diol.applications.PlaygroundApi)
-            var processName = "Diol.applications.PlaygroundApi";
-            var process = this.dotnetService.GetItemOrDefault(processName);
+            var processId = this.dotnetService.GetProcessId();
 
-            if (process == null)
+            if (!processId.HasValue)
             {
-                Console.WriteLine($"Process {processName} not found. Please try again");
+                Console.WriteLine($"Process id ({processId}) not found. Please try again");
                 return;
             }
 
             var eventPipeEventSourceWrapper = this.builder
                 .Build()
-                .SetProcessId(process.Id)
+                .SetProcessId(processId.Value)
                 .Build();
 
             Task.Run(() => 
@@ -71,12 +118,7 @@ namespace Diol.applications.WpfClient.ViewModels
 
         private void ClearExecute() 
         {
-            this.Logs.Clear();
-        }
-
-        private void ShowLog(string log) 
-        {
-            this.Logs.Add(log);
+            this.HttpLogs.Clear();
         }
     }
 }

@@ -15,15 +15,45 @@
         </Grid.RowDefinitions>
 
         <ToolBar Grid.Row="0">
-            <Button>Connect to process</Button>
+            
             <Button Command="{Binding StartCommand}">Start</Button>
             <Button Command="{Binding ClearCommand}">Clear</Button>
             <Button>Settings</Button>
         </ToolBar>
 
-        <ListView
-            Grid.Row="1"
-            ItemsSource="{Binding Logs}" />
+        <TabControl
+            Grid.Row="1">
+            <TabItem
+                Header="HTTP">
+                <DataGrid 
+                    Grid.Row="1"
+                    ItemsSource="{Binding HttpLogs}"
+                    AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn 
+                            Header="Uri"
+                            Width="*"
+                            Binding="{Binding Uri}" />
+                        <DataGridTextColumn 
+                            Header="Method"
+                            Width="60"
+                            Binding="{Binding Method}" />
+                        <DataGridTextColumn 
+                            Header="Status"
+                            Width="60"
+                            Binding="{Binding ResponseStatusCode}" />
+                        <DataGridTextColumn 
+                            Header="Duration (s)"
+                            Width="100"
+                            Binding="{Binding DurationInMiliSeconds, StringFormat=ss\\:fff}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem
+                Header="Aspnet core">
+                <DataGrid></DataGrid>
+            </TabItem>
+        </TabControl>
         
     </Grid>
 </Window>

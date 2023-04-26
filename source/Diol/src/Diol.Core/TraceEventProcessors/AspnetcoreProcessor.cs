@@ -8,6 +8,8 @@ namespace Diol.Core.TraceEventProcessors
 {
     public class AspnetcoreProcessor : IProcessor
     {
+        private static string DebugCorrelationId = string.Empty;
+
         private readonly string loggerName = "Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware";
 
         private readonly string eventName = "MessageJson";
@@ -87,11 +89,17 @@ namespace Diol.Core.TraceEventProcessors
             // path: /WeatherForecast
             arguments.Remove("Path", out var path);
 
+            var correlationId = traceEvent.ActivityID.ToString();
+
+#if DEBUG
+            DebugCorrelationId = correlationId;
+#endif
+
             // all other is headers or metadata
             // create event
             return new RequestLogDto
             {
-                CorrelationId = traceEvent.ActivityID.ToString(),
+                CorrelationId = correlationId,
                 Protocol = protocol,
                 Method = method,
                 Scheme = scheme,
@@ -119,10 +127,16 @@ namespace Diol.Core.TraceEventProcessors
 
             // all other is headers or metadata
 
+            var correlationId = traceEvent.ActivityID.ToString();
+
+#if DEBUG
+            correlationId = DebugCorrelationId;
+#endif
+
             // create event
             return new ResponseLogDto
             {
-                CorrelationId = traceEvent.ActivityID.ToString(),
+                CorrelationId = correlationId,
                 StatusCode = Convert.ToInt32(statusCode),
                 ContentType = contentType,
                 Metadata = arguments
@@ -146,10 +160,16 @@ namespace Diol.Core.TraceEventProcessors
 
             // all other is headers or metadata
 
+            var correlationId = traceEvent.ActivityID.ToString();
+
+#if DEBUG
+            correlationId = DebugCorrelationId;
+#endif
+
             // create event
             return new RequestBodyDto
             {
-                CorrelationId = traceEvent.ActivityID.ToString(),
+                CorrelationId = correlationId,
                 BodyAsString = body,
                 Metadata = arguments
             };
@@ -172,10 +192,16 @@ namespace Diol.Core.TraceEventProcessors
 
             // all other is headers or metadata
 
+            var correlationId = traceEvent.ActivityID.ToString();
+
+#if DEBUG
+            correlationId = DebugCorrelationId;
+#endif
+
             // create event
             return new ResponseBodyDto
             {
-                CorrelationId = traceEvent.ActivityID.ToString(),
+                CorrelationId = correlationId,
                 BodyAsString = body,
                 Metadata = arguments
             };

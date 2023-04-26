@@ -15,6 +15,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Diol.applications.WpfClient.Features.Https;
 
 namespace Diol.applications.WpfClient
 {
@@ -32,9 +33,16 @@ namespace Diol.applications.WpfClient
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // register all services here
-            containerRegistry.RegisterSingleton<DotnetProcessesService>();
             containerRegistry.RegisterSingleton<LogsConsumer>();
             containerRegistry.RegisterSingleton<LoggerBuilder>();
+
+            // depends of scenario
+            containerRegistry.RegisterSingleton<DotnetProcessesService>();
+            containerRegistry.RegisterSingleton<IProcessInfoProvider, LocalDevelopmentProcessInfoProvider>();
+
+            // register http
+            containerRegistry.RegisterSingleton<HttpService>();
+            containerRegistry.RegisterSingleton<IStore<HttpModel>, HttpStore>();
         }
     }
 }

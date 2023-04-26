@@ -8,6 +8,8 @@ namespace Diol.Core.TraceEventProcessors
 {
     public class HttpclientProcessor : IProcessor
     {
+        private static string DebugCorrelationId = string.Empty;
+
         private readonly string loggerNameBegin = "System.Net.Http.HttpClient";
 
         private readonly string loggerNameEnd = "LogicalHandler";
@@ -84,9 +86,15 @@ namespace Diol.Core.TraceEventProcessors
             var httpMethod = arguments["HttpMethod"];
             var uri = arguments["Uri"];
 
+            var correlationId = traceEvent.ActivityID.ToString();
+
+#if DEBUG
+            DebugCorrelationId = correlationId;
+#endif
+
             return new RequestPipelineStartDto
             {
-                CorrelationId = traceEvent.ActivityID.ToString(),
+                CorrelationId = correlationId,
                 HttpMethod = httpMethod,
                 Uri = uri
             };
@@ -102,9 +110,15 @@ namespace Diol.Core.TraceEventProcessors
 
             var result = ParseHeaders(headersAsText);
 
+            var correlationId = traceEvent.ActivityID.ToString();
+
+#if DEBUG
+            correlationId = DebugCorrelationId;
+#endif
+
             return new RequestPipelineRequestHeaderDto
             {
-                CorrelationId = traceEvent.ActivityID.ToString(),
+                CorrelationId = correlationId,
                 Headers = result
             };
         }
@@ -120,10 +134,16 @@ namespace Diol.Core.TraceEventProcessors
             var elapsedMilliseconds = arguments["ElapsedMilliseconds"];
             var statusCode = arguments["StatusCode"];
 
+            var correlationId = traceEvent.ActivityID.ToString();
+
+#if DEBUG
+            correlationId = DebugCorrelationId;
+#endif
+
             // parse from milisecond to TimeSpan
             return new RequestPipelineEndDto
             {
-                CorrelationId = traceEvent.ActivityID.ToString(),
+                CorrelationId = correlationId,
                 ElapsedMilliseconds = TimeSpan.FromMilliseconds(double.Parse(elapsedMilliseconds.ToString())),
                 StatusCode = int.Parse(statusCode)
             };
@@ -139,9 +159,15 @@ namespace Diol.Core.TraceEventProcessors
 
             var result = ParseHeaders(headersAsText);
 
+            var correlationId = traceEvent.ActivityID.ToString();
+
+#if DEBUG
+            correlationId = DebugCorrelationId;
+#endif
+
             return new RequestPipelineResponseHeaderDto
             {
-                CorrelationId = traceEvent.ActivityID.ToString(),
+                CorrelationId = correlationId,
                 Headers = result
             };
         }
