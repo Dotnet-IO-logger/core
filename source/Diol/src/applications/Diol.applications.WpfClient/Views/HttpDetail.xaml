@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="Diol.applications.WpfClient.Views.HttpDetail"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Diol.applications.WpfClient.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:Height="650"
+             d:Width="450"
+             d:Background="White">
+    <ScrollViewer>
+        <StackPanel>
+            <GroupBox 
+                Header="General">
+                <StackPanel>
+                    <TextBlock>Uri</TextBlock>
+                    <TextBox 
+                        Text="{ Binding Request.Uri }"
+                        IsReadOnly="True" />
+                    <TextBlock>Method</TextBlock>
+                    <TextBox 
+                        Text="{ Binding Request.HttpMethod }"
+                        IsReadOnly="True"/>
+                    <TextBlock>Status</TextBlock>
+                    <TextBox 
+                        Text="{ Binding Response.StatusCode }"
+                        IsReadOnly="True" />
+                    <TextBlock>Duration</TextBlock>
+                    <TextBox 
+                        Text="{ Binding Response.ElapsedMilliseconds, StringFormat=ss\\:fff }"
+                        IsReadOnly="True" />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox
+                Header="Request headers">
+                <DataGrid
+                    ItemsSource="{Binding RequestHeaders}"
+                    AutoGenerateColumns="False"
+                    Height="250"
+                    IsReadOnly="True"
+                    HeadersVisibility="None">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn 
+                            Header="Key"
+                            Width="auto" 
+                            MinWidth="70"
+                            Binding="{Binding Key}"/>
+                        <DataGridTextColumn 
+                            Header="Value"
+                            Width="*"
+                            Binding="{Binding Value}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+            <GroupBox
+                Header="Response headers">
+                <DataGrid
+                    ItemsSource="{Binding ResponseHeaders}"
+                    AutoGenerateColumns="False"
+                    Height="250"
+                    IsReadOnly="True"
+                    HeadersVisibility="None">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn 
+                            Header="Key"
+                            Width="auto" 
+                            MinWidth="70"
+                            Binding="{Binding Key}"/>
+                        <DataGridTextColumn 
+                            Header="Value"
+                            Width="*"
+                            Binding="{Binding Value}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

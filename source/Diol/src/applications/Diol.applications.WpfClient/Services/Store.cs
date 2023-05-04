@@ -33,7 +33,7 @@ namespace Diol.applications.WpfClient.Services
         
         public TEntity GetItemOrDefault(string id)
         {
-            if (this.store.ContainsKey(id))
+            if (!string.IsNullOrEmpty(id) && this.store.ContainsKey(id))
             {
                 return this.store[id];
             }

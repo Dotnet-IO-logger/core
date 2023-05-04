@@ -1,4 +1,5 @@
 ﻿using Diol.applications.WpfClient.Features.Https;
+using Diol.applications.WpfClient.Features.Shared;
 using Diol.applications.WpfClient.Services;
 using Diol.Core.DiagnosticClients;
 using Diol.Core.DotnetProcesses;
@@ -19,7 +20,6 @@ namespace Diol.applications.WpfClient.ViewModels
     {
         private IProcessInfoProvider dotnetService;
         private LoggerBuilder builder;
-        private HttpService httpService;
         private IEventAggregator eventAggregator;
 
         public MainWindowViewModel(
@@ -30,60 +30,19 @@ namespace Diol.applications.WpfClient.ViewModels
         {
             this.dotnetService = dotnetService;
             this.builder = builder;
-            this.httpService = httpService;
 
             this.eventAggregator = eventAggregator;
-
-            this.eventAggregator
-                .GetEvent<HttpRequestStartedEvent>()
-                .Subscribe(HandleHttpRequestStartedEvent, ThreadOption.UIThread);
-
-            this.eventAggregator
-                .GetEvent<HttpRequestEndedEvent>()
-                .Subscribe(HandleHttpRequestEndedEvent, ThreadOption.UIThread);
-        }
-
-        private void HandleHttpRequestStartedEvent(string obj)
-        {
-            var item = this.httpService.GetItemOrDefault(obj);
-
-            if (item == null) 
-            {
-                return;
-            }
-
-            var vm = new HttpViewModel() 
-            {
-                Key = item?.Key,
-                Uri = item?.Request?.Uri,
-                Method = item?.Request?.HttpMethod
-            };
-
-            this.HttpLogs.Add(vm);
-        }
-
-        private void HandleHttpRequestEndedEvent(string obj)
-        {
-            var item = this.httpService.GetItemOrDefault(obj);
-
-            if (item == null)
-            {
-                return;
-            }
-
-            var vm = this.HttpLogs.FirstOrDefault(x => x.Key == obj);
-
-            if(vm == null) 
-            {
-                return;
-            }
-
-            vm.ResponseStatusCode = item?.Response?.StatusCode;
-            vm.DurationInMiliSeconds = item?.Response?.ElapsedMilliseconds;
         }
 
         public ObservableCollection<HttpViewModel> HttpLogs { get; private set; } =
             new ObservableCollection<HttpViewModel>();
+
+        private bool _canExecute = true;
+        public bool CanExecute 
+        {
+            get => this._canExecute;
+            set => SetProperty(ref this._canExecute, value);
+        }
 
         private DelegateCommand _startCommand = null;
         public DelegateCommand StartCommand =>
@@ -106,7 +65,9 @@ namespace Diol.applications.WpfClient.ViewModels
 
             Task.Run(() => 
             {
+                this.CanExecute = false;
                 eventPipeEventSourceWrapper.Start();
+                this.CanExecute = true;
             }).ConfigureAwait(false);
 
             
@@ -118,7 +79,9 @@ namespace Diol.applications.WpfClient.ViewModels
 
         private void ClearExecute() 
         {
-            this.HttpLogs.Clear();
+            this.eventAggregator
+                .GetEvent<ClearDataEvent>()
+                .Publish(string.Empty);
         }
     }
 }

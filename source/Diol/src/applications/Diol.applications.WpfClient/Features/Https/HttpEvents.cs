@@ -14,4 +14,8 @@ namespace Diol.applications.WpfClient.Features.Https
     public class HttpRequestEndedEvent : PubSubEvent<string> 
     {
     }
+
+    public class HttpItemSelectedEvent : PubSubEvent<string> 
+    {
+    }
 }
