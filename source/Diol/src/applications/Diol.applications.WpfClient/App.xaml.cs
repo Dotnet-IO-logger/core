@@ -16,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Diol.applications.WpfClient.Features.Https;
+using Diol.applications.WpfClient.Features.Aspnetcores;
 
 namespace Diol.applications.WpfClient
 {
@@ -43,6 +44,10 @@ namespace Diol.applications.WpfClient
             // register http
             containerRegistry.RegisterSingleton<HttpService>();
             containerRegistry.RegisterSingleton<IStore<HttpModel>, HttpStore>();
+
+            // register aspnet
+            containerRegistry.RegisterSingleton<AspnetService>();
+            containerRegistry.RegisterSingleton<IStore<AspnetcoreModel>, AspnetcoreStore>();
         }
     }
 }

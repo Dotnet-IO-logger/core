@@ -14,7 +14,7 @@ namespace Diol.applications.WpfClient.ViewModels
 {
     public class HttpMasterViewModel : BindableBase
     {
-        private HttpService httpService;
+        private HttpService service;
         private IEventAggregator eventAggregator;
 
         public ObservableCollection<HttpViewModel> HttpLogs { get; private set; } =
@@ -40,10 +40,10 @@ namespace Diol.applications.WpfClient.ViewModels
         }
 
         public HttpMasterViewModel(
-            HttpService httpService,
+            HttpService service,
             IEventAggregator eventAggregator)
         {
-            this.httpService = httpService;
+            this.service = service;
             this.eventAggregator = eventAggregator;
 
             this.eventAggregator
@@ -59,17 +59,9 @@ namespace Diol.applications.WpfClient.ViewModels
                 .Subscribe(HandleClearDataEvent, ThreadOption.UIThread);
         }
 
-        private DelegateCommand _selectCommand = null;
-        public DelegateCommand SelectCommand =>
-            _selectCommand ?? (_selectCommand = new DelegateCommand(SelectExecute));
-
-        private void SelectExecute()
-        {
-        }
-
         private void HandleHttpRequestStartedEvent(string obj)
         {
-            var item = this.httpService.GetItemOrDefault(obj);
+            var item = this.service.GetItemOrDefault(obj);
 
             if (item == null)
             {
@@ -88,7 +80,7 @@ namespace Diol.applications.WpfClient.ViewModels
 
         private void HandleHttpRequestEndedEvent(string obj)
         {
-            var item = this.httpService.GetItemOrDefault(obj);
+            var item = this.service.GetItemOrDefault(obj);
 
             if (item == null)
             {

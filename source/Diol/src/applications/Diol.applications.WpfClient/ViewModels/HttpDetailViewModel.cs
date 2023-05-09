@@ -15,7 +15,7 @@ namespace Diol.applications.WpfClient.ViewModels
 {
     public class HttpDetailViewModel : BindableBase
     {
-        private HttpService httpService;
+        private HttpService service;
         private IEventAggregator eventAggregator;
 
         private RequestPipelineStartDto _request;
@@ -40,10 +40,10 @@ namespace Diol.applications.WpfClient.ViewModels
             new ObservableCollection<KeyValuePair<string, string>>();
 
         public HttpDetailViewModel(
-            HttpService httpService, 
+            HttpService service, 
             IEventAggregator eventAggregator)
         {
-            this.httpService = httpService;
+            this.service = service;
             this.eventAggregator = eventAggregator;
 
             this.eventAggregator
@@ -78,7 +78,7 @@ namespace Diol.applications.WpfClient.ViewModels
         {
             this.HandleClearDataEvent(obj);
 
-            var item = this.httpService.GetItemOrDefault(obj);
+            var item = this.service.GetItemOrDefault(obj);
 
             if (item == null) 
             {

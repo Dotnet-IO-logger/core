@@ -1,4 +1,5 @@
-﻿using Diol.applications.WpfClient.Features.Https;
+﻿using Diol.applications.WpfClient.Features.Aspnetcores;
+using Diol.applications.WpfClient.Features.Https;
 using Diol.applications.WpfClient.ViewModels;
 using Diol.Core.Consumers;
 using Diol.Share.Features;
@@ -15,10 +16,14 @@ namespace Diol.applications.WpfClient.Services
     public class LogsConsumer : IConsumer
     {
         private HttpService httpService;
+        private AspnetService aspnetService;
 
-        public LogsConsumer(HttpService httpService)
+        public LogsConsumer(
+            HttpService httpService,
+            AspnetService aspnetService)
         {
             this.httpService = httpService;
+            this.aspnetService = aspnetService;
         }
 
         public void OnCompleted()
@@ -40,9 +45,13 @@ namespace Diol.applications.WpfClient.Services
             Debug.WriteLine($"{nameof(LogsConsumer)} | {nameof(OnNext)}");
             Debug.WriteLine($"{value.CorrelationId} | {value.CategoryName} | {nameof(value.EventName)}");
 
-            if (value.CategoryName == "HttpClient") 
+            if (value.CategoryName == "HttpClient")
             {
                 this.httpService.Update(value);
+            }
+            else if (value.CategoryName == "AspnetCore") 
+            {
+                this.aspnetService.Update(value);
             }
         }
     }

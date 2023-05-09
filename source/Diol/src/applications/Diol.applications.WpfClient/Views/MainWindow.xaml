@@ -31,7 +31,7 @@
             </TabItem>
             <TabItem
                     Header="Aspnet core">
-                <DataGrid></DataGrid>
+                <views:AspnetMasterDetail />
             </TabItem>
         </TabControl>
 
