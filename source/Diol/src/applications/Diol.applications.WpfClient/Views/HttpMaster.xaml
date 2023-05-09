@@ -11,24 +11,31 @@
     <DataGrid
         ItemsSource="{Binding HttpLogs}"
         SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+        SelectionMode="Single"
+        SelectionUnit="FullRow"
         AutoGenerateColumns="False"
-        IsReadOnly="True">
+        IsReadOnly="True"
+        HorizontalScrollBarVisibility="Visible">
         <DataGrid.Columns>
             <DataGridTextColumn 
                 Header="Uri"
                 Width="*"
+                MinWidth="150"
                 Binding="{Binding Uri}" />
             <DataGridTextColumn 
                 Header="Method"
                 Width="60"
+                MinWidth="40"
                 Binding="{Binding Method}" />
             <DataGridTextColumn 
                 Header="Status"
                 Width="60"
+                MinWidth="40"
                 Binding="{Binding ResponseStatusCode}" />
             <DataGridTextColumn 
                 Header="Duration (s)"
                 Width="100"
+                MinWidth="40"
                 Binding="{Binding DurationInMiliSeconds, StringFormat=ss\\:fff}" />
         </DataGrid.Columns>
     </DataGrid>

@@ -1,5 +1,6 @@
 ﻿using Diol.applications.WpfClient.Features.Https;
 using Diol.applications.WpfClient.Features.Shared;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
@@ -56,6 +57,14 @@ namespace Diol.applications.WpfClient.ViewModels
             this.eventAggregator
                 .GetEvent<ClearDataEvent>()
                 .Subscribe(HandleClearDataEvent, ThreadOption.UIThread);
+        }
+
+        private DelegateCommand _selectCommand = null;
+        public DelegateCommand SelectCommand =>
+            _selectCommand ?? (_selectCommand = new DelegateCommand(SelectExecute));
+
+        private void SelectExecute()
+        {
         }
 
         private void HandleHttpRequestStartedEvent(string obj)

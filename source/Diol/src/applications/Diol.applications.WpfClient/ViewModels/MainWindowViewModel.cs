@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Diol.applications.WpfClient.ViewModels
 {
@@ -81,6 +82,10 @@ namespace Diol.applications.WpfClient.ViewModels
         {
             this.eventAggregator
                 .GetEvent<ClearDataEvent>()
+                .Publish(string.Empty);
+
+            this.eventAggregator
+                .GetEvent<HttpItemSelectedEvent>()
                 .Publish(string.Empty);
         }
     }

@@ -12,6 +12,10 @@
              d:Background="White">
     <ScrollViewer>
         <StackPanel>
+            <Button 
+                Margin="8"
+                Width="20" HorizontalAlignment="Left"
+                Command="{Binding CloseCommand}">x</Button>
             <GroupBox 
                 Header="General">
                 <StackPanel>

@@ -27,16 +27,7 @@
                 Grid.Row="1">
             <TabItem
                 Header="HTTP">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
-                    <views:HttpMaster 
-                        Grid.Column="0"/>
-                    <views:HttpDetail 
-                        Grid.Column="1"/>
-                </Grid>
+                <views:HttpMasterDetailView />
             </TabItem>
             <TabItem
                     Header="Aspnet core">
