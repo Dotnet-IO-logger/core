@@ -11,12 +11,12 @@ namespace Diol.Wpf.Core.Features.Aspnetcores
     {
         public string Key { get; set; }
 
-        public RequestLogDto? Request { get; set; }
+        public RequestLogDto Request { get; set; }
 
-        public RequestBodyDto? RequestMetadata { get; set; }
+        public RequestBodyDto RequestMetadata { get; set; }
 
-        public ResponseLogDto? Response { get; set; }
+        public ResponseLogDto Response { get; set; }
 
-        public ResponseBodyDto? ResponseMetadata { get; set; }
+        public ResponseBodyDto ResponseMetadata { get; set; }
     }
 }

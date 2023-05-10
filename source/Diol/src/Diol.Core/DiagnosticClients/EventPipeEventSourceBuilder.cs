@@ -4,6 +4,8 @@ using Diol.Share.Features;
 using Diol.Share.Features.Aspnetcores;
 using Diol.Share.Features.Httpclients;
 using Microsoft.Diagnostics.NETCore.Client;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Diol.Core.DiagnosticClients
 {
@@ -17,11 +19,7 @@ namespace Diol.Core.DiagnosticClients
                     new AspnetcoreFeatureFlag(),
                     new HttpclientFeatureFlag()
                 })
-                .SetEventObserver(new EventPublisher())
-                .SetConsumers(new List<IConsumer>() 
-                {
-                    new ConsoleConsumer()
-                });
+                .SetEventObserver(new EventPublisher());
 
         public int ProcessId { get; private set; }
         public EventPipeEventSourceBuilder SetProcessId(int processId)

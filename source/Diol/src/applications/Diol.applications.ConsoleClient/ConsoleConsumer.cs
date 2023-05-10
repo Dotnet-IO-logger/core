@@ -1,8 +1,9 @@
-﻿using Diol.Share.Features;
+﻿using Diol.Core.Consumers;
+using Diol.Share.Features;
 using System.Diagnostics;
 using System.Text.Json;
 
-namespace Diol.Core.Consumers
+namespace Diol.applications.ConsoleClient
 {
     public class ConsoleConsumer : IConsumer
     {

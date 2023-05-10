@@ -1,15 +1,17 @@
 ﻿using Microsoft.Diagnostics.Tracing;
+using System;
+using System.Collections.Generic;
 
 namespace Diol.Core.TraceEventProcessors
 {
     public class TraceEventRouter : IObservable<TraceEvent>
     {
-        private IProcessor? httpClientProcessor;
-        private IProcessor? aspnetcoreProcessor;
+        private IProcessor httpClientProcessor;
+        private IProcessor aspnetcoreProcessor;
 
         public TraceEventRouter(
-            HttpclientProcessor? httpClientProcessor,
-            AspnetcoreProcessor? aspnetcoreProcessor)
+            HttpclientProcessor httpClientProcessor,
+            AspnetcoreProcessor aspnetcoreProcessor)
         {
             this.httpClientProcessor = httpClientProcessor;
             this.aspnetcoreProcessor = aspnetcoreProcessor;

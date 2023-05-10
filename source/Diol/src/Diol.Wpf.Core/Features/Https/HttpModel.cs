@@ -11,12 +11,12 @@ namespace Diol.Wpf.Core.Features.Https
     {
         public string Key { get; set; }
 
-        public RequestPipelineStartDto? Request { get; set; }
+        public RequestPipelineStartDto Request { get; set; }
 
-        public RequestPipelineRequestHeaderDto? RequestMetadata { get; set; }
+        public RequestPipelineRequestHeaderDto RequestMetadata { get; set; }
 
-        public RequestPipelineEndDto? Response { get; set; }
+        public RequestPipelineEndDto Response { get; set; }
 
-        public RequestPipelineResponseHeaderDto? ResponseMetadata { get; set; }
+        public RequestPipelineResponseHeaderDto ResponseMetadata { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.Diagnostics.Tracing;
+using System;
+using System.Collections.Generic;
 
 namespace Diol.Core.TraceEventProcessors
 {

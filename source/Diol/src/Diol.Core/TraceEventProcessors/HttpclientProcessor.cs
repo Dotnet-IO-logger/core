@@ -1,8 +1,11 @@
 ﻿using Diol.Share.Features;
 using Diol.Share.Features.Httpclients;
 using Microsoft.Diagnostics.Tracing;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text.Json;
+using System.Linq;
 
 namespace Diol.Core.TraceEventProcessors
 {
@@ -82,7 +85,7 @@ namespace Diol.Core.TraceEventProcessors
         public static RequestPipelineStartDto ParseRequestPipelineStart(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
-            var arguments = JsonSerializer.Deserialize<Dictionary<string, string>>(argumentsAsJson);
+            var arguments = JsonConvert.DeserializeObject<Dictionary<string, string>>(argumentsAsJson);
             var httpMethod = arguments["HttpMethod"];
             var uri = arguments["Uri"];
 
@@ -130,7 +133,7 @@ namespace Diol.Core.TraceEventProcessors
         public static RequestPipelineEndDto ParseRequestPipelineEnd(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
-            var arguments = JsonSerializer.Deserialize<Dictionary<string, string>>(argumentsAsJson);
+            var arguments = JsonConvert.DeserializeObject<Dictionary<string, string>>(argumentsAsJson);
             var elapsedMilliseconds = arguments["ElapsedMilliseconds"];
             var statusCode = arguments["StatusCode"];
 

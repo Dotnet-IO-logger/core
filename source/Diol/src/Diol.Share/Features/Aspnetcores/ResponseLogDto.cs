@@ -10,7 +10,7 @@ namespace Diol.Share.Features.Aspnetcores
 
         public int StatusCode { get; set; }
 
-        public string? ContentType { get; set; }
+        public string ContentType { get; set; }
 
         public Dictionary<string, string> Metadata { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using Diol.Core.DiagnosticClients;
+﻿using Diol.applications.ConsoleClient;
+using Diol.Core.DiagnosticClients;
 using Diol.Core.DotnetProcesses;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +10,9 @@ Console.WriteLine("Registering services");
 var serviceCollection = new ServiceCollection();
 
 serviceCollection.AddSingleton(new DotnetProcessesService());
-serviceCollection.AddSingleton<EventPipeEventSourceBuilder>(EventPipeEventSourceBuilder.CreateDefault());
+serviceCollection.AddSingleton<EventPipeEventSourceBuilder>(
+    EventPipeEventSourceBuilder.CreateDefault()
+    .SetConsumers(new List<Diol.Core.Consumers.IConsumer>() { new ConsoleConsumer() }));
 
 var services = serviceCollection.BuildServiceProvider();
 

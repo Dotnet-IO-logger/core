@@ -1,4 +1,5 @@
 ﻿using Diol.Share.Features;
+using System;
 
 namespace Diol.Core.Consumers
 {

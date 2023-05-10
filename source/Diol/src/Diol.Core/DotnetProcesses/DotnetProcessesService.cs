@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Diol.Core.DotnetProcesses
 {
@@ -25,7 +27,7 @@ namespace Diol.Core.DotnetProcesses
             }).ToList();
         }
 
-        public DotnetProcessInfo? GetItemOrDefault(string name) 
+        public DotnetProcessInfo GetItemOrDefault(string name) 
         {
             var process = Process.GetProcessesByName(name)
                 .Select(x => new DotnetProcessInfo() 

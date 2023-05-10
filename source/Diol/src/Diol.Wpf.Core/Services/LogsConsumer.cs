@@ -2,6 +2,7 @@
 using Diol.Share.Features;
 using Diol.Wpf.Core.Features.Aspnetcores;
 using Diol.Wpf.Core.Features.Https;
+using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 
@@ -34,7 +35,7 @@ namespace Diol.Wpf.Core.Services
 
         public void OnNext(BaseDto value)
         {
-            var json = System.Text.Json.JsonSerializer.Serialize(value, value.GetType());
+            var json = JsonConvert.SerializeObject(value);
 
             Debug.WriteLine($"{nameof(LogsConsumer)} | {nameof(OnNext)}");
             Debug.WriteLine($"{value.CorrelationId} | {value.CategoryName} | {value.EventName}");

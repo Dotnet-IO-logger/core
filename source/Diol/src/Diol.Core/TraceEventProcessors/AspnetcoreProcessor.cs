@@ -1,8 +1,10 @@
 ﻿using Diol.Share.Features;
 using Diol.Share.Features.Aspnetcores;
 using Microsoft.Diagnostics.Tracing;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text.Json;
 
 namespace Diol.Core.TraceEventProcessors
 {
@@ -76,18 +78,23 @@ namespace Diol.Core.TraceEventProcessors
         private RequestLogDto ParseRequestLog(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
-            var arguments = JsonSerializer.Deserialize<Dictionary<string, string>>(argumentsAsJson);
+            var arguments = JsonConvert.DeserializeObject<Dictionary<string, string>>(argumentsAsJson);
 
-            // protocol: http/2
-            arguments.Remove("Protocol", out var protocol);
-            // method: GET
-            arguments.Remove("Method", out var method);
-            // scheme: https
-            arguments.Remove("Scheme", out var scheme);
-            // host: localhost:5001
-            arguments.Remove("Host", out var host);
-            // path: /WeatherForecast
-            arguments.Remove("Path", out var path);
+            // Protocol: http/2
+            arguments.TryGetValue("Protocol", out var protocol);
+            arguments.Remove("");
+            // Method: GET
+            arguments.TryGetValue("Method", out var method);
+            arguments.Remove("Method");
+            // Scheme: https
+            arguments.TryGetValue("Scheme", out var scheme);
+            arguments.Remove("Scheme");
+            // Host: localhost:5001
+            arguments.TryGetValue("Host", out var host);
+            arguments.Remove("Host");
+            // Path: /WeatherForecast
+            arguments.TryGetValue("Path", out var path);
+            arguments.Remove("Path");
 
             var correlationId = traceEvent.ActivityID.ToString();
 
@@ -116,14 +123,16 @@ namespace Diol.Core.TraceEventProcessors
         public ResponseLogDto ParseResponseLog(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
-            var arguments = JsonSerializer.Deserialize<Dictionary<string, string>>(argumentsAsJson);
+            var arguments = JsonConvert.DeserializeObject<Dictionary<string, string>>(argumentsAsJson);
 
-            // statusCode: 200
-            arguments.Remove("StatusCode", out var statusCode);
+            // StatusCode: 200
+            arguments.TryGetValue("StatusCode", out var statusCode);
+            arguments.Remove("StatusCode");
 
-            // contentType: application/json; charset=utf-8
+            // ContentType: application/json; charset=utf-8
             // can be null
-            arguments.Remove("ContentType", out var contentType);
+            arguments.TryGetValue("ContentType", out var contentType);
+            arguments.Remove("ContentType");
 
             // all other is headers or metadata
 
@@ -150,13 +159,14 @@ namespace Diol.Core.TraceEventProcessors
         public RequestBodyDto ParseRequestBody(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
-            var arguments = JsonSerializer.Deserialize<Dictionary<string, string>>(argumentsAsJson);
+            var arguments = JsonConvert.DeserializeObject<Dictionary<string, string>>(argumentsAsJson);
 
             // remove "{OriginalFormat}", because it is used for formatting
             arguments.Remove("{OriginalFormat}");
 
-            // body
-            arguments.Remove("Body", out var body);
+            // Body
+            arguments.TryGetValue("Body", out var body);
+            arguments.Remove("Body");
 
             // all other is headers or metadata
 
@@ -182,13 +192,14 @@ namespace Diol.Core.TraceEventProcessors
         public ResponseBodyDto ParseResponseBody(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
-            var arguments = JsonSerializer.Deserialize<Dictionary<string, string>>(argumentsAsJson);
+            var arguments = JsonConvert.DeserializeObject<Dictionary<string, string>>(argumentsAsJson);
 
             // remove "{OriginalFormat}", because it is used for formatting
             arguments.Remove("{OriginalFormat}");
 
-            // body
-            arguments.Remove("Body", out var body);
+            // Body
+            arguments.TryGetValue("Body", out var body);
+            arguments.Remove("Body");
 
             // all other is headers or metadata
 

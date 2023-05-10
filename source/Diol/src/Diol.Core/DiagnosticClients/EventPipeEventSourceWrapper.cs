@@ -1,6 +1,7 @@
 ﻿using Diol.Core.TraceEventProcessors;
 using Microsoft.Diagnostics.NETCore.Client;
 using Microsoft.Diagnostics.Tracing;
+using System;
 using System.Diagnostics;
 
 namespace Diol.Core.DiagnosticClients
@@ -27,12 +28,14 @@ namespace Diol.Core.DiagnosticClients
             try 
             {
                 var client = new DiagnosticsClient(this.builder.ProcessId);
-                using var session = client.StartEventPipeSession(this.builder.Providers);
-                this.source = new EventPipeEventSource(session.EventStream);
+                using (var session = client.StartEventPipeSession(this.builder.Providers)) 
+                {
+                    this.source = new EventPipeEventSource(session.EventStream);
 
-                this.source.Dynamic.All += this.traceEventRouter.TraceEvent;
+                    this.source.Dynamic.All += this.traceEventRouter.TraceEvent;
 
-                source.Process();
+                    source.Process();
+                }
             }
             catch (Exception ex) 
             {

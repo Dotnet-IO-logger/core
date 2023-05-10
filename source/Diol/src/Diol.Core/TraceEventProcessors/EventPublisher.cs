@@ -1,4 +1,6 @@
 ﻿using Diol.Share.Features;
+using System;
+using System.Collections.Generic;
 
 namespace Diol.Core.TraceEventProcessors
 {

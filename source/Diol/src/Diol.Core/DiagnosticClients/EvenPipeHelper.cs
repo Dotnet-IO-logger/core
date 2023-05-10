@@ -1,4 +1,5 @@
 ﻿using Microsoft.Diagnostics.NETCore.Client;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 
 namespace Diol.Core.DiagnosticClients
