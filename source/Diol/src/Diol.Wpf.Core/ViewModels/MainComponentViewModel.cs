@@ -6,18 +6,21 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Diol.Wpf.Core.ViewModels
 {
-    public class MainWindowViewModel : BindableBase
+    public class MainComponentViewModel : BindableBase
     {
         private IProcessProvider dotnetService;
         private LoggerBuilder builder;
         private IEventAggregator eventAggregator;
 
-        public MainWindowViewModel(
+        public MainComponentViewModel(
             IProcessProvider dotnetService,
             LoggerBuilder builder,
             HttpService httpService,
@@ -33,7 +36,7 @@ namespace Diol.Wpf.Core.ViewModels
             new ObservableCollection<HttpViewModel>();
 
         private bool _canExecute = true;
-        public bool CanExecute 
+        public bool CanExecute
         {
             get => this._canExecute;
             set => SetProperty(ref this._canExecute, value);
@@ -58,21 +61,21 @@ namespace Diol.Wpf.Core.ViewModels
                 .SetProcessId(processId.Value)
                 .Build();
 
-            Task.Run(() => 
+            Task.Run(() =>
             {
                 this.CanExecute = false;
                 eventPipeEventSourceWrapper.Start();
                 this.CanExecute = true;
             }).ConfigureAwait(false);
 
-            
+
         }
 
         private DelegateCommand _clearCommand = null;
         public DelegateCommand ClearCommand =>
             _clearCommand ?? (_clearCommand = new DelegateCommand(ClearExecute));
 
-        private void ClearExecute() 
+        private void ClearExecute()
         {
             this.eventAggregator
                 .GetEvent<ClearDataEvent>()

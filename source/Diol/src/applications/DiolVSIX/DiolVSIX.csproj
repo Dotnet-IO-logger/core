@@ -46,9 +46,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="DiolBoostrapper.cs" />
     <Compile Include="DiolToolWindow.cs" />
     <Compile Include="DiolToolWindowCommand.cs" />
     <Compile Include="DiolToolWindowControl.xaml.cs">
@@ -101,10 +99,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="App.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="DiolToolWindowControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

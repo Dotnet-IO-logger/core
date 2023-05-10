@@ -18,9 +18,9 @@ namespace Diol.Wpf.Core.Views
     /// <summary>
     /// Interaction logic for HttpMasterDetailView.xaml
     /// </summary>
-    public partial class HttpMasterDetailView : UserControl
+    public partial class HttpComponent : UserControl
     {
-        public HttpMasterDetailView()
+        public HttpComponent()
         {
             InitializeComponent();
         }

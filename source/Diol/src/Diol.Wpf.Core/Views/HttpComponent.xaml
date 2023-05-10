@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Diol.Wpf.Core.Views.AspnetMasterDetail"
+﻿<UserControl x:Class="Diol.Wpf.Core.Views.HttpComponent"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -18,14 +18,14 @@
                 x:Name="cd_detail"
                 Width="{Binding DetailWidth}" />
         </Grid.ColumnDefinitions>
-
-        <local:AspnetMaster Grid.Column="0" />
+        
+        <local:HttpMaster Grid.Column="0"/>
+        
         <GridSplitter 
             Grid.Column="1"
             Width="5"
             HorizontalAlignment="Stretch"/>
-
-        <local:AspnetDetail Grid.Column="2" />
-
+        
+        <local:HttpDetail Grid.Column="2"/>
     </Grid>
 </UserControl>

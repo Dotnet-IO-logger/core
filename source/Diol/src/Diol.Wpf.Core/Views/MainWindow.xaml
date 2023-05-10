@@ -9,31 +9,6 @@
         Height="650" 
         Width="650">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <ToolBar 
-            Grid.Row="0">
-            <Button 
-                Command="{Binding StartCommand}"
-                IsEnabled="{Binding CanExecute}" >Start</Button>
-            <Button Command="{Binding ClearCommand}">Clear</Button>
-            <Button>Settings</Button>
-        </ToolBar>
-
-        <TabControl
-                Grid.Row="1">
-            <TabItem
-                Header="HTTP">
-                <views:HttpMasterDetailView />
-            </TabItem>
-            <TabItem
-                    Header="Aspnet core">
-                <views:AspnetMasterDetail />
-            </TabItem>
-        </TabControl>
-
+        <views:MainComponent />
     </Grid>
 </Window>

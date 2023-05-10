@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Diol.Wpf.Core.Views
 {
     /// <summary>
-    /// Interaction logic for AspnetMasterDetail.xaml
+    /// Interaction logic for MainView.xaml
     /// </summary>
-    public partial class AspnetMasterDetail : UserControl
+    public partial class MainComponent : UserControl
     {
-        public AspnetMasterDetail()
+        public MainComponent()
         {
             InitializeComponent();
         }

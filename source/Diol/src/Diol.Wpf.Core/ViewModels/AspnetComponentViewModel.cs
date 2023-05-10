@@ -5,11 +5,11 @@ using System.Windows;
 
 namespace Diol.Wpf.Core.ViewModels
 {
-    public class AspnetMasterDetailViewModel : BindableBase
+    public class AspnetComponentViewModel : BindableBase
     {
         private IEventAggregator eventAggregator;
 
-        public AspnetMasterDetailViewModel(IEventAggregator eventAggregator)
+        public AspnetComponentViewModel(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
 

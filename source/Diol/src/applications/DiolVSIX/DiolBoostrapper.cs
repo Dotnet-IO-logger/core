@@ -5,19 +5,31 @@ using Diol.Wpf.Core.Services;
 using Diol.Wpf.Core.Views;
 using Prism.Ioc;
 using Prism.Unity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace DiolVSIX
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : PrismApplication
+    public class DiolBoostrapper : PrismBootstrapper
     {
-        protected override Window CreateShell()
+        private DiolToolWindow diolToolWindow;
+
+        public DiolBoostrapper(DiolToolWindow diolToolWindow)
         {
-            var w = Container.Resolve<MainWindow>();
-            return w;
+            this.diolToolWindow = diolToolWindow;
+        }
+
+        protected override DependencyObject CreateShell() 
+        {
+            var mw = this.Container.Resolve<MainComponent>();
+
+            this.diolToolWindow.Content = mw;
+
+            return mw;
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
