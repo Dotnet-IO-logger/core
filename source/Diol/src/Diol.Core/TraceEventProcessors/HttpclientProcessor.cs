@@ -87,7 +87,7 @@ namespace Diol.Core.TraceEventProcessors
             var uri = arguments["Uri"];
 
             var correlationId = traceEvent.ActivityID.ToString();
-
+            
 #if DEBUG
             DebugCorrelationId = correlationId;
 #endif

@@ -136,7 +136,7 @@ app.MapGet("/api/with-headers", ([FromHeader] int myHeader) =>
     return myHeader;
 });
 
-app.MapGet("/api/with-route-param/{routeAttribute}", ([FromRouteAttribute] int routeAttribute) =>
+app.MapGet("/api/with-route-param/{routeAttribute}", ([FromRoute] int routeAttribute) =>
 {
     return routeAttribute;
 });
@@ -146,7 +146,7 @@ app.MapGet("/api/with-query-param", ([FromQuery] int queryParam) =>
     return queryParam;
 });
 
-app.MapPost("api/with-body-param", ([FromBodyAttribute] DummyModel bodyAttribute) =>
+app.MapPost("api/with-body-param", ([FromBody] DummyModel bodyAttribute) =>
 {
     return bodyAttribute;
 });
@@ -157,6 +157,16 @@ app.MapGet("/api/with-response-headers", (HttpRequest request) =>
     request.HttpContext.Response.Headers.Add("my-response-header-2", "value-2");
 
     return Results.Ok();
+});
+
+app.MapDelete("/api/fail-if-negative/{id}", ([FromRoute] int id) =>
+{
+    if (id < 0)
+    {
+        throw new Exception("Negative value");
+    }
+
+    return Results.Ok(id);
 });
 
 app.Run();

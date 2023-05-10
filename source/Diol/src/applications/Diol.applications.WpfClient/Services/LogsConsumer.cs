@@ -43,7 +43,7 @@ namespace Diol.applications.WpfClient.Services
             var json = System.Text.Json.JsonSerializer.Serialize(value, value.GetType());
 
             Debug.WriteLine($"{nameof(LogsConsumer)} | {nameof(OnNext)}");
-            Debug.WriteLine($"{value.CorrelationId} | {value.CategoryName} | {nameof(value.EventName)}");
+            Debug.WriteLine($"{value.CorrelationId} | {value.CategoryName} | {value.EventName}");
 
             if (value.CategoryName == "HttpClient")
             {

@@ -58,7 +58,7 @@ namespace Diol.Core.TraceEventProcessors
             else if (eventId == 3)
                 be = ParseRequestBody(value);
             else if (eventId == 4)
-                be = ParseRequestBody(value);
+                be = ParseResponseBody(value);
             else
                 be = null;
 

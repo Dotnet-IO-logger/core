@@ -110,7 +110,7 @@ namespace Diol.applications.WpfClient.Features.Https
             {
                 Update(requestEndDto);
             }
-            else if (httpDto is RequestPipelineRequestHeaderDto requestEndHeaderDto) 
+            else if (httpDto is RequestPipelineResponseHeaderDto requestEndHeaderDto) 
             {
                 Update(requestEndHeaderDto);
             }

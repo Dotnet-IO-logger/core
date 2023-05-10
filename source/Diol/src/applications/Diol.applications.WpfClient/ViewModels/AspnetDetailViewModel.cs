@@ -45,16 +45,24 @@ namespace Diol.applications.WpfClient.ViewModels
             set => SetProperty(ref this._statusCode, value);
         }
 
+        private string _requestBodyAsString;
+        public string RequestBodyAsString
+        {
+            get => this._requestBodyAsString;
+            set => SetProperty(ref this._requestBodyAsString, value);
+        }
+
+        private string _responseBodyAsString;
+        public string ResponseBodyAsString
+        {
+            get => this._responseBodyAsString;
+            set => SetProperty(ref this._responseBodyAsString, value);
+        }
+
         public ObservableCollection<KeyValuePair<string, string>> RequestHeaders { get; private set; } =
             new ObservableCollection<KeyValuePair<string, string>>();
 
-        public ObservableCollection<KeyValuePair<string, string>> RequestBody { get; private set; } =
-            new ObservableCollection<KeyValuePair<string, string>>();
-
         public ObservableCollection<KeyValuePair<string, string>> ResponseHeaders { get; set; } =
-            new ObservableCollection<KeyValuePair<string, string>>();
-
-        public ObservableCollection<KeyValuePair<string, string>> ResponseBody { get; set; } =
             new ObservableCollection<KeyValuePair<string, string>>();
 
         public AspnetDetailViewModel(
@@ -108,13 +116,7 @@ namespace Diol.applications.WpfClient.ViewModels
                 }
             }
 
-            if(item.RequestMetadata != null && item.RequestMetadata.Metadata != null)
-            {
-                foreach (var header in item.RequestMetadata.Metadata)
-                {
-                    this.RequestBody.Add(new KeyValuePair<string, string>(header.Key, header.Value));
-                }
-            }
+            this.RequestBodyAsString = item?.RequestMetadata?.BodyAsString;
 
             if (item.Response != null && item.Response.Metadata != null)
             {
@@ -124,13 +126,7 @@ namespace Diol.applications.WpfClient.ViewModels
                 }
             }
 
-            if (item.ResponseMetadata != null && item.ResponseMetadata.Metadata != null)
-            {
-                foreach (var header in item.ResponseMetadata.Metadata)
-                {
-                    this.ResponseBody.Add(new KeyValuePair<string, string>(header.Key, header.Value));
-                }
-            }
+            this.ResponseBodyAsString = item?.ResponseMetadata?.BodyAsString;
         }
 
         private void HandleClearDataEvent(string obj)
@@ -140,10 +136,10 @@ namespace Diol.applications.WpfClient.ViewModels
             this.StatusCode = int.MinValue;
 
             this.RequestHeaders.Clear();
-            this.RequestBody.Clear();
+            this.RequestBodyAsString = string.Empty;
 
             this.ResponseHeaders.Clear();
-            this.ResponseBody.Clear();
+            this.ResponseBodyAsString = string.Empty;
         }
     }
 }

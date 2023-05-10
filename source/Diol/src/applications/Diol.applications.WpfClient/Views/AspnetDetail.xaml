@@ -63,24 +63,13 @@
 
             <GroupBox
                 Header="Request body">
-                <DataGrid
-                    ItemsSource="{Binding RequestBody}"
-                    AutoGenerateColumns="False"
-                    Height="250"
+                <TextBox 
                     IsReadOnly="True"
-                    HeadersVisibility="None">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn 
-                            Header="Key"
-                            Width="auto" 
-                            MinWidth="70"
-                            Binding="{Binding Key}"/>
-                        <DataGridTextColumn 
-                            Header="Value"
-                            Width="*"
-                            Binding="{Binding Value}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                    MinHeight="250"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    VerticalScrollBarVisibility="Visible"
+                    Text="{Binding RequestBodyAsString}"/>
             </GroupBox>
 
             <GroupBox
@@ -107,24 +96,13 @@
 
             <GroupBox
                 Header="Response body">
-                <DataGrid
-                    ItemsSource="{Binding ResponseBody}"
-                    AutoGenerateColumns="False"
-                    Height="250"
+                <TextBox 
                     IsReadOnly="True"
-                    HeadersVisibility="None">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn 
-                            Header="Key"
-                            Width="auto" 
-                            MinWidth="70"
-                            Binding="{Binding Key}"/>
-                        <DataGridTextColumn 
-                            Header="Value"
-                            Width="*"
-                            Binding="{Binding Value}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                    MinHeight="250"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    VerticalScrollBarVisibility="Visible"
+                    Text="{Binding ResponseBodyAsString}"/>
             </GroupBox>
         </StackPanel>
     </ScrollViewer>
