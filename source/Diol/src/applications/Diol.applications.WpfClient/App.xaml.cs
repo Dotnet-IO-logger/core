@@ -1,22 +1,11 @@
-﻿using Diol.applications.WpfClient.Services;
-using Diol.Core.Consumers;
-using Diol.Core.DiagnosticClients;
-using Diol.Core.DotnetProcesses;
-using Diol.Core.TraceEventProcessors;
-using Diol.Share.Features.Aspnetcores;
-using Diol.Share.Features.Httpclients;
-using Diol.Share.Features;
+﻿using Diol.Core.DotnetProcesses;
+using Diol.Wpf.Core.Features.Aspnetcores;
+using Diol.Wpf.Core.Features.Https;
+using Diol.Wpf.Core.Services;
+using Diol.Wpf.Core.Views;
 using Prism.Ioc;
 using Prism.Unity;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using Diol.applications.WpfClient.Features.Https;
-using Diol.applications.WpfClient.Features.Aspnetcores;
 
 namespace Diol.applications.WpfClient
 {
@@ -27,7 +16,7 @@ namespace Diol.applications.WpfClient
     {
         protected override Window CreateShell()
         {
-            var w = Container.Resolve<Views.MainWindow>();
+            var w = Container.Resolve<MainWindow>();
             return w;
         }
 

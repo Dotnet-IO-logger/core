@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Diol.Core\Diol.Core.csproj" />
     <ProjectReference Include="..\..\Diol.Share\Diol.Share.csproj" />
+    <ProjectReference Include="..\..\Diol.Wpf.Core\Diol.Wpf.Core.csproj" />
   </ItemGroup>
 
 </Project>
