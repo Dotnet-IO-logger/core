@@ -39,7 +39,9 @@ namespace Diol.applications.WpfClient
 
             // depends of scenario
             containerRegistry.RegisterSingleton<DotnetProcessesService>();
-            containerRegistry.RegisterSingleton<IProcessInfoProvider, LocalDevelopmentProcessInfoProvider>();
+            // for development we can use LocalDevelopmentProcessProvider
+            // for real scenario use another
+            containerRegistry.RegisterSingleton<IProcessProvider, LocalDevelopmentProcessProvider>();
 
             // register http
             containerRegistry.RegisterSingleton<HttpService>();

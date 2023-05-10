@@ -1,23 +1,22 @@
-﻿using Diol.Core.DotnetProcesses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Diol.applications.WpfClient.Services
+namespace Diol.Core.DotnetProcesses
 {
-    public interface IProcessInfoProvider
+    public interface IProcessProvider
     {
         int? GetProcessId();
     }
 
-    public class LocalDevelopmentProcessInfoProvider : IProcessInfoProvider
+    public class LocalDevelopmentProcessProvider : IProcessProvider
     {
         private readonly DotnetProcessesService dotnetService;
 
-        public LocalDevelopmentProcessInfoProvider(DotnetProcessesService dotnetService)
+        public LocalDevelopmentProcessProvider(DotnetProcessesService dotnetService)
         {
             this.dotnetService = dotnetService;
         }

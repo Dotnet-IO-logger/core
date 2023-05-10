@@ -19,12 +19,12 @@ namespace Diol.applications.WpfClient.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private IProcessInfoProvider dotnetService;
+        private IProcessProvider dotnetService;
         private LoggerBuilder builder;
         private IEventAggregator eventAggregator;
 
         public MainWindowViewModel(
-            IProcessInfoProvider dotnetService,
+            IProcessProvider dotnetService,
             LoggerBuilder builder,
             HttpService httpService,
             IEventAggregator eventAggregator)
