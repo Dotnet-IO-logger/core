@@ -16,15 +16,17 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel
-            Grid.Row="0"
-            Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button
+        <Menu Grid.Row="0">
+            <MenuItem
+                Header="Start"
                 Command="{Binding StartCommand}"
-                IsEnabled="{Binding CanExecute}" >Start</Button>
-            <Button Command="{Binding ClearCommand}">Clear</Button>
-            <Button>Settings</Button>
-        </StackPanel>
+                IsEnabled="{Binding CanExecute}">
+            </MenuItem>
+            <MenuItem 
+                Header="Clear"
+                Command="{Binding ClearCommand}"/>
+            <MenuItem Header="Settings"/>
+        </Menu>
         
         <TabControl Grid.Row="1">
             <TabItem Header="HTTP">

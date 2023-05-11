@@ -70,9 +70,9 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter 
-                                    TargetName="ContentSite"
-                                    Property="TextBlock.FontWeight" 
-                                    Value="Bold"/>
+                                    TargetName="Border"
+                                    Property="Background" 
+                                    Value="{DynamicResource {x:Static vsshell:VsBrushes.AccentMediumKey}}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -163,6 +163,30 @@
             <Setter
                 Property="BorderBrush"
                 Value="Gray" />
+        </Style>
+        <Style 
+            TargetType="Menu">
+            <Setter
+                Property="Background"
+                Value="{DynamicResource {x:Static vsshell:VsBrushes.CommandBarMenuBackgroundGradientKey}}"/> 
+        </Style>
+        <Style
+            TargetType="MenuItem">
+            <Setter 
+                Property="Foreground"
+                Value="{DynamicResource {x:Static vsshell:VsBrushes.MenuTextKey}}"/>
+            <Setter 
+                Property="FontFamily"
+                Value="{DynamicResource {x:Static vsshell:VsFonts.CaptionFontFamilyKey}}"/>
+            <Setter 
+                Property="FontSize"
+                Value="{DynamicResource {x:Static vsshell:VsFonts.CaptionFontSizeKey}}"/>
+            <Setter
+                Property="Padding"
+                Value="12, 1"/>
+            <Setter
+                Property="Margin"
+                Value="5" />
         </Style>
     </UserControl.Resources>
 </UserControl>
