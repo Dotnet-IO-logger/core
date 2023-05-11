@@ -44,7 +44,6 @@
                 <DataGrid
                     ItemsSource="{Binding RequestHeaders}"
                     AutoGenerateColumns="False"
-                    Height="250"
                     IsReadOnly="True"
                     HeadersVisibility="None">
                     <DataGrid.Columns>
@@ -68,7 +67,7 @@
                     MinHeight="250"
                     TextWrapping="Wrap"
                     AcceptsReturn="True"
-                    VerticalScrollBarVisibility="Visible"
+                    VerticalScrollBarVisibility="Auto"
                     Text="{Binding RequestBodyAsString}"/>
             </GroupBox>
 
@@ -77,7 +76,6 @@
                 <DataGrid
                     ItemsSource="{Binding ResponseHeaders}"
                     AutoGenerateColumns="False"
-                    Height="250"
                     IsReadOnly="True"
                     HeadersVisibility="None">
                     <DataGrid.Columns>
@@ -101,7 +99,7 @@
                     MinHeight="250"
                     TextWrapping="Wrap"
                     AcceptsReturn="True"
-                    VerticalScrollBarVisibility="Visible"
+                    VerticalScrollBarVisibility="Auto"
                     Text="{Binding ResponseBodyAsString}"/>
             </GroupBox>
         </StackPanel>

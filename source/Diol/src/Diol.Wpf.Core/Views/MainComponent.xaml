@@ -16,15 +16,16 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ToolBar 
-            Grid.Row="0">
-            <Button 
+        <StackPanel
+            Grid.Row="0"
+            Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button
                 Command="{Binding StartCommand}"
                 IsEnabled="{Binding CanExecute}" >Start</Button>
             <Button Command="{Binding ClearCommand}">Clear</Button>
             <Button>Settings</Button>
-        </ToolBar>
-
+        </StackPanel>
+        
         <TabControl Grid.Row="1">
             <TabItem Header="HTTP">
                 <local:HttpComponent />

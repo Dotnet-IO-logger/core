@@ -42,7 +42,6 @@
                 <DataGrid
                     ItemsSource="{Binding RequestHeaders}"
                     AutoGenerateColumns="False"
-                    Height="250"
                     IsReadOnly="True"
                     HeadersVisibility="None">
                     <DataGrid.Columns>
@@ -63,7 +62,6 @@
                 <DataGrid
                     ItemsSource="{Binding ResponseHeaders}"
                     AutoGenerateColumns="False"
-                    Height="250"
                     IsReadOnly="True"
                     HeadersVisibility="None">
                     <DataGrid.Columns>

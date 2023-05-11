@@ -3,28 +3,136 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
+             xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0" 
+             xmlns:views="clr-namespace:Diol.Wpf.Core.Views;assembly=Diol.Wpf.Core"
              Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
              Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              Name="MyToolWindow">
     <UserControl.Resources>
-        <Style TargetType="TextBlock">
+        <Style
+            TargetType="Button"
+            BasedOn="{StaticResource {x:Static vsshell:VsResourceKeys.ButtonStyleKey}}">
+            <Setter
+                Property="Margin"
+                Value="0, 0, 5, 5" />
+        </Style>
+        <Style
+            TargetType="TabControl"
+            BasedOn="{StaticResource {x:Static vsshell:VsResourceKeys.ThemedDialogTabControlNavigationStyleKey}}">
+            <Setter
+                Property="Margin"
+                Value="0" />
+            <Setter
+                Property="TabStripPlacement"
+                Value="Top" />
+        </Style>
+        <Style 
+            TargetType="TabItem"
+            BasedOn="{StaticResource {x:Static vsshell:VsResourceKeys.ThemedDialogTabItemNavigationStyleKey}}">
+            <Setter
+                Property="Padding"
+                Value="0" />
+            <Setter
+                Property="Margin"
+                Value="0" />
             <Setter 
                 Property="Foreground"
-                Value="Blue" />
-        </Style>
-        <Style TargetType="Button">
+                Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"/>
             <Setter 
                 Property="FontFamily"
-                Value="{DynamicResource VsFont.EnvironmentFontFamily}"/>
+                Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontFamilyKey}}"/>
             <Setter 
                 Property="FontSize"
-                Value="{DynamicResource VsFont.EnvironmentFontSize}" />
+                Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontSizeKey}}"/>
+            <Setter
+                Property="HorizontalAlignment"
+                Value="Center" />
+            <Setter
+                Property="HorizontalContentAlignment"
+                Value="Center" />
+        </Style>
+        <Style  TargetType="DataGrid">
             <Setter 
                 Property="Background"
-                Value="{DynamicResource VsBrush.EnvironmentBackgroundGradient}" />
+                Value="Transparent"/>
+            <Setter 
+                Property="BorderBrush"
+                Value="Transparent"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter
+                Property="Background"
+                Value="Transparent" />
+            <Setter 
+                Property="Foreground"
+                Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"/>
+            <Setter 
+                Property="FontFamily"
+                Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontFamilyKey}}"/>
+            <Setter 
+                Property="FontSize"
+                Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontSizeKey}}"/>
+        </Style>
+        <Style TargetType="DataGridRow">
+            <Setter
+                Property="Background"
+                Value="Transparent" />
+            <Setter 
+                Property="Foreground"
+                Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"/>
+            <Setter 
+                Property="FontFamily"
+                Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontFamilyKey}}"/>
+            <Setter 
+                Property="FontSize"
+                Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontSizeKey}}"/>
+            <Style.Triggers>
+                <Trigger 
+                    Property="IsSelected" 
+                    Value="True">
+                    <Setter 
+                        Property="Background"
+                        Value="{DynamicResource {x:Static vsshell:VsBrushes.AccentMediumKey}}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter 
+                Property="Margin"
+                Value="0, 8, 0, 3"/>
+        </Style>
+        <Style 
+            TargetType="TextBox"
+            BasedOn="{StaticResource {x:Static vsshell:VsResourceKeys.TextBoxStyleKey}}"></Style>
+        <Style TargetType="GroupBox">
+            <Setter 
+                Property="BorderThickness"
+                Value="0"/>
+            <Setter 
+                Property="BorderBrush"
+                Value="Transparent" />
+            <Setter
+                Property="Margin"
+                Value="8, 2" />
+            <Setter
+                Property="Padding"
+                Value="0, 5, 0, 0" />
+            <Setter 
+                Property="Foreground"
+                Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"/>
+            <Setter 
+                Property="FontFamily"
+                Value="{DynamicResource {x:Static vsshell:VsFonts.CaptionFontFamilyKey}}"/>
+            <Setter 
+                Property="FontSize"
+                Value="{DynamicResource {x:Static vsshell:VsFonts.CaptionFontSizeKey}}"/>
+        </Style>
+        <Style TargetType="GridSplitter">
+            <Setter 
+                Property="Background"
+                Value="{DynamicResource {x:Static vsshell:VsBrushes.EnvironmentBackgroundTexture1Key}}"/>
         </Style>
     </UserControl.Resources>
 </UserControl>
