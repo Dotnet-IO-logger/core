@@ -9,6 +9,22 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              Name="MyToolWindow">
-    <Grid>
-    </Grid>
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter 
+                Property="Foreground"
+                Value="Blue" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter 
+                Property="FontFamily"
+                Value="{DynamicResource VsFont.EnvironmentFontFamily}"/>
+            <Setter 
+                Property="FontSize"
+                Value="{DynamicResource VsFont.EnvironmentFontSize}" />
+            <Setter 
+                Property="Background"
+                Value="{DynamicResource VsBrush.EnvironmentBackgroundGradient}" />
+        </Style>
+    </UserControl.Resources>
 </UserControl>

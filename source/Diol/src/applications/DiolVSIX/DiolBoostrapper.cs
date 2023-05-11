@@ -16,9 +16,9 @@ namespace DiolVSIX
 {
     public class DiolBoostrapper : PrismBootstrapper
     {
-        private DiolToolWindow diolToolWindow;
+        private DiolToolWindowControl diolToolWindow;
 
-        public DiolBoostrapper(DiolToolWindow diolToolWindow)
+        public DiolBoostrapper(DiolToolWindowControl diolToolWindow)
         {
             this.diolToolWindow = diolToolWindow;
         }
