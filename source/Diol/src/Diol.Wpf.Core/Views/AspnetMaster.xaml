@@ -17,7 +17,8 @@
         SelectionUnit="FullRow"
         AutoGenerateColumns="False"
         IsReadOnly="True"
-        HorizontalScrollBarVisibility="Visible">
+        HorizontalScrollBarVisibility="Visible"
+        HeadersVisibility="Column">
         <DataGrid.Columns>
             <DataGridTextColumn 
                 Header="Uri"

@@ -10,73 +10,75 @@
              d:Height="650"
              d:Width="450"
              d:Background="White">
-    <ScrollViewer>
-        <StackPanel>
-            <Button 
-                Margin="8"
-                Width="20" HorizontalAlignment="Left"
-                Command="{Binding CloseCommand}">x</Button>
-            <GroupBox 
-                Header="General">
-                <StackPanel>
-                    <TextBlock>Uri</TextBlock>
-                    <TextBox 
-                        Text="{ Binding Request.Uri }"
-                        IsReadOnly="True" />
-                    <TextBlock>Method</TextBlock>
-                    <TextBox 
-                        Text="{ Binding Request.HttpMethod }"
-                        IsReadOnly="True"/>
-                    <TextBlock>Status</TextBlock>
-                    <TextBox 
-                        Text="{ Binding Response.StatusCode }"
-                        IsReadOnly="True" />
-                    <TextBlock>Duration</TextBlock>
-                    <TextBox 
-                        Text="{ Binding Response.ElapsedMilliseconds, StringFormat=ss\\:fff }"
-                        IsReadOnly="True" />
-                </StackPanel>
-            </GroupBox>
-            <GroupBox
-                Header="Request headers">
-                <DataGrid
-                    ItemsSource="{Binding RequestHeaders}"
-                    AutoGenerateColumns="False"
-                    IsReadOnly="True"
-                    HeadersVisibility="None">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn 
-                            Header="Key"
-                            Width="auto" 
-                            MinWidth="70"
-                            Binding="{Binding Key}"/>
-                        <DataGridTextColumn 
-                            Header="Value"
-                            Width="*"
-                            Binding="{Binding Value}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </GroupBox>
-            <GroupBox
-                Header="Response headers">
-                <DataGrid
-                    ItemsSource="{Binding ResponseHeaders}"
-                    AutoGenerateColumns="False"
-                    IsReadOnly="True"
-                    HeadersVisibility="None">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn 
-                            Header="Key"
-                            Width="auto" 
-                            MinWidth="70"
-                            Binding="{Binding Key}"/>
-                        <DataGridTextColumn 
-                            Header="Value"
-                            Width="*"
-                            Binding="{Binding Value}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </GroupBox>
-        </StackPanel>
-    </ScrollViewer>
+    <Border>
+        <ScrollViewer>
+            <StackPanel>
+                <Button
+                    Margin="8"
+                    Width="20" HorizontalAlignment="Left"
+                    Command="{Binding CloseCommand}">x</Button>
+                <GroupBox 
+                    Header="General">
+                    <StackPanel>
+                        <TextBlock>Uri</TextBlock>
+                        <TextBox 
+                            Text="{ Binding Request.Uri }"
+                            IsReadOnly="True" />
+                        <TextBlock>Method</TextBlock>
+                        <TextBox 
+                            Text="{ Binding Request.HttpMethod }"
+                            IsReadOnly="True"/>
+                        <TextBlock>Status</TextBlock>
+                        <TextBox 
+                            Text="{ Binding Response.StatusCode }"
+                            IsReadOnly="True" />
+                        <TextBlock>Duration</TextBlock>
+                        <TextBox 
+                            Text="{ Binding Response.ElapsedMilliseconds, StringFormat=ss\\:fff }"
+                            IsReadOnly="True" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox
+                    Header="Request headers">
+                    <DataGrid
+                        ItemsSource="{Binding RequestHeaders}"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        HeadersVisibility="None">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn 
+                                Header="Key"
+                                Width="auto" 
+                                MinWidth="70"
+                                Binding="{Binding Key}"/>
+                            <DataGridTextColumn 
+                                Header="Value"
+                                Width="*"
+                                Binding="{Binding Value}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+                <GroupBox
+                    Header="Response headers">
+                    <DataGrid
+                        ItemsSource="{Binding ResponseHeaders}"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        HeadersVisibility="None">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn 
+                                Header="Key"
+                                Width="auto" 
+                                MinWidth="70"
+                                Binding="{Binding Key}"/>
+                            <DataGridTextColumn 
+                                Header="Value"
+                                Width="*"
+                                Binding="{Binding Value}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
 </UserControl>

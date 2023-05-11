@@ -10,98 +10,100 @@
              d:DesignHeight="650" 
              d:DesignWidth="450"
              d:Background="White">
-    <ScrollViewer>
-        <StackPanel>
-            <Button 
-                Margin="8"
-                Width="20" HorizontalAlignment="Left"
-                Command="{Binding CloseCommand}">x</Button>
+    <Border>
+        <ScrollViewer>
+            <StackPanel>
+                <Button 
+                    Margin="8"
+                    Width="20" HorizontalAlignment="Left"
+                    Command="{Binding CloseCommand}">x</Button>
 
-            <GroupBox
-                Header="General">
-                <StackPanel>
-                    <TextBlock>Uri</TextBlock>
+                <GroupBox
+                    Header="General">
+                    <StackPanel>
+                        <TextBlock>Uri</TextBlock>
+                        <TextBox 
+                            Text="{ Binding Uri }"
+                            IsReadOnly="True" />
+                        <TextBlock>Method</TextBlock>
+                        <TextBox 
+                            Text="{ Binding Method }"
+                            IsReadOnly="True"/>
+                        <TextBlock>Protocol</TextBlock>
+                        <TextBox 
+                            Text="{ Binding Protocol }"
+                            IsReadOnly="True"/>
+                        <TextBlock>Status</TextBlock>
+                        <TextBox 
+                            Text="{ Binding StatusCode }"
+                            IsReadOnly="True" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                    Header="Request headers">
+                    <DataGrid
+                        ItemsSource="{Binding RequestHeaders}"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        HeadersVisibility="None">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn 
+                                Header="Key"
+                                Width="auto" 
+                                MinWidth="70"
+                                Binding="{Binding Key}"/>
+                            <DataGridTextColumn 
+                                Header="Value"
+                                Width="*"
+                                Binding="{Binding Value}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+
+                <GroupBox
+                    Header="Request body">
                     <TextBox 
-                        Text="{ Binding Uri }"
-                        IsReadOnly="True" />
-                    <TextBlock>Method</TextBlock>
+                        IsReadOnly="True"
+                        MinHeight="250"
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"
+                        VerticalScrollBarVisibility="Auto"
+                        Text="{Binding RequestBodyAsString}"/>
+                </GroupBox>
+
+                <GroupBox
+                    Header="Response headers">
+                    <DataGrid
+                        ItemsSource="{Binding ResponseHeaders}"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        HeadersVisibility="None">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn 
+                                Header="Key"
+                                Width="auto" 
+                                MinWidth="70"
+                                Binding="{Binding Key}"/>
+                            <DataGridTextColumn 
+                                Header="Value"
+                                Width="*"
+                                Binding="{Binding Value}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+
+                <GroupBox
+                    Header="Response body">
                     <TextBox 
-                        Text="{ Binding Method }"
-                        IsReadOnly="True"/>
-                    <TextBlock>Protocol</TextBlock>
-                    <TextBox 
-                        Text="{ Binding Protocol }"
-                        IsReadOnly="True"/>
-                    <TextBlock>Status</TextBlock>
-                    <TextBox 
-                        Text="{ Binding StatusCode }"
-                        IsReadOnly="True" />
-                </StackPanel>
-            </GroupBox>
-
-            <GroupBox
-                Header="Request headers">
-                <DataGrid
-                    ItemsSource="{Binding RequestHeaders}"
-                    AutoGenerateColumns="False"
-                    IsReadOnly="True"
-                    HeadersVisibility="None">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn 
-                            Header="Key"
-                            Width="auto" 
-                            MinWidth="70"
-                            Binding="{Binding Key}"/>
-                        <DataGridTextColumn 
-                            Header="Value"
-                            Width="*"
-                            Binding="{Binding Value}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </GroupBox>
-
-            <GroupBox
-                Header="Request body">
-                <TextBox 
-                    IsReadOnly="True"
-                    MinHeight="250"
-                    TextWrapping="Wrap"
-                    AcceptsReturn="True"
-                    VerticalScrollBarVisibility="Auto"
-                    Text="{Binding RequestBodyAsString}"/>
-            </GroupBox>
-
-            <GroupBox
-                Header="Response headers">
-                <DataGrid
-                    ItemsSource="{Binding ResponseHeaders}"
-                    AutoGenerateColumns="False"
-                    IsReadOnly="True"
-                    HeadersVisibility="None">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn 
-                            Header="Key"
-                            Width="auto" 
-                            MinWidth="70"
-                            Binding="{Binding Key}"/>
-                        <DataGridTextColumn 
-                            Header="Value"
-                            Width="*"
-                            Binding="{Binding Value}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </GroupBox>
-
-            <GroupBox
-                Header="Response body">
-                <TextBox 
-                    IsReadOnly="True"
-                    MinHeight="250"
-                    TextWrapping="Wrap"
-                    AcceptsReturn="True"
-                    VerticalScrollBarVisibility="Auto"
-                    Text="{Binding ResponseBodyAsString}"/>
-            </GroupBox>
-        </StackPanel>
-    </ScrollViewer>
+                        IsReadOnly="True"
+                        MinHeight="250"
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"
+                        VerticalScrollBarVisibility="Auto"
+                        Text="{Binding ResponseBodyAsString}"/>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
 </UserControl>

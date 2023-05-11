@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0" 
              xmlns:views="clr-namespace:Diol.Wpf.Core.Views;assembly=Diol.Wpf.Core"
-             Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
+             Background="Transparent"
              Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
@@ -19,27 +19,25 @@
                 Value="0, 0, 5, 5" />
         </Style>
         <Style
-            TargetType="TabControl"
-            BasedOn="{StaticResource {x:Static vsshell:VsResourceKeys.ThemedDialogTabControlNavigationStyleKey}}">
+            TargetType="TabControl">
             <Setter
                 Property="Margin"
                 Value="0" />
             <Setter
                 Property="TabStripPlacement"
                 Value="Top" />
+            <Setter
+                Property="Background"
+                Value="Transparent" />
+            <Setter
+                Property="BorderBrush"
+                Value="DimGray" />
         </Style>
         <Style 
-            TargetType="TabItem"
-            BasedOn="{StaticResource {x:Static vsshell:VsResourceKeys.ThemedDialogTabItemNavigationStyleKey}}">
-            <Setter
-                Property="Padding"
-                Value="0" />
-            <Setter
-                Property="Margin"
-                Value="0" />
+            TargetType="TabItem">
             <Setter 
-                Property="Foreground"
-                Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"/>
+                Property="Background"
+                Value="Transparent"/>
             <Setter 
                 Property="FontFamily"
                 Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontFamilyKey}}"/>
@@ -47,11 +45,39 @@
                 Property="FontSize"
                 Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontSizeKey}}"/>
             <Setter
-                Property="HorizontalAlignment"
-                Value="Center" />
-            <Setter
-                Property="HorizontalContentAlignment"
-                Value="Center" />
+                Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid>
+                            <Border 
+                                Name="Border"
+                                Background="Transparent"
+                                BorderBrush="DimGray" 
+                                BorderThickness="1" 
+                                CornerRadius="1,1,1,1" >
+                                <ContentPresenter 
+                                    x:Name="ContentSite"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    ContentSource="Header"
+                                    Margin="12,2,12,2"
+                                    RecognizesAccessKey="True"
+                                    TextBlock.Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}" 
+                                    TextBlock.FontFamily="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontFamilyKey}}"
+                                    TextBlock.FontSize="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontSizeKey}}" />
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter 
+                                    TargetName="ContentSite"
+                                    Property="TextBlock.FontWeight" 
+                                    Value="Bold"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style  TargetType="DataGrid">
             <Setter 
@@ -88,15 +114,6 @@
             <Setter 
                 Property="FontSize"
                 Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontSizeKey}}"/>
-            <Style.Triggers>
-                <Trigger 
-                    Property="IsSelected" 
-                    Value="True">
-                    <Setter 
-                        Property="Background"
-                        Value="{DynamicResource {x:Static vsshell:VsBrushes.AccentMediumKey}}"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
         <Style TargetType="TextBlock">
             <Setter 
@@ -115,10 +132,10 @@
                 Value="Transparent" />
             <Setter
                 Property="Margin"
-                Value="8, 2" />
+                Value="8, 2, 8, 5" />
             <Setter
                 Property="Padding"
-                Value="0, 5, 0, 0" />
+                Value="0, 2, 0, 2" />
             <Setter 
                 Property="Foreground"
                 Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"/>
@@ -133,6 +150,19 @@
             <Setter 
                 Property="Background"
                 Value="{DynamicResource {x:Static vsshell:VsBrushes.EnvironmentBackgroundTexture1Key}}"/>
+        </Style>
+        <Style TargetType="ScrollViewer">
+            <Setter 
+                Property="VerticalScrollBarVisibility"
+                Value="Auto"/>
+        </Style>
+        <Style TargetType="Border">
+            <Setter 
+                Property="BorderThickness"
+                Value="1" />
+            <Setter
+                Property="BorderBrush"
+                Value="Gray" />
         </Style>
     </UserControl.Resources>
 </UserControl>

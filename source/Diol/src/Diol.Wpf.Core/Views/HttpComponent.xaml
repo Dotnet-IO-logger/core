@@ -25,7 +25,8 @@
             Grid.Column="1"
             Width="5"
             HorizontalAlignment="Stretch"/>
-        
-        <local:HttpDetail Grid.Column="2"/>
+
+        <local:HttpDetail Grid.Column="2" />
+
     </Grid>
 </UserControl>
