@@ -168,7 +168,7 @@
             TargetType="Menu">
             <Setter
                 Property="Background"
-                Value="{DynamicResource {x:Static vsshell:VsBrushes.CommandBarMenuBackgroundGradientKey}}"/> 
+                Value="{DynamicResource {x:Static vsshell:VsBrushes.CommandBarMenuBackgroundGradientKey}}"/>
         </Style>
         <Style
             TargetType="MenuItem">
@@ -186,7 +186,7 @@
                 Value="12, 1"/>
             <Setter
                 Property="Margin"
-                Value="5" />
+                Value="5, 3" />
         </Style>
     </UserControl.Resources>
 </UserControl>

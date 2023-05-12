@@ -88,11 +88,18 @@ namespace DiolVSIX
         {
             this.package.JoinableTaskFactory.RunAsync(async delegate
             {
-                ToolWindowPane window = await this.package.ShowToolWindowAsync(typeof(DiolToolWindow), 0, true, this.package.DisposalToken);
-                if ((null == window) || (null == window.Frame))
-                {
-                    throw new NotSupportedException("Cannot create tool window");
-                }
+                ToolWindowPane window = await this.package
+                    .ShowToolWindowAsync(
+                        typeof(DiolToolWindow),
+                        0,
+                        true,
+                        this.package.DisposalToken)
+                    .ConfigureAwait(false);
+
+                //if ((null == window) || (null == window.Frame))
+                //{
+                //    throw new NotSupportedException("Cannot create tool window");
+                //}
             });
         }
     }

@@ -3,6 +3,7 @@ using Diol.Wpf.Core.Features.Aspnetcores;
 using Diol.Wpf.Core.Features.Https;
 using Diol.Wpf.Core.Services;
 using Diol.Wpf.Core.Views;
+using DiolVSIX.Services;
 using Prism.Ioc;
 using Prism.Unity;
 using System;
@@ -16,11 +17,15 @@ namespace DiolVSIX
 {
     public class DiolBoostrapper : PrismBootstrapper
     {
-        private DiolToolWindowControl diolToolWindow;
+        private readonly DiolToolWindowControl diolToolWindow;
+        private readonly RequiredServices requiredServices;
 
-        public DiolBoostrapper(DiolToolWindowControl diolToolWindow)
+        public DiolBoostrapper(
+            DiolToolWindowControl diolToolWindow,
+            RequiredServices requiredServices)
         {
             this.diolToolWindow = diolToolWindow;
+            this.requiredServices = requiredServices;
         }
 
         protected override DependencyObject CreateShell() 
@@ -41,8 +46,10 @@ namespace DiolVSIX
             // depends of scenario
             containerRegistry.RegisterSingleton<DotnetProcessesService>();
             // for development we can use LocalDevelopmentProcessProvider
-            // for real scenario use another
-            containerRegistry.RegisterSingleton<IProcessProvider, LocalDevelopmentProcessProvider>();
+            // for real scenario use VsProcessProvider
+            //containerRegistry.RegisterSingleton<IProcessProvider, LocalDevelopmentProcessProvider>();
+            containerRegistry.RegisterSingleton<RequiredServices>(() => this.requiredServices);
+            containerRegistry.RegisterSingleton<IProcessProvider, VsProcessProvider>();
 
             // register http
             containerRegistry.RegisterSingleton<HttpService>();

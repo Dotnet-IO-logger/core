@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using DiolVSIX.Services;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -49,6 +51,28 @@ namespace DiolVSIX
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await DiolToolWindowCommand.InitializeAsync(this);
+        }
+
+        public override IVsAsyncToolWindowFactory GetAsyncToolWindowFactory(Guid toolWindowType)
+        {
+            return toolWindowType.Equals(Guid.Parse(DiolToolWindow.WindowGuidString)) ? this : null;
+        }
+
+        protected override string GetToolWindowTitle(Type toolWindowType, int id)
+        {
+            return toolWindowType == typeof(DiolToolWindow) ? DiolToolWindow.Title : base.GetToolWindowTitle(toolWindowType, id);
+        }
+
+        protected override async System.Threading.Tasks.Task<object> InitializeToolWindowAsync(Type toolWindowType, int id, CancellationToken cancellationToken)
+        {
+            //return base.InitializeToolWindowAsync(toolWindowType, id, cancellationToken);
+
+            var dte = await GetServiceAsync(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+
+            return new RequiredServices() 
+            {
+                Dte = dte
+            };
         }
 
         #endregion
