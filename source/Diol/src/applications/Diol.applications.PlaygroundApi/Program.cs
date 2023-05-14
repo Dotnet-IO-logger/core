@@ -126,6 +126,15 @@ app.MapGet("/api/named-client/bing-and-google", async (IHttpClientFactory factor
     return results;
 });
 
+app.MapGet("api/get-logger-providers", (IServiceProvider serviceProvider) => 
+{
+    var services = serviceProvider.GetServices<ILoggerProvider>();
+
+    var names = services.Select(x => x.GetType().Name);
+
+    return names;
+});
+
 app.MapGet("/api/process-id", () =>
 {
     return Process.GetCurrentProcess().Id;
