@@ -110,6 +110,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\logo.png" />
     <VSCTCompile Include="DiolVSIXPackage.vsct">
       <Generator>VsctGenerator</Generator>
       <ResourceName>Menus.ctmenu</ResourceName>
