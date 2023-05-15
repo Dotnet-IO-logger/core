@@ -16,7 +16,9 @@
                 <Button
                     Margin="8"
                     Width="20" HorizontalAlignment="Left"
-                    Command="{Binding CloseCommand}">x</Button>
+                    Command="{Binding CloseCommand}"
+                    FontFamily="Segoe UI Symbol"
+                    Content="&#xE10A;" />
                 <GroupBox 
                     Header="General">
                     <StackPanel>

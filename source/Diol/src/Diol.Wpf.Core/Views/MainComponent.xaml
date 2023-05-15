@@ -18,14 +18,18 @@
 
         <Menu Grid.Row="0">
             <MenuItem
-                Header="Start"
                 Command="{Binding StartCommand}"
-                IsEnabled="{Binding CanExecute}">
+                IsEnabled="{Binding CanExecute}"
+                FontFamily="Segoe UI Symbol"
+                Header="&#xE102;">
             </MenuItem>
             <MenuItem 
-                Header="Clear"
-                Command="{Binding ClearCommand}"/>
-            <MenuItem Header="Settings"/>
+                Command="{Binding ClearCommand}"
+                FontFamily="Segoe UI Symbol"
+                Header="&#xE107;" />
+            <MenuItem 
+                FontFamily="Segoe UI Symbol"
+                Header="&#xE115;"/>
         </Menu>
         
         <TabControl Grid.Row="1">
