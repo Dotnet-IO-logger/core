@@ -4,11 +4,7 @@ using Diol.Core.TraceEventProcessors;
 using Diol.Share.Features.Aspnetcores;
 using Diol.Share.Features.Httpclients;
 using Diol.Share.Features;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Diol.Wpf.Core.Services
 {

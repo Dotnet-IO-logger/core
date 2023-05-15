@@ -50,6 +50,7 @@ namespace DiolVSIX
             //containerRegistry.RegisterSingleton<IProcessProvider, LocalDevelopmentProcessProvider>();
             containerRegistry.RegisterSingleton<RequiredServices>(() => this.requiredServices);
             containerRegistry.RegisterSingleton<IProcessProvider, VsProcessProvider>();
+            containerRegistry.RegisterSingleton<IApplicationStateService, VsApplicationStateService>();
 
             // register http
             containerRegistry.RegisterSingleton<HttpService>();

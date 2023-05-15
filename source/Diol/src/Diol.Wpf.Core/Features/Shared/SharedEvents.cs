@@ -10,4 +10,8 @@ namespace Diol.Wpf.Core.Features.Shared
     public class ClearDataEvent : PubSubEvent<string>
     {
     }
+
+    public class DebugModeRunnedEvent : PubSubEvent<bool> 
+    {
+    }
 }

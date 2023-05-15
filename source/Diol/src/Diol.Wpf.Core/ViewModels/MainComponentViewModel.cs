@@ -19,17 +19,26 @@ namespace Diol.Wpf.Core.ViewModels
         private IProcessProvider dotnetService;
         private LoggerBuilder builder;
         private IEventAggregator eventAggregator;
+        private IApplicationStateService applicationStateService;
 
         public MainComponentViewModel(
             IProcessProvider dotnetService,
             LoggerBuilder builder,
             HttpService httpService,
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator,
+            IApplicationStateService applicationStateService)
         {
             this.dotnetService = dotnetService;
             this.builder = builder;
 
             this.eventAggregator = eventAggregator;
+            this.applicationStateService = applicationStateService;
+
+            this.eventAggregator
+                .GetEvent<DebugModeRunnedEvent>()
+                .Subscribe(DebugModeRunnedEventHandler, ThreadOption.UIThread);
+
+            this.applicationStateService.Subscribe();
         }
 
         public ObservableCollection<HttpViewModel> HttpLogs { get; private set; } =
@@ -84,6 +93,11 @@ namespace Diol.Wpf.Core.ViewModels
             this.eventAggregator
                 .GetEvent<HttpItemSelectedEvent>()
                 .Publish(string.Empty);
+        }
+
+        private void DebugModeRunnedEventHandler(bool obj)
+        {
+            StartExecute();
         }
     }
 }
