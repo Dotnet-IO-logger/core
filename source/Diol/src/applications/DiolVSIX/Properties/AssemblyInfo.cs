@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DiolVSIX")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Diol is Dotnet Input Output Logger.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("DiolVSIX")]

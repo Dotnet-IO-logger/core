@@ -5,6 +5,7 @@
         <DisplayName>DiolVSIX</DisplayName>
         <Description xml:space="preserve">Diol is Dotnet Input Output Logger.
 This extension should help developers to analize their logs in realtime.Diol </Description>
+        <MoreInfo>https://github.com/Dotnet-IO-logger/core</MoreInfo>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">

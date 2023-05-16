@@ -21,8 +21,8 @@ namespace DiolVSIX
         public const string guidImagesString = "2dd12e27-238f-42f5-8abd-57280d31d00f";
         public static Guid guidImages = new Guid(guidImagesString);
 
-        public const string diolLogosString = "8df56e6c-31d5-49a9-9c40-b34a85fd42b1";
-        public static Guid diolLogos = new Guid(diolLogosString);
+        public const string diolCommandLogosString = "8df56e6c-31d5-49a9-9c40-b34a85fd42b1";
+        public static Guid diolCommandLogos = new Guid(diolCommandLogosString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -36,6 +36,6 @@ namespace DiolVSIX
         public const int bmpPicX = 0x0004;
         public const int bmpPicArrows = 0x0005;
         public const int bmpPicStrikethrough = 0x0006;
-        public const int diolLogo1 = 0x0001;
+        public const int diolCommandLogo1 = 0x0001;
     }
 }
