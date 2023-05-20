@@ -1,12 +1,8 @@
 ﻿using Diol.Core.Consumers;
 using Diol.Share.Features;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Diol.Applications.DotnetFrameworkConsoleClient
 {
