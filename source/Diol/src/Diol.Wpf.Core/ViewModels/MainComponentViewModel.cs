@@ -6,10 +6,7 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -127,7 +124,26 @@ namespace Diol.Wpf.Core.ViewModels
 #elif NETCOREAPP
             version = "NETCOREAPP";
 #endif
-            MessageBox.Show(version, mode);
+            
+            var architecture = Environment.Is64BitProcess ? "x64" : "x86";
+            var userName = Environment.UserName;
+            var machineName = Environment.MachineName;
+            var workingSet = Environment.WorkingSet;
+
+            var message = string.Join(
+                Environment.NewLine,
+                new string[]
+                {
+                    "Info",
+                    $"dotnet version: {version}",
+                    $"architectire: {architecture}",
+                    $"user name: {userName}",
+                    $"machine name: {machineName}",
+                    $"working set: {workingSet}",
+                    "Runtime",
+                });
+
+            MessageBox.Show(message, mode);
         }
 
         private void DebugModeRunnedEventHandler(bool obj)
