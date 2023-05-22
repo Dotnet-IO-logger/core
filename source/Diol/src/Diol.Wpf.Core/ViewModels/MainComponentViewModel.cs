@@ -75,8 +75,15 @@ namespace Diol.Wpf.Core.ViewModels
                 this.CanExecute = false;
                 eventPipeEventSourceWrapper.Start();
                 this.CanExecute = true;
-            }).ConfigureAwait(false);
-
+            }).ContinueWith(
+                t => 
+                {
+                    if (t.IsFaulted) 
+                    {
+                        this.CanExecute = true;
+                    }
+                }, 
+                TaskScheduler.FromCurrentSynchronizationContext());
 
         }
 
