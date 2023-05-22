@@ -2,7 +2,9 @@
 using Diol.Share.Features;
 using Diol.Wpf.Core.Features.Aspnetcores;
 using Diol.Wpf.Core.Features.Https;
+using Diol.Wpf.Core.Features.Shared;
 using Newtonsoft.Json;
+using Prism.Events;
 using System;
 using System.Diagnostics;
 
@@ -12,13 +14,16 @@ namespace Diol.Wpf.Core.Services
     {
         private HttpService httpService;
         private AspnetService aspnetService;
+        private readonly IEventAggregator eventAggregator;
 
         public LogsConsumer(
             HttpService httpService,
-            AspnetService aspnetService)
+            AspnetService aspnetService,
+            IEventAggregator eventAggregator)
         {
             this.httpService = httpService;
             this.aspnetService = aspnetService;
+            this.eventAggregator = eventAggregator;
         }
 
         public void OnCompleted()
@@ -39,6 +44,16 @@ namespace Diol.Wpf.Core.Services
 
             Debug.WriteLine($"{nameof(LogsConsumer)} | {nameof(OnNext)}");
             Debug.WriteLine($"{value.CorrelationId} | {value.CategoryName} | {value.EventName}");
+
+            // display logs infor
+            this.eventAggregator
+                .GetEvent<DiagnosticEvent>()
+                .Publish(new DiagnosticModel() 
+                {
+                    ActivityId = value.CorrelationId,
+                    EventName = value.EventName,
+                    CategoryName = value.CategoryName
+                });
 
             if (value.CategoryName == "HttpClient")
             {
