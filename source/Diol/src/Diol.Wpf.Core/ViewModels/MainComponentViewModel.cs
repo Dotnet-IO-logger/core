@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Diol.Wpf.Core.ViewModels
 {
@@ -93,6 +94,33 @@ namespace Diol.Wpf.Core.ViewModels
             this.eventAggregator
                 .GetEvent<HttpItemSelectedEvent>()
                 .Publish(string.Empty);
+        }
+
+        private DelegateCommand _settingsCommand = null;
+        public DelegateCommand SettingsCommand =>
+            _settingsCommand ?? (_settingsCommand = new DelegateCommand(SettingsExecute));
+
+        private void SettingsExecute()
+        {
+            var version = string.Empty;
+            var mode = string.Empty;
+
+#if DEBUG
+            mode = "DEBUG";
+#else
+            mode = "RELEASE";
+#endif
+
+#if NETSTANDARD
+            version = "NETSTANDARD";
+#elif NETFRAMEWORK
+            version = "NETFRAMEWORK";
+#elif NET
+            version = "NET";
+#elif NETCOREAPP
+            version = "NETCOREAPP";
+#endif
+            MessageBox.Show(version, mode);
         }
 
         private void DebugModeRunnedEventHandler(bool obj)

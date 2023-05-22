@@ -1,5 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
@@ -16,4 +15,8 @@
     <ProjectReference Include="..\..\Diol.Share\Diol.Share.csproj" />
   </ItemGroup>
 
+  <Target Name="DefineConstantsDisplayTarget" BeforeTargets="Build">
+    <Message Text="DefineConstants: $(DefineConstants)" Importance="high" />
+  </Target>
+  
 </Project>

@@ -28,6 +28,7 @@
                 FontFamily="Segoe UI Symbol"
                 Header="&#xE107;" />
             <MenuItem 
+                Command="{Binding SettingsCommand}"
                 FontFamily="Segoe UI Symbol"
                 Header="&#xE115;"/>
         </Menu>

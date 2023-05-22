@@ -45,6 +45,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="DiolBoostrapper.cs" />
     <Compile Include="DiolToolWindow.cs" />
@@ -131,4 +134,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="DefineConstantsDisplayTarget" BeforeTargets="Build">
+    <Message Text="DefineConstants: $(DefineConstants)" Importance="high" />
+  </Target>
 </Project>
