@@ -14,4 +14,17 @@ namespace Diol.Wpf.Core.Features.Shared
     public class DebugModeRunnedEvent : PubSubEvent<bool> 
     {
     }
+
+    public class DiagnosticEvent : PubSubEvent<DiagnosticModel>
+    {
+    }
+
+    public class DiagnosticModel 
+    {
+        public string CategoryName { get; set; }
+
+        public string EventName { get; set; }
+
+        public string ActivityId { get; set; }
+    }
 }

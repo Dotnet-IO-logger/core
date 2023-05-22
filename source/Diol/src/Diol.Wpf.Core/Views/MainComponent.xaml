@@ -40,6 +40,9 @@
             <TabItem Header="Aspnet core">
                 <local:AspnetComponent />
             </TabItem>
+            <TabItem Header="Diagnostics">
+                <local:DiagnosticsView />
+            </TabItem>
         </TabControl>
 
     </Grid>

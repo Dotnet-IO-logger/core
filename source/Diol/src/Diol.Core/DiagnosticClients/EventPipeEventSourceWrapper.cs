@@ -28,7 +28,7 @@ namespace Diol.Core.DiagnosticClients
             try 
             {
                 var client = new DiagnosticsClient(this.builder.ProcessId);
-                using (var session = client.StartEventPipeSession(this.builder.Providers)) 
+                using (var session = client.StartEventPipeSession(this.builder.Providers, false)) 
                 {
                     this.source = new EventPipeEventSource(session.EventStream);
 
