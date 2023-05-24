@@ -126,6 +126,25 @@ app.MapGet("/api/named-client/bing-and-google", async (IHttpClientFactory factor
     return results;
 });
 
+app.MapGet("/api/default-client/blocking-bing", (HttpClient httpClient) =>
+{
+    httpClient.DefaultRequestHeaders.Add("my-default-header", "my-value");
+
+    var response = httpClient
+        .GetAsync("https://www.bing.com")
+        .ConfigureAwait(false)
+        .GetAwaiter()
+        .GetResult();
+
+    var content = response.Content
+        .ReadAsStringAsync()
+        .ConfigureAwait(false)
+        .GetAwaiter()
+        .GetResult();
+
+    return response.StatusCode;
+});
+
 app.MapGet("api/get-logger-providers", (IServiceProvider serviceProvider) => 
 {
     var services = serviceProvider.GetServices<ILoggerProvider>();
