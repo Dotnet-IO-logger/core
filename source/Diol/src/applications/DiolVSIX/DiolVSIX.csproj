@@ -149,4 +149,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="DefineConstantsDisplayTarget" BeforeTargets="Build">
+    <Message Text="DefineConstants: $(DefineConstants)" Importance="high" />
+  </Target>
 </Project>

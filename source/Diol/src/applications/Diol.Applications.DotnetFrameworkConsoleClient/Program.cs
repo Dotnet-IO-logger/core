@@ -35,9 +35,19 @@ namespace Diol.Applications.DotnetFrameworkConsoleClient
                 .SetProcessId(process.Id)
                 .Build();
 
-            eventPipeEventSourceWrapper.Start();
+            // run eventPipeEventSourceWrapper.Start() in a separate thread and wait for a key press to stop it
+            var startTask = Task.Run(() =>
+            {
+                eventPipeEventSourceWrapper.Start();
+            });
 
-            Console.ReadKey();
+            var stopTask = Task.Run(() =>
+            {
+                Console.ReadKey();
+                eventPipeEventSourceWrapper.Stop();
+            });
+
+            Task.WaitAny(startTask, stopTask);
         }
     }
 }
