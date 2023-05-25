@@ -92,7 +92,7 @@ namespace Diol.Core.TraceEventProcessors
             var correlationId = traceEvent.ActivityID.ToString();
             
 #if DEBUG
-            DebugCorrelationId = correlationId;
+            //DebugCorrelationId = correlationId;
 #endif
 
             return new RequestPipelineStartDto
@@ -116,7 +116,7 @@ namespace Diol.Core.TraceEventProcessors
             var correlationId = traceEvent.ActivityID.ToString();
 
 #if DEBUG
-            correlationId = DebugCorrelationId;
+            //correlationId = DebugCorrelationId;
 #endif
 
             return new RequestPipelineRequestHeaderDto
@@ -140,7 +140,7 @@ namespace Diol.Core.TraceEventProcessors
             var correlationId = traceEvent.ActivityID.ToString();
 
 #if DEBUG
-            correlationId = DebugCorrelationId;
+            //correlationId = DebugCorrelationId;
 #endif
 
             // parse from milisecond to TimeSpan
@@ -165,7 +165,7 @@ namespace Diol.Core.TraceEventProcessors
             var correlationId = traceEvent.ActivityID.ToString();
 
 #if DEBUG
-            correlationId = DebugCorrelationId;
+            //correlationId = DebugCorrelationId;
 #endif
 
             return new RequestPipelineResponseHeaderDto
