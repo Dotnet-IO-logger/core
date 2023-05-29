@@ -106,44 +106,7 @@ namespace Diol.Wpf.Core.ViewModels
 
         private void SettingsExecute()
         {
-            var version = string.Empty;
-            var mode = string.Empty;
-
-#if DEBUG
-            mode = "DEBUG";
-#else
-            mode = "RELEASE";
-#endif
-
-#if NETSTANDARD
-            version = "NETSTANDARD";
-#elif NETFRAMEWORK
-            version = "NETFRAMEWORK";
-#elif NET
-            version = "NET";
-#elif NETCOREAPP
-            version = "NETCOREAPP";
-#endif
-            
-            var architecture = Environment.Is64BitProcess ? "x64" : "x86";
-            var userName = Environment.UserName;
-            var machineName = Environment.MachineName;
-            var workingSet = Environment.WorkingSet;
-
-            var message = string.Join(
-                Environment.NewLine,
-                new string[]
-                {
-                    "Info",
-                    $"dotnet version: {version}",
-                    $"architectire: {architecture}",
-                    $"user name: {userName}",
-                    $"machine name: {machineName}",
-                    $"working set: {workingSet}",
-                    "Runtime",
-                });
-
-            MessageBox.Show(message, mode);
+            // for debug purposes
         }
 
         private void DebugModeRunnedEventHandler(bool obj)
