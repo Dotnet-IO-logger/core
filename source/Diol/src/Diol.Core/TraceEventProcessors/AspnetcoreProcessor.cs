@@ -99,7 +99,7 @@ namespace Diol.Core.TraceEventProcessors
             var correlationId = traceEvent.ActivityID.ToString();
 
 #if DEBUG
-            DebugCorrelationId = correlationId;
+            //DebugCorrelationId = correlationId;
 #endif
 
             // all other is headers or metadata
@@ -139,7 +139,7 @@ namespace Diol.Core.TraceEventProcessors
             var correlationId = traceEvent.ActivityID.ToString();
 
 #if DEBUG
-            correlationId = DebugCorrelationId;
+            //correlationId = DebugCorrelationId;
 #endif
 
             // create event
@@ -173,7 +173,7 @@ namespace Diol.Core.TraceEventProcessors
             var correlationId = traceEvent.ActivityID.ToString();
 
 #if DEBUG
-            correlationId = DebugCorrelationId;
+            //correlationId = DebugCorrelationId;
 #endif
 
             // create event
@@ -206,7 +206,7 @@ namespace Diol.Core.TraceEventProcessors
             var correlationId = traceEvent.ActivityID.ToString();
 
 #if DEBUG
-            correlationId = DebugCorrelationId;
+            //correlationId = DebugCorrelationId;
 #endif
 
             // create event
