@@ -74,6 +74,9 @@ namespace Diol.Core.TraceEventProcessors
             // send notification
             if (be != null)
             {
+                be.ProcessName = value.ProcessName;
+                be.ProcessId = value.ProcessID;
+
                 this.eventObserver.AddEvent(be);
             }
         }

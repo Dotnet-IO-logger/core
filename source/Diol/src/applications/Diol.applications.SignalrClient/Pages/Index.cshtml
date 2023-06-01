@@ -47,7 +47,7 @@
                         <th>Category</th>
                         <th>Event</th>
                         <th>Correlation</th>
-                        <th>Body</th>
+                        <th>Process id</th>
                     </tr>
                 </thead>
                 <tbody id="table-body">
@@ -93,13 +93,13 @@
             getTable().replaceChildren();
         }
 
-        function addRow(category, event, correlationId, dataAsJson) {
+        function addRow(category, event, correlationId, processId) {
             let row = document.createElement('tr');
             
             let c1 = document.createElement('td');
             c1.innerHTML = category;
 
-            [ category, event, correlationId, dataAsJson ].forEach(function (item) {
+            [category, event, correlationId, processId].forEach(function (item) {
                 let c = document.createElement('td');
                 c.innerHTML = item;
                 row.appendChild(c);
@@ -119,7 +119,8 @@
             let category = data.CategoryName;
             let event = data.EventName;
             let correlationId = data.CorrelationId;
-            addRow(category, event, correlationId, eventAsJson);
+            let processId = data.ProcessId;
+            addRow(category, event, correlationId, processId);
         });
 
     </script>
