@@ -30,8 +30,8 @@ namespace Diol.applications.SignalrClient.Consumers
 
         public void OnNext(BaseDto value)
         {
-            var json = JsonSerializer.Serialize(
-                value, 
+            var valueAsJson = JsonSerializer.Serialize(
+                value,
                 value.GetType());
 
             Debug.WriteLine($"{nameof(SignalRConsumer)} | {nameof(OnNext)}");
@@ -39,7 +39,7 @@ namespace Diol.applications.SignalrClient.Consumers
 
             _ = this.hubContext.Clients
                 .Group(value.ProcessId.ToString())
-                .SendAsync("LogsReceived", json)
+                .SendAsync("LogReceived", value.CategoryName, value.EventName, valueAsJson)
                 .ConfigureAwait(false);
         }
 

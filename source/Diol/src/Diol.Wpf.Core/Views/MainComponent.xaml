@@ -18,6 +18,12 @@
 
         <Menu Grid.Row="0">
             <MenuItem
+                Command="{Binding ConnectCommand}"
+                IsEnabled="{Binding CanConnect}"
+                FontFamily="Segoe UI Symbol"
+                Header="&#xE117;">
+            </MenuItem>
+            <MenuItem
                 Command="{Binding StartCommand}"
                 IsEnabled="{Binding CanExecute}"
                 FontFamily="Segoe UI Symbol"

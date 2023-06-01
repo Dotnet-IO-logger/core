@@ -22,7 +22,7 @@ namespace Diol.applications.SignalrClient.Hubs
             var processes = this.dotnetProcessesService.GetCollection();
 
             await this.Clients.Caller
-                .SendAsync("GetProcesses", processes);
+                .SendAsync("ProcessesReceived", processes);
         }
 
         public async Task Subscribe(int processId)
@@ -30,6 +30,9 @@ namespace Diol.applications.SignalrClient.Hubs
             await this.Groups.AddToGroupAsync(
                 this.Context.ConnectionId, 
                 processId.ToString());
+
+            await this.Clients.Caller
+                .SendAsync("ProcessingStarted", processId);
 
             await this.taskQueue.QueueLogsProcessing(processId);
         }

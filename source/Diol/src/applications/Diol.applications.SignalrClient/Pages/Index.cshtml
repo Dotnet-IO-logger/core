@@ -113,15 +113,17 @@
             setStatusMessage("connection failed");
         });
 
-        // how to receive data
-        connection.on('LogsReceived', function (eventAsJson) {
-            let data = JSON.parse(eventAsJson);
+        function logsReceivedHanndler(categoryName, eventName, dataAsJson) {
+            let data = JSON.parse(dataAsJson);
             let category = data.CategoryName;
             let event = data.EventName;
             let correlationId = data.CorrelationId;
             let processId = data.ProcessId;
             addRow(category, event, correlationId, processId);
-        });
+        }
+
+        connection.on('LogReceived', logsReceivedHanndler);
+
 
     </script>
 </body>

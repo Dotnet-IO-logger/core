@@ -15,19 +15,18 @@ namespace Diol.Wpf.Core.ViewModels
     public class MainComponentViewModel : BindableBase
     {
         private IProcessProvider dotnetService;
-        private LoggerBuilder builder;
         private IEventAggregator eventAggregator;
         private IApplicationStateService applicationStateService;
+        private LogsSignalrClient logsSignalrClient;
 
         public MainComponentViewModel(
             IProcessProvider dotnetService,
-            LoggerBuilder builder,
             HttpService httpService,
             IEventAggregator eventAggregator,
-            IApplicationStateService applicationStateService)
+            IApplicationStateService applicationStateService,
+            LogsSignalrClient logsSignalrClient)
         {
             this.dotnetService = dotnetService;
-            this.builder = builder;
 
             this.eventAggregator = eventAggregator;
             this.applicationStateService = applicationStateService;
@@ -36,11 +35,61 @@ namespace Diol.Wpf.Core.ViewModels
                 .GetEvent<DebugModeRunnedEvent>()
                 .Subscribe(DebugModeRunnedEventHandler, ThreadOption.UIThread);
 
+            this.eventAggregator
+                .GetEvent<SignalRConnectionClosedEvent>()
+                .Subscribe(SignalRConnectionClosedEventHandler, ThreadOption.UIThread);
+
+            this.eventAggregator
+                .GetEvent<ProcessStarted>()
+                .Subscribe(ProcessStartedEventHandler, ThreadOption.UIThread);
+
+            this.eventAggregator
+                .GetEvent<ProcessFinished>()
+                .Subscribe(ProcessFinishedEventHandler, ThreadOption.UIThread);
+
             this.applicationStateService.Subscribe();
+
+            this.logsSignalrClient = logsSignalrClient;
+        }
+
+        private void ProcessFinishedEventHandler(int obj)
+        {
+            this.CanExecute = true;
+        }
+
+        private void ProcessStartedEventHandler(int obj)
+        {
+            this.CanExecute = false;
+        }
+
+        private void SignalRConnectionClosedEventHandler()
+        {
+            this.CanConnect = true;
         }
 
         public ObservableCollection<HttpViewModel> HttpLogs { get; private set; } =
             new ObservableCollection<HttpViewModel>();
+
+        private bool _canConnect = true;
+        public bool CanConnect
+        {
+            get => this._canConnect;
+            set => SetProperty(ref this._canConnect, value);
+        }
+
+        private DelegateCommand _connectCommand = null;
+        public DelegateCommand ConnectCommand =>
+            _connectCommand ?? (_connectCommand = new DelegateCommand(ConnectExecute));
+
+        private void ConnectExecute()
+        {
+            Task.Run(async () =>
+            {
+                this.CanConnect = false;
+                await this.logsSignalrClient.ConnectAsync()
+                    .ConfigureAwait(false);
+            });
+        }
 
         private bool _canExecute = true;
         public bool CanExecute
@@ -63,25 +112,21 @@ namespace Diol.Wpf.Core.ViewModels
                 return;
             }
 
-            var eventPipeEventSourceWrapper = this.builder
-                .Build()
-                .SetProcessId(processId.Value)
-                .Build();
-
-            Task.Run(() =>
+            Task.Run(async () =>
             {
-                this.CanExecute = false;
-                eventPipeEventSourceWrapper.Start();
-                this.CanExecute = true;
-            }).ContinueWith(
-                t => 
+                //this.CanExecute = false;
+                await this.logsSignalrClient
+                    .StartProcessing(processId.Value)
+                    .ConfigureAwait(false);
+            })
+            .ContinueWith(t => 
+            {
+                if (t.IsFaulted) 
                 {
-                    if (t.IsFaulted) 
-                    {
-                        this.CanExecute = true;
-                    }
-                }, 
-                TaskScheduler.FromCurrentSynchronizationContext());
+                    //this.CanExecute = true;
+                }
+            }, 
+            TaskScheduler.FromCurrentSynchronizationContext());
 
         }
 

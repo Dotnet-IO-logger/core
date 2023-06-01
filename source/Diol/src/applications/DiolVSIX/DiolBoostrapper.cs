@@ -40,8 +40,12 @@ namespace DiolVSIX
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // register all services here
-            containerRegistry.RegisterSingleton<LogsConsumer>();
-            containerRegistry.RegisterSingleton<LoggerBuilder>();
+            containerRegistry.RegisterSingleton<LogsSignalrClientBuilder>();
+            containerRegistry.RegisterSingleton<LogsSignalrClient>(container =>
+            {
+                var builder = container.Resolve<LogsSignalrClientBuilder>();
+                return builder.BuildClient();
+            });
 
             // depends of scenario
             containerRegistry.RegisterSingleton<DotnetProcessesService>();

@@ -1,4 +1,7 @@
-﻿using Diol.Core.DiagnosticClients;
+﻿using Diol.applications.SignalrClient.Consumers;
+using Diol.applications.SignalrClient.Hubs;
+using Diol.Core.DiagnosticClients;
+using Microsoft.AspNetCore.SignalR;
 using System.Threading.Channels;
 
 namespace Diol.applications.SignalrClient.BackgroundWorkers
@@ -7,8 +10,12 @@ namespace Diol.applications.SignalrClient.BackgroundWorkers
     {
         private readonly Channel<Func<EventPipeEventSourceBuilder, CancellationToken, ValueTask>> _queue;
 
-        public BackgroundTaskQueue(int capacity = 1)
+        private readonly IHubContext<LogsHub> hubContext;
+
+        public BackgroundTaskQueue(IHubContext<LogsHub> hubContext, int capacity = 1)
         {
+            this.hubContext = hubContext;
+
             // Capacity should be set based on the expected application load and
             // number of concurrent threads accessing the queue.            
             // BoundedChannelFullMode.Wait will cause calls to WriteAsync() to return a task,
@@ -55,7 +62,7 @@ namespace Diol.applications.SignalrClient.BackgroundWorkers
                     });
 
                     // do processing
-                    Task processing = Task.Run(() =>
+                    Task processing = Task.Run(async () =>
                     {
                         executor.Start();
 
@@ -63,6 +70,10 @@ namespace Diol.applications.SignalrClient.BackgroundWorkers
                     });
 
                     Task.WaitAny(finish, processing);
+
+                    await this.hubContext.Clients
+                        .Group(processId.ToString())
+                        .SendAsync("ProcessingFinished", processId);
                 });
         }
 

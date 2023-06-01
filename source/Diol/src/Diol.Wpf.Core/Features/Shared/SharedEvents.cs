@@ -1,4 +1,5 @@
-﻿using Prism.Events;
+﻿using Diol.Share.Utils;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,5 +27,21 @@ namespace Diol.Wpf.Core.Features.Shared
         public string EventName { get; set; }
 
         public string ActivityId { get; set; }
+    }
+
+    public class ProcessesReceivedEvent : PubSubEvent<ICollection<DotnetProcessInfo>>
+    {
+    }
+
+    public class SignalRConnectionClosedEvent : PubSubEvent
+    {
+    }
+
+    public class ProcessStarted : PubSubEvent<int>
+    {
+    }
+
+    public class ProcessFinished : PubSubEvent<int>
+    {
     }
 }
