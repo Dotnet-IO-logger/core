@@ -4,8 +4,6 @@ using Diol.Core.DiagnosticClients;
 using Diol.Core.TraceEventProcessors;
 using Diol.Share.Features.Aspnetcores;
 using Diol.Share.Features.Httpclients;
-using Microsoft.AspNetCore.SignalR;
-using System.Collections.Concurrent;
 
 namespace Diol.applications.SignalrClient.BackgroundWorkers
 {
@@ -18,7 +16,8 @@ namespace Diol.applications.SignalrClient.BackgroundWorkers
 
         public LogsBackgroundWorker(
             BackgroundTaskQueue taskQueue,
-            SignalRConsumer signalRConsumer)
+            SignalRConsumer signalRConsumer,
+            EventPublisher eventPublisher)
         {
             this.taskQueue = taskQueue;
             this.signalRConsumer = signalRConsumer;
@@ -29,7 +28,7 @@ namespace Diol.applications.SignalrClient.BackgroundWorkers
                     new AspnetcoreFeatureFlag(),
                     new HttpclientFeatureFlag()
                 })
-                .SetEventObserver(new EventPublisher())
+                .SetEventObserver(eventPublisher)
                 .SetConsumers(new List<Core.Consumers.IConsumer>()
                 {
                     this.signalRConsumer

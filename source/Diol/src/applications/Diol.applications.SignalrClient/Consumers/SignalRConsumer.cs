@@ -30,13 +30,17 @@ namespace Diol.applications.SignalrClient.Consumers
 
         public void OnNext(BaseDto value)
         {
-            var json = System.Text.Json.JsonSerializer.Serialize(value, value.GetType());
+            var json = JsonSerializer.Serialize(
+                value, 
+                value.GetType());
 
             Debug.WriteLine($"{nameof(SignalRConsumer)} | {nameof(OnNext)}");
             Debug.WriteLine($"{value.CorrelationId} | {value.CategoryName} | {nameof(value.EventName)}");
 
-            _ = this.hubContext.Clients.All
-                .SendAsync(value.CategoryName, json).ConfigureAwait(false);
+            _ = this.hubContext.Clients
+                .Group(value.ProcessId.ToString())
+                .SendAsync("LogsReceived", json)
+                .ConfigureAwait(false);
         }
 
 

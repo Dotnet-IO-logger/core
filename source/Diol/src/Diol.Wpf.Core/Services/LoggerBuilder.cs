@@ -23,13 +23,13 @@ namespace Diol.Wpf.Core.Services
                 .SetProviders(EvenPipeHelper.Providers)
                 .SetFeatures(new List<BaseFeatureFlag>()
                 {
-                        new AspnetcoreFeatureFlag(),
-                        new HttpclientFeatureFlag()
+                    new AspnetcoreFeatureFlag(),
+                    new HttpclientFeatureFlag()
                 })
                 .SetEventObserver(new EventPublisher())
                 .SetConsumers(new List<IConsumer>()
                 {
-                        this.logsConsumer
+                    this.logsConsumer
                 });
         }
     }

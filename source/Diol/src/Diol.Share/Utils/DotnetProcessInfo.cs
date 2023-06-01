@@ -1,4 +1,8 @@
-﻿namespace Diol.Core.DotnetProcesses
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Diol.Share.Utils
 {
     public class DotnetProcessInfo
     {

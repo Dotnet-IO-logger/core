@@ -7,5 +7,9 @@
         public abstract string CategoryName { get; }
 
         public abstract string EventName { get; }
+
+        public int ProcessId { get; set; }
+
+        public string ProcessName { get; set; }
     }
 }

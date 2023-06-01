@@ -32,6 +32,40 @@ namespace Diol.applications.SignalrClient.BackgroundWorkers
             await _queue.Writer.WriteAsync(workItem);
         }
 
+        public async ValueTask QueueLogsProcessing(int processId) 
+        {
+            await this.QueueBackgroundWorkItemAsync(
+                async (builder, cancelationToken) => 
+                {
+                    var executor = builder
+                        .SetProcessId(processId)
+                        .Build();
+
+                    // finish action
+                    Task finish = Task.Run(async () =>
+                    {
+                        while (!cancelationToken.IsCancellationRequested)
+                        {
+                            await Task.Delay(TimeSpan.FromSeconds(5));
+                        }
+
+                        executor.Stop();
+
+                        return Task.CompletedTask;
+                    });
+
+                    // do processing
+                    Task processing = Task.Run(() =>
+                    {
+                        executor.Start();
+
+                        executor.Dispose();
+                    });
+
+                    Task.WaitAny(finish, processing);
+                });
+        }
+
         public async ValueTask<Func<EventPipeEventSourceBuilder, CancellationToken, ValueTask>> DequeueAsync(
             CancellationToken cancellationToken)
         {

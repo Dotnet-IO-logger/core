@@ -113,25 +113,14 @@
             setStatusMessage("connection failed");
         });
 
-        connection.on('AspnetCore', function(eventAsJson) {
+        // how to receive data
+        connection.on('LogsReceived', function (eventAsJson) {
             let data = JSON.parse(eventAsJson);
             let category = data.CategoryName;
             let event = data.EventName;
             let correlationId = data.CorrelationId;
-            console.info('AspnetCore', data);
             addRow(category, event, correlationId, eventAsJson);
         });
-
-        connection.on('HttpClient', function (eventAsJson) {
-            let data = JSON.parse(eventAsJson);
-            let category = data.CategoryName;
-            let event = data.EventName;
-            let correlationId = data.CorrelationId;
-            console.info('HttpClient', data);
-            addRow(category, event, correlationId, eventAsJson);
-        });
-
-
 
     </script>
 </body>
