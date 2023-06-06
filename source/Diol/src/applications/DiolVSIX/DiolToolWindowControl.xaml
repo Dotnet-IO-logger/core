@@ -6,12 +6,11 @@
              xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0" 
              xmlns:views="clr-namespace:Diol.Wpf.Core.Views;assembly=Diol.Wpf.Core"
              Background="Transparent"
-             Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              Name="MyToolWindow">
     <UserControl.Resources>
-        <Style
+        <!--<Style
             TargetType="Button"
             BasedOn="{StaticResource {x:Static vsshell:VsResourceKeys.ButtonStyleKey}}">
             <Setter
@@ -187,6 +186,6 @@
             <Setter
                 Property="Margin"
                 Value="5, 3" />
-        </Style>
+        </Style>-->
     </UserControl.Resources>
 </UserControl>
