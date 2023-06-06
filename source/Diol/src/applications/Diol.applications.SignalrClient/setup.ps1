@@ -1,7 +1,10 @@
 ﻿$serviceName = 'DiolBackendService'
 $serviceDisplayName = 'Diol Backend Service'
-
 $exeName = 'Diol.applications.SignalrClient.exe'
+
+$currentDir = (Get-Item .).FullName
+
+$exePath = $currentDir + '\' + $exeName
 
 # check if the service exist
 $service = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
@@ -13,5 +16,5 @@ if ($service.Length -gt 0) {
 }
 
 Write-Host "Creating service $serviceName" -ForegroundColor Yellow
-sc.exe create $serviceName binPath= $exeName DisplayName= $serviceDisplayName
+sc.exe create $serviceName binPath= $exePath DisplayName= $serviceDisplayName
 Write-Host "$serviceName has installed" -ForegroundColor Green
