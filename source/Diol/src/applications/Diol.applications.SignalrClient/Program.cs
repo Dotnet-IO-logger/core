@@ -5,7 +5,15 @@ using Diol.Core.DotnetProcesses;
 using Diol.Core.TraceEventProcessors;
 using Microsoft.AspNetCore.SignalR;
 
-var builder = WebApplication.CreateBuilder(args);
+var appOptions = new WebApplicationOptions() 
+{
+    ContentRootPath = AppContext.BaseDirectory,
+    Args = args
+};
+
+var builder = WebApplication.CreateBuilder(appOptions);
+
+builder.Host.UseWindowsService();
 
 builder.Services.AddSignalR(setting => 
 {
