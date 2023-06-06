@@ -16,4 +16,10 @@
     <ProjectReference Include="..\..\Diol.Share\Diol.Share.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="setup.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -38,8 +38,16 @@ coming soon...
 
 ## Additional things
 
-Remove services:
+### Remove services:
 
 ```ps
 sc.exe delete DiolBackendService
 ```
+
+### Change prot
+
+By default we use port `9200`. 
+
+You can change it in `appsettings.json` file. 
+
+Path `Kestrel.EndPoints.Https.Url`.
