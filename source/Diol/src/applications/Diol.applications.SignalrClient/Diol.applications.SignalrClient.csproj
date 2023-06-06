@@ -21,5 +21,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
+  
+  <Target Name="ZipOutputPath" 
+          AfterTargets="Build" 
+          Condition="$(Configuration) == Release">
+    <ZipDirectory
+            SourceDirectory="$(OutputPath)"
+            DestinationFile="$(OutputPath)\..\DiolBackendService.zip"
+            Overwrite="true" />
+  </Target>
 </Project>
