@@ -18,18 +18,22 @@ namespace Diol.Wpf.Core.ViewModels
         private IEventAggregator eventAggregator;
         private IApplicationStateService applicationStateService;
         private LogsSignalrClient logsSignalrClient;
+        private IBackendProxy backendProxy;
 
         public MainComponentViewModel(
             IProcessProvider dotnetService,
             HttpService httpService,
             IEventAggregator eventAggregator,
             IApplicationStateService applicationStateService,
-            LogsSignalrClient logsSignalrClient)
+            LogsSignalrClient logsSignalrClient,
+            IBackendProxy backendProxy)
         {
             this.dotnetService = dotnetService;
 
             this.eventAggregator = eventAggregator;
             this.applicationStateService = applicationStateService;
+
+            this.backendProxy = backendProxy;
 
             this.eventAggregator
                 .GetEvent<DebugModeRunnedEvent>()
@@ -47,9 +51,18 @@ namespace Diol.Wpf.Core.ViewModels
                 .GetEvent<ProcessFinished>()
                 .Subscribe(ProcessFinishedEventHandler, ThreadOption.UIThread);
 
+            this.eventAggregator
+                .GetEvent<BackendStarted>()
+                .Subscribe(BackendStartedEventHandler, ThreadOption.UIThread);
+
             this.applicationStateService.Subscribe();
 
             this.logsSignalrClient = logsSignalrClient;
+        }
+
+        private void BackendStartedEventHandler(bool obj)
+        {
+            this.CanConnectToBe = !obj;
         }
 
         private void ProcessFinishedEventHandler(int obj)
@@ -64,31 +77,48 @@ namespace Diol.Wpf.Core.ViewModels
 
         private void SignalRConnectionClosedEventHandler()
         {
-            this.CanConnect = true;
+            this.CanConnectToHub = true;
         }
 
         public ObservableCollection<HttpViewModel> HttpLogs { get; private set; } =
             new ObservableCollection<HttpViewModel>();
 
-        private bool _canConnect = true;
-        public bool CanConnect
+        private bool _canConnectToHub = true;
+        public bool CanConnectToHub
         {
-            get => this._canConnect;
-            set => SetProperty(ref this._canConnect, value);
+            get => this._canConnectToHub;
+            set => SetProperty(ref this._canConnectToHub, value);
         }
 
-        private DelegateCommand _connectCommand = null;
-        public DelegateCommand ConnectCommand =>
-            _connectCommand ?? (_connectCommand = new DelegateCommand(ConnectExecute));
+        private DelegateCommand _connectToHubCommand = null;
+        public DelegateCommand ConnectToHubCommand =>
+            _connectToHubCommand ?? (_connectToHubCommand = new DelegateCommand(ConnectToHubExecute));
 
-        private void ConnectExecute()
+        private void ConnectToHubExecute()
         {
             Task.Run(async () =>
             {
-                this.CanConnect = false;
+                this.CanConnectToHub = false;
                 await this.logsSignalrClient.ConnectAsync()
                     .ConfigureAwait(false);
             });
+        }
+
+        private bool _canConnectToBe = true;
+        public bool CanConnectToBe
+        {
+            get => this._canConnectToBe;
+            set => SetProperty(ref this._canConnectToBe, value);
+        }
+
+        private DelegateCommand _connectToBeCommand = null;
+        public DelegateCommand ConnectToBeCommand =>
+            _connectToBeCommand ?? (_connectToHubCommand = new DelegateCommand(ConnectToBeExecute));
+
+        private void ConnectToBeExecute()
+        {
+            this.backendProxy.StartBackend()
+                .ConfigureAwait(false);
         }
 
         private bool _canExecute = true;

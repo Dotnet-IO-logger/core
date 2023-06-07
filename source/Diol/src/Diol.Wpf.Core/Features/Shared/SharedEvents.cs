@@ -44,4 +44,8 @@ namespace Diol.Wpf.Core.Features.Shared
     public class ProcessFinished : PubSubEvent<int>
     {
     }
+
+    public class BackendStarted : PubSubEvent<bool>
+    {
+    }
 }
