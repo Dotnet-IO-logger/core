@@ -5,6 +5,7 @@ using Diol.Wpf.Core.Services;
 using Diol.Wpf.Core.Views;
 using DiolVSIX.Services;
 using Prism.Ioc;
+using Prism.Modularity;
 using Prism.Unity;
 using System;
 using System.Collections.Generic;
@@ -47,13 +48,14 @@ namespace DiolVSIX
                 return builder.BuildClient();
             });
 
+            containerRegistry.RegisterSingleton<RequiredServices>(() => this.requiredServices);
+
             // depends of scenario
             containerRegistry.RegisterSingleton<DotnetProcessesService>();
             // for development we can use LocalDevelopmentProcessProvider
             // for real scenario use VsProcessProvider
-            //containerRegistry.RegisterSingleton<IProcessProvider, LocalDevelopmentProcessProvider>();
-            containerRegistry.RegisterSingleton<RequiredServices>(() => this.requiredServices);
-            containerRegistry.RegisterSingleton<IProcessProvider, VsProcessProvider>();
+            containerRegistry.RegisterSingleton<IProcessProvider, LocalDevelopmentProcessProvider>();
+            //containerRegistry.RegisterSingleton<IProcessProvider, VsProcessProvider>();
             containerRegistry.RegisterSingleton<IApplicationStateService, VsApplicationStateService>();
 
             // register http
@@ -63,6 +65,12 @@ namespace DiolVSIX
             // register aspnet
             containerRegistry.RegisterSingleton<AspnetService>();
             containerRegistry.RegisterSingleton<IStore<AspnetcoreModel>, AspnetcoreStore>();
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog) 
+        {
+            base.ConfigureModuleCatalog(moduleCatalog);
+            moduleCatalog.AddModule<Diol.Wpf.Core.MainModule>();
         }
     }
 }

@@ -43,9 +43,21 @@ namespace Diol.Wpf.Core.ViewModels
                 .GetEvent<ProcessFinished>()
                 .Subscribe(ProcessFinishedEventHandler, ThreadOption.UIThread);
 
+            this.eventAggregator
+                .GetEvent<SignalRConnectionEvent>()
+                .Subscribe(SignalRConnectionEventHandler, ThreadOption.UIThread);
+
             this.applicationStateService.Subscribe();
 
             this.logsSignalrClient = logsSignalrClient;
+        }
+
+        private void SignalRConnectionEventHandler(SignalRConnectionEnum status)
+        {
+            if (status == SignalRConnectionEnum.Connected || status == SignalRConnectionEnum.Reconnected) 
+            {
+
+            }
         }
 
         private void ProcessFinishedEventHandler(int obj)

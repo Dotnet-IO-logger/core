@@ -4,6 +4,7 @@ using Diol.Wpf.Core.Features.Https;
 using Diol.Wpf.Core.Services;
 using Diol.Wpf.Core.Views;
 using Prism.Ioc;
+using Prism.Modularity;
 using Prism.Unity;
 using System.Windows;
 
@@ -44,6 +45,12 @@ namespace Diol.applications.WpfClient
             // register aspnet
             containerRegistry.RegisterSingleton<AspnetService>();
             containerRegistry.RegisterSingleton<IStore<AspnetcoreModel>, AspnetcoreStore>();
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            base.ConfigureModuleCatalog(moduleCatalog);
+            moduleCatalog.AddModule<Diol.Wpf.Core.MainModule>();
         }
     }
 }
