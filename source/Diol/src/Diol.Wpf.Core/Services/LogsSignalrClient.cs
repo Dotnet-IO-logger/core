@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Diol.Wpf.Core.Services
 {
-    public class LogsSignalrClient
+    public class LogsSignalrClient : IDisposable
     {
         private readonly HubConnection hubConnection;
         private readonly IEventAggregator eventAggregator;
@@ -37,6 +37,21 @@ namespace Diol.Wpf.Core.Services
             this.aspnetService = aspnetService;
 
             // setup signalr events
+            this.hubConnection.Closed += async (error) => 
+            {
+                this.UpdateSignalrConnectionStatus(SignalRConnectionEnum.Closed);
+            };
+
+            this.hubConnection.Reconnecting += async (error) => 
+            {
+                this.UpdateSignalrConnectionStatus(SignalRConnectionEnum.Reconnecting);
+            };
+
+            this.hubConnection.Reconnected += async (connectionId) =>
+            {
+                this.UpdateSignalrConnectionStatus(SignalRConnectionEnum.Reconnected);
+            };
+
             this.hubConnection.On<int>(
                 "ProcessingStarted",
                 (processId) => 
@@ -70,6 +85,13 @@ namespace Diol.Wpf.Core.Services
             {
                 LogReceivedHandler(category, eventName, valueAsJson);
             });
+        }
+
+        private void UpdateSignalrConnectionStatus(SignalRConnectionEnum status) 
+        {
+            this.eventAggregator
+                .GetEvent<SignalRConnectionEvent>()
+                .Publish(status);
         }
 
         private void LogReceivedHandler(string categoryName, string eventName, string valueAsJson)
@@ -141,7 +163,15 @@ namespace Diol.Wpf.Core.Services
 
         public async Task ConnectAsync() 
         {
-            await this.hubConnection.StartAsync();
+            try 
+            {
+                this.UpdateSignalrConnectionStatus(SignalRConnectionEnum.Connected);
+                await this.hubConnection.StartAsync();
+            }
+            catch (Exception ex) 
+            {
+                this.UpdateSignalrConnectionStatus(SignalRConnectionEnum.Error);
+            }
         }
 
         public async Task GetProcesses() 
@@ -153,6 +183,17 @@ namespace Diol.Wpf.Core.Services
         {
             await this.hubConnection
                 .InvokeAsync("Subscribe", processId);
+        }
+
+        public void Dispose()
+        {
+            this.hubConnection.StopAsync()
+                .ContinueWith(async t => 
+                {
+                    await this.hubConnection.DisposeAsync()
+                        .ConfigureAwait(false);
+                });
+
         }
     }
 }

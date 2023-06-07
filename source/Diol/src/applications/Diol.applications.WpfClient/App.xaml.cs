@@ -32,10 +32,6 @@ namespace Diol.applications.WpfClient
 
             // depends of scenario
             containerRegistry.RegisterSingleton<DotnetProcessesService>();
-
-            //containerRegistry.RegisterSingleton<IBackendProxy, DebugBackendProxy>();
-            containerRegistry.RegisterSingleton<IBackendProxy, ReleaseBackendProxy>();
-
             // for development we can use LocalDevelopmentProcessProvider
             // for real scenario use another
             containerRegistry.RegisterSingleton<IProcessProvider, LocalDevelopmentProcessProvider>();

@@ -35,15 +35,8 @@ namespace Diol.Wpf.Core.Services
         {
             this.connection = new HubConnectionBuilder()
                 .WithUrl(this.uri)
-                //.WithAutomaticReconnect()
+                .WithAutomaticReconnect()
                 .Build();
-
-            this.connection.Closed += async (error) =>
-            {
-                this.eventAggregator
-                    .GetEvent<SignalRConnectionClosedEvent>()
-                    .Publish();
-            };
 
             return new LogsSignalrClient(
                 this.connection, 

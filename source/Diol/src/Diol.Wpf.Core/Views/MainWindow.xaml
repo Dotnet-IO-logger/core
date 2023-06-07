@@ -9,6 +9,6 @@
         Height="650" 
         Width="650">
     <Grid>
-        <views:MainComponent />
+        <views:ShellComponent />
     </Grid>
 </Window>

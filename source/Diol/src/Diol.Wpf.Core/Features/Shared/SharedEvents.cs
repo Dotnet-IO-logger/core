@@ -33,7 +33,16 @@ namespace Diol.Wpf.Core.Features.Shared
     {
     }
 
-    public class SignalRConnectionClosedEvent : PubSubEvent
+    public enum SignalRConnectionEnum 
+    {
+        Connected,
+        Reconnecting,
+        Reconnected,
+        Closed,
+        Error
+    }
+
+    public class SignalRConnectionEvent : PubSubEvent<SignalRConnectionEnum>
     {
     }
 

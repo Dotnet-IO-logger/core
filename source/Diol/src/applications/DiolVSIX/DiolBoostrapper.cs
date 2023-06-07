@@ -30,7 +30,7 @@ namespace DiolVSIX
 
         protected override DependencyObject CreateShell() 
         {
-            var mw = this.Container.Resolve<MainComponent>();
+            var mw = this.Container.Resolve<ShellComponent>();
 
             this.diolToolWindow.Content = mw;
 
