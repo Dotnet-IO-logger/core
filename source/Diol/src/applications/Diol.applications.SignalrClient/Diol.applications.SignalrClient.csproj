@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,12 +23,7 @@
     </None>
   </ItemGroup>
   
-  <Target Name="ZipOutputPath" 
-          AfterTargets="Build" 
-          Condition="$(Configuration) == Release">
-    <ZipDirectory
-            SourceDirectory="$(OutputPath)"
-            DestinationFile="$(OutputPath)\..\DiolBackendService.zip"
-            Overwrite="true" />
+  <Target Name="ZipOutputPath" AfterTargets="Build" Condition="$(Configuration) == Release">
+    <ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(OutputPath)\..\DiolBackendService.zip" Overwrite="true" />
   </Target>
 </Project>
