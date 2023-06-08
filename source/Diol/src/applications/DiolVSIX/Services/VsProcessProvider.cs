@@ -1,9 +1,4 @@
-﻿using Diol.Core.DotnetProcesses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Diol.Share.Services;
 
 namespace DiolVSIX.Services
 {

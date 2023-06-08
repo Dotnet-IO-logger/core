@@ -1,17 +1,18 @@
 ﻿using Diol.Share.Utils;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Diol.Core.DotnetProcesses
+namespace Diol.Share.Services
 {
     public class DotnetProcessesService
     {
-        public ICollection<DotnetProcessInfo> GetCollection() 
+        public ICollection<DotnetProcessInfo> GetCollection()
         {
             var processes = Process.GetProcesses();
 
-            return processes.Select(x => new DotnetProcessInfo() 
+            return processes.Select(x => new DotnetProcessInfo()
             {
                 Id = x.Id,
                 Name = x.ProcessName
@@ -28,10 +29,10 @@ namespace Diol.Core.DotnetProcesses
             }).ToList();
         }
 
-        public DotnetProcessInfo GetItemOrDefault(string name) 
+        public DotnetProcessInfo GetItemOrDefault(string name)
         {
             var process = Process.GetProcessesByName(name)
-                .Select(x => new DotnetProcessInfo() 
+                .Select(x => new DotnetProcessInfo()
                 {
                     Id = x.Id,
                     Name = x.ProcessName

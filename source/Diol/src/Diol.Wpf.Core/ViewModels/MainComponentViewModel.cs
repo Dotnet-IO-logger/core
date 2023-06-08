@@ -1,4 +1,4 @@
-﻿using Diol.Core.DotnetProcesses;
+﻿using Diol.Share.Services;
 using Diol.Wpf.Core.Features.Https;
 using Diol.Wpf.Core.Features.Shared;
 using Diol.Wpf.Core.Services;
@@ -43,21 +43,9 @@ namespace Diol.Wpf.Core.ViewModels
                 .GetEvent<ProcessFinished>()
                 .Subscribe(ProcessFinishedEventHandler, ThreadOption.UIThread);
 
-            this.eventAggregator
-                .GetEvent<SignalRConnectionEvent>()
-                .Subscribe(SignalRConnectionEventHandler, ThreadOption.UIThread);
-
             this.applicationStateService.Subscribe();
 
             this.logsSignalrClient = logsSignalrClient;
-        }
-
-        private void SignalRConnectionEventHandler(SignalRConnectionEnum status)
-        {
-            if (status == SignalRConnectionEnum.Connected || status == SignalRConnectionEnum.Reconnected) 
-            {
-
-            }
         }
 
         private void ProcessFinishedEventHandler(int obj)

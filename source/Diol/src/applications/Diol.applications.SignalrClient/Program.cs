@@ -1,8 +1,8 @@
 using Diol.applications.SignalrClient.BackgroundWorkers;
 using Diol.applications.SignalrClient.Consumers;
 using Diol.applications.SignalrClient.Hubs;
-using Diol.Core.DotnetProcesses;
 using Diol.Core.TraceEventProcessors;
+using Diol.Share.Services;
 using Microsoft.AspNetCore.SignalR;
 
 var appOptions = new WebApplicationOptions() 

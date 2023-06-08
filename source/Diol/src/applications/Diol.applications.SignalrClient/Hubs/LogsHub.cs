@@ -1,5 +1,5 @@
 ﻿using Diol.applications.SignalrClient.BackgroundWorkers;
-using Diol.Core.DotnetProcesses;
+using Diol.Share.Services;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Diol.applications.SignalrClient.Hubs

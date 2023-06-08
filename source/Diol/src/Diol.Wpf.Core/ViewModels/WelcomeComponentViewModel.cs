@@ -30,7 +30,12 @@ namespace Diol.Wpf.Core.ViewModels
 
         private void SignalRConnectionEventHandler(SignalRConnectionEnum status)
         {
-            if (status == SignalRConnectionEnum.Connected)
+            if (status == SignalRConnectionEnum.Connecting)
+            {
+                this.CanConnected = false;
+                this.ErrorMessage = string.Empty;
+            }
+            else if (status == SignalRConnectionEnum.Connected)
             {
                 this.CanConnected = false;
                 this.ErrorMessage = string.Empty;

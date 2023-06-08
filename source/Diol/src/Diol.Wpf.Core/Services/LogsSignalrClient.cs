@@ -10,8 +10,6 @@ using Newtonsoft.Json;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Diol.Wpf.Core.Services
@@ -165,8 +163,13 @@ namespace Diol.Wpf.Core.Services
         {
             try 
             {
-                this.UpdateSignalrConnectionStatus(SignalRConnectionEnum.Connected);
-                await this.hubConnection.StartAsync();
+                this.UpdateSignalrConnectionStatus(SignalRConnectionEnum.Connecting);
+
+                await this.hubConnection.StartAsync()
+                        .ContinueWith(t =>
+                        {
+                            this.UpdateSignalrConnectionStatus(SignalRConnectionEnum.Connected);
+                        });
             }
             catch (Exception ex) 
             {

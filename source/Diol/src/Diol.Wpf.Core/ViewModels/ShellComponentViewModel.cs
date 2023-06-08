@@ -37,7 +37,11 @@ namespace Diol.Wpf.Core.ViewModels
 
         private void SignalRConnectionEventHandler(SignalRConnectionEnum status)
         {
-            if (status == SignalRConnectionEnum.Connected)
+            if (status == SignalRConnectionEnum.Connecting)
+            {
+                this.ShowMain(false);
+            }
+            else if (status == SignalRConnectionEnum.Connected) 
             {
                 this.ShowMain(true);
             }

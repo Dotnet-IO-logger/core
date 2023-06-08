@@ -1,4 +1,4 @@
-﻿using Diol.Core.DotnetProcesses;
+﻿using Diol.Share.Services;
 using Diol.Wpf.Core.Features.Aspnetcores;
 using Diol.Wpf.Core.Features.Https;
 using Diol.Wpf.Core.Services;
@@ -7,11 +7,6 @@ using DiolVSIX.Services;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Unity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace DiolVSIX

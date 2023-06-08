@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Diol.Core.DotnetProcesses
+namespace Diol.Share.Services
 {
     public interface IApplicationStateService
     {

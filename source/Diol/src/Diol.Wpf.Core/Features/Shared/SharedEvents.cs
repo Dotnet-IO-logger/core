@@ -35,6 +35,7 @@ namespace Diol.Wpf.Core.Features.Shared
 
     public enum SignalRConnectionEnum 
     {
+        Connecting,
         Connected,
         Reconnecting,
         Reconnected,

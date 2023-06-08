@@ -1,9 +1,7 @@
 ﻿using Diol.Core.DiagnosticClients;
-using Diol.Core.DotnetProcesses;
+using Diol.Share.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Diol.Applications.DotnetFrameworkConsoleClient

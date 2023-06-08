@@ -1,6 +1,6 @@
 ﻿using Diol.applications.ConsoleClient;
 using Diol.Core.DiagnosticClients;
-using Diol.Core.DotnetProcesses;
+using Diol.Share.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 Console.WriteLine("Welcome to Diol Console client");

@@ -1,12 +1,8 @@
-﻿using Diol.Core.DotnetProcesses;
+﻿using Diol.Share.Services;
 using Diol.Wpf.Core.Features.Shared;
 using EnvDTE;
 using Prism.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DiolVSIX.Services
 {
