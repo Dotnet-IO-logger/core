@@ -13,8 +13,6 @@ var appOptions = new WebApplicationOptions()
 
 var builder = WebApplication.CreateBuilder(appOptions);
 
-builder.Host.UseWindowsService();
-
 builder.Services.AddSignalR(setting => 
 {
     setting.EnableDetailedErrors = true;
