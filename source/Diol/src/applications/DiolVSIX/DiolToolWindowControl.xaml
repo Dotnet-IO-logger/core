@@ -10,7 +10,7 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Name="MyToolWindow">
     <UserControl.Resources>
-        <!--<Style
+        <Style
             TargetType="Button"
             BasedOn="{StaticResource {x:Static vsshell:VsResourceKeys.ButtonStyleKey}}">
             <Setter
@@ -186,6 +186,6 @@
             <Setter
                 Property="Margin"
                 Value="5, 3" />
-        </Style>-->
+        </Style>
     </UserControl.Resources>
 </UserControl>

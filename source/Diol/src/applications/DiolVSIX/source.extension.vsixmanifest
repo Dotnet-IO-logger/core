@@ -4,8 +4,8 @@
         <Identity Id="DiolVSIX.66bbb016-3110-40f6-a936-35f914a663e3" Version="1.1" Language="en-US" Publisher="Diol devs" />
         <DisplayName>Dotnet input-output logger DIOL</DisplayName>
         <Description xml:space="preserve">This extension should help developers to analize their logs in realtime.</Description>
-        <MoreInfo>https://github.com/Dotnet-IO-logger/core</MoreInfo>
-        <GettingStartedGuide>https://github.com/Dotnet-IO-logger/core/wiki/Getting-started-guide</GettingStartedGuide>
+        <MoreInfo>https://github.com/Dotnet-IO-logger/core/wiki</MoreInfo>
+        <GettingStartedGuide>https://github.com/Dotnet-IO-logger/core/wiki/1.-Getting-started-guide</GettingStartedGuide>
         <Icon>Resources\logo.png</Icon>
         <Tags>logger</Tags>
     </Metadata>
