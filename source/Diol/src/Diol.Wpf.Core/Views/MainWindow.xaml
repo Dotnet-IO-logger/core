@@ -8,7 +8,5 @@
         Title="MainWindow" 
         Height="650" 
         Width="650">
-    <Grid>
-        <views:ShellComponent />
-    </Grid>
+    <views:MainComponent />
 </Window>

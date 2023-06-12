@@ -21,16 +21,20 @@
                 Command="{Binding StartCommand}"
                 IsEnabled="{Binding CanExecute}"
                 FontFamily="Segoe UI Symbol"
-                Header="&#xE102;">
-            </MenuItem>
+                Header="&#xE102;"/>
             <MenuItem 
                 Command="{Binding ClearCommand}"
                 FontFamily="Segoe UI Symbol"
                 Header="&#xE107;" />
-            <MenuItem 
+            <!--<MenuItem 
                 Command="{Binding SettingsCommand}"
                 FontFamily="Segoe UI Symbol"
-                Header="&#xE115;"/>
+                Header="&#xE115;"/>-->
+            <MenuItem 
+                Command="{Binding ConnectCommand}"
+                IsEnabled="{Binding CanConnect}"
+                FontFamily="Segoe UI Symbol"
+                Header="&#xE117;"/>
         </Menu>
         
         <TabControl Grid.Row="1">

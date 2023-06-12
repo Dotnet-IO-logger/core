@@ -46,11 +46,5 @@ namespace Diol.applications.WpfClient
             containerRegistry.RegisterSingleton<AspnetService>();
             containerRegistry.RegisterSingleton<IStore<AspnetcoreModel>, AspnetcoreStore>();
         }
-
-        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
-        {
-            base.ConfigureModuleCatalog(moduleCatalog);
-            moduleCatalog.AddModule<Diol.Wpf.Core.MainModule>();
-        }
     }
 }

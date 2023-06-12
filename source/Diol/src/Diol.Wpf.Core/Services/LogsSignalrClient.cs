@@ -179,7 +179,8 @@ namespace Diol.Wpf.Core.Services
 
         public async Task GetProcesses() 
         {
-            await this.hubConnection.InvokeAsync("GetProcesses");
+            await this.hubConnection
+                .InvokeAsync("GetProcesses");
         }
 
         public async Task StartProcessing(int processId)

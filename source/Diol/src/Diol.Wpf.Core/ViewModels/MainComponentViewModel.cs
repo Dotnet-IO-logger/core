@@ -43,9 +43,42 @@ namespace Diol.Wpf.Core.ViewModels
                 .GetEvent<ProcessFinished>()
                 .Subscribe(ProcessFinishedEventHandler, ThreadOption.UIThread);
 
+            this.eventAggregator
+                .GetEvent<SignalRConnectionEvent>()
+                .Subscribe(SignalRConnectionEventHandler, ThreadOption.UIThread);
+
             this.applicationStateService.Subscribe();
 
             this.logsSignalrClient = logsSignalrClient;
+
+            CanProcess(false);
+        }
+
+        private void SignalRConnectionEventHandler(SignalRConnectionEnum obj)
+        {
+            if (obj == SignalRConnectionEnum.Connected 
+                || obj == SignalRConnectionEnum.Reconnected)
+            {
+                CanProcess(true);
+            }
+            else 
+            {
+                CanProcess(false);
+            }
+        }
+
+        private void CanProcess(bool isConnected) 
+        {
+            if (isConnected)
+            {
+                this.CanConnect = false;
+                this.CanExecute = true;
+            }
+            else 
+            {
+                this.CanConnect = true;
+                this.CanExecute = false;
+            }
         }
 
         private void ProcessFinishedEventHandler(int obj)
@@ -122,6 +155,26 @@ namespace Diol.Wpf.Core.ViewModels
         private void SettingsExecute()
         {
             // for debug purposes
+        }
+
+        private bool _canConnect = true;
+        public bool CanConnect
+        {
+            get => this._canConnect;
+            set => SetProperty(ref this._canConnect, value);
+        }
+
+        private DelegateCommand _connectCommand = null;
+        public DelegateCommand ConnectCommand =>
+            _connectCommand ?? (_connectCommand = new DelegateCommand(ConnectExecute));
+
+        private void ConnectExecute()
+        {
+            this.CanConnect = false;
+            Task.Run(async () => 
+            {
+                await this.logsSignalrClient.ConnectAsync();
+            });
         }
 
         private void DebugModeRunnedEventHandler(bool obj)
