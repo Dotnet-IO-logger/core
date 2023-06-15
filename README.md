@@ -19,6 +19,8 @@ Our backend service is available for you to integrate with your own UI app. It's
 
 ## How to use
 
+![image](/content/screenshots/main.png)
+
 We prepared [guide](https://github.com/Dotnet-IO-logger/core/wiki/1.-Getting-started-guide) how to use it but in short:
 
 1. Start debugging your dotnet application
