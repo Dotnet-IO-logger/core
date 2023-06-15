@@ -1,75 +1,38 @@
 # Welcome to Diol!
 
-Diol is Dotnet IO logger.
+![image](/content/images/diol-main-banner.png)
 
-## Project info
+`D`otnet `I`nput-`O`utput `L`ogger (`Diol`) is a free and open-source tool you can easily see and explore logs during debugging your `dotnet` application in real time.
 
-```
-|- source
-    |- Diol
-        |- src
-            |- core
-            |- share
-            |- applications
-                |- ConsoleClient
-                |- PlaygroundApi
-                |- SignalrClient
-                |- VsExtenstion
-        |- tests
-            |- units
-            |- functional
-            |- integrations
-|- cicd (for future)
-```
+## Features
 
-### Core functionality
+Diol handles:
 
-[Share](/source/Diol/src/Diol.Share/) - a project for all DTO and consts (.net standard)
+* Http request and response metadata
+* Aspnet core request and response metadata
+* Database call with Entity Framework (coming soon)
+* Web sockets (coming soon)
 
-[Core](/source/Diol/src/Diol.Core/) - a project for mail logic
+### Additional feature
 
-### Applications
+Our backend service is available for you to integrate with your own UI app. It's free and easy to use, and it offers many features and benefits. To learn more, please visit [the link](https://github.com/Dotnet-IO-logger/core/wiki/2.-Diol-backend-service).
 
-In the repo you can find several applications. 
+## How to use
 
-#### Playground api
+It's a super easy to use Diol:
 
-This is an example of general [asp.net core api app](/source/Diol/src/applications/Diol.applications.PlaygroundApi/) with different scenarios of logs generation:
+1. Install `DiolBackendService` and run it *(1)*
+2. Install `Diol` from Visual studio market to your Visual Studio
+3. Start debugging your dotnet application *(2)*
+4. Call a function with http activities
+5. Watch your logs!
 
-* Http call with default client
-* Http call with named client
-* Multiple calls
-* etc.
+*(1)* You can download `DiolBackendService` from the [link](https://github.com/Dotnet-IO-logger/core/releases). Unzip it to your folder and run `Diol.applications.SignalrClient.exe`
 
-You can use this app as an example how to setup consumer app (`appsettings.json` and `startup.cs` files.) 
+*(2)* To see http logs you need to inject `HttpClient` and modify `appsettings.json`. You can find more information [here](https://github.com/Dotnet-IO-logger/core/wiki/1.-Getting-started-guide)
 
-#### Console client
+## Feedback and contribution
 
-This is [an example](/source/Diol/src/applications/Diol.applications.ConsoleClient/) how to read logs outside of a process in realtime.
+Please feel free to reach out our Wiki to find more information
 
-You can use it as a reference to build your own solution.
-
-#### Signalr client
-
-This is [the SignalR project](/source/Diol/src/applications/Diol.applications.SignalrClient/). You can subscribe from your app to the hub and receive all required logs and make a really good UX. 
-
-### Tests
-
-Coming soon...
-
-## How to build
-
-No additional action is required. you can build it with VS.
-
-## How to run
-
-Sample demo:
-1. Open [PlaygroundApi](/source/Diol/src/applications/Diol.applications.PlaygroundApi/) from a terminal and run it with command: `dotnet run`. You should see the link for a web app. 
-2. Navigate to swagger page: `localhost:[your-port]/swagger`
-3. Open [ConsoleClient](/source/Diol/src/applications/Diol.applications.ConsoleClient/) from a terminal and run it with command: `dotnet run`
-4. From swagger page call any API. 
-5. in `ConsoleClient` terminal you should see logs.
-
-## How to contribute
-
-Coming soon...
+We are open for new ideas and help from community!
