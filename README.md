@@ -19,17 +19,11 @@ Our backend service is available for you to integrate with your own UI app. It's
 
 ## How to use
 
-It's a super easy to use Diol:
+We prepared [guide](https://github.com/Dotnet-IO-logger/core/wiki/1.-Getting-started-guide) how to use it but in short:
 
-1. Install `DiolBackendService` and run it *(1)*
-2. Install `Diol` from Visual studio market to your Visual Studio
-3. Start debugging your dotnet application *(2)*
-4. Call a function with http activities
-5. Watch your logs!
-
-*(1)* You can download `DiolBackendService` from the [link](https://github.com/Dotnet-IO-logger/core/releases). Unzip it to your folder and run `Diol.applications.SignalrClient.exe`
-
-*(2)* To see http logs you need to inject `HttpClient` and modify `appsettings.json`. You can find more information [here](https://github.com/Dotnet-IO-logger/core/wiki/1.-Getting-started-guide)
+1. Start debugging your dotnet application
+2. Call a function with http activities
+3. Watch your logs in `Diol tool window`!
 
 ## Feedback and contribution
 
