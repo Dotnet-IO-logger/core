@@ -29,6 +29,11 @@ builder.Services.AddHttpLogging(options =>
     options.LoggingFields = HttpLoggingFields.All;
 });
 
+// setup logs
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddEventSourceLogger();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
