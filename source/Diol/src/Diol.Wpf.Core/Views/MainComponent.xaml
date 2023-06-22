@@ -30,11 +30,11 @@
                 Command="{Binding SettingsCommand}"
                 FontFamily="Segoe UI Symbol"
                 Header="&#xE115;"/>-->
-            <MenuItem 
+            <!--<MenuItem 
                 Command="{Binding ConnectCommand}"
                 IsEnabled="{Binding CanConnect}"
                 FontFamily="Segoe UI Symbol"
-                Header="&#xE117;"/>
+                Header="&#xE117;"/>-->
         </Menu>
         
         <TabControl Grid.Row="1">

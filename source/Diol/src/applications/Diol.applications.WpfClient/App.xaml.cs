@@ -32,7 +32,11 @@ namespace Diol.applications.WpfClient
             });
 
             // depends of scenario
+            containerRegistry.RegisterSingleton<DiolExecutor>();
+            containerRegistry.RegisterSingleton<DiolBuilder>();
+            containerRegistry.RegisterSingleton<WpfConsumer>();
             containerRegistry.RegisterSingleton<DotnetProcessesService>();
+
             // for development we can use LocalDevelopmentProcessProvider
             // for real scenario use another
             containerRegistry.RegisterSingleton<IProcessProvider, LocalDevelopmentProcessProvider>();

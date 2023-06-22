@@ -18,6 +18,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\Diol.Core\Diol.Core.csproj" />
     <ProjectReference Include="..\Diol.Share\Diol.Share.csproj" />
   </ItemGroup>
 
