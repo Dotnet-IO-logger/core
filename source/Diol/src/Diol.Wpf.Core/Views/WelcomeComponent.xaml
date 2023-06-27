@@ -4,34 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Diol.Wpf.Core.Views"
-             mc:Ignorable="d" 
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             d:DesignHeight="850" 
-             d:DesignWidth="650"
+             mc:Ignorable="d" 
+             d:Height="650"
+             d:Width="450"
              d:Background="White">
-    <Grid>
+    <Border>
         <StackPanel 
             HorizontalAlignment="Center" 
             VerticalAlignment="Center"
-            Margin="15">
-            <TextBlock 
-                HorizontalAlignment="Center"
-                Margin="0, 25, 0, 25">Welcome to Diol!</TextBlock>
-            <TextBlock 
-                TextWrapping="Wrap" 
-                HorizontalAlignment="Center"
-                Margin="0, 0, 0, 15">Dotnet Input-Output Logger (Diol) is a free and open-source tool you can easily see and explore logs during debugging your dotnet application in real time.</TextBlock>
+            Margin="25">
+            <GroupBox
+                Header="Welcome to Diol">
+                <TextBlock
+                    TextWrapping="Wrap">Dotnet Input-Output Logger (Diol) is a free and open-source tool you can easily see and explore logs during debugging your dotnet application in real time.</TextBlock>    
+            </GroupBox>
 
-            <TextBlock>Status: </TextBlock>
-            <TextBlock 
-                Text="{Binding StatusMessage}" 
-                TextWrapping="Wrap" />
+            <GroupBox 
+                Header="Status">
+                <TextBlock 
+                Text="{Binding StatusMessage}" />
+            </GroupBox>
 
             <Button 
                 Command="{Binding GoCommand}"
                 IsEnabled="{Binding CanGo}"
-                Margin="0, 15">Use the extension</Button>
+                Margin="0, 12">Use the extension</Button>
         </StackPanel>
-    </Grid>
+    </Border>
 </UserControl>
