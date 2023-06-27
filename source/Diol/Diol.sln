@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diol.Wpf.Core", "src\Diol.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiolVSIX", "src\applications\DiolVSIX\DiolVSIX.csproj", "{E0468409-CC5D-4A75-BAB2-B174172B1599}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DiolBackendServiceSetup", "src\applications\DiolBackendServiceSetup\DiolBackendServiceSetup.vdproj", "{E25C1CD6-16B7-4DED-8996-8B1322840750}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{E0468409-CC5D-4A75-BAB2-B174172B1599}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E0468409-CC5D-4A75-BAB2-B174172B1599}.Release|x86.ActiveCfg = Release|x86
 		{E0468409-CC5D-4A75-BAB2-B174172B1599}.Release|x86.Build.0 = Release|x86
+		{E25C1CD6-16B7-4DED-8996-8B1322840750}.Debug|Any CPU.ActiveCfg = Debug
+		{E25C1CD6-16B7-4DED-8996-8B1322840750}.Debug|x86.ActiveCfg = Debug
+		{E25C1CD6-16B7-4DED-8996-8B1322840750}.Release|Any CPU.ActiveCfg = Release
+		{E25C1CD6-16B7-4DED-8996-8B1322840750}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +115,7 @@ Global
 		{747E725B-015C-4420-879E-B787704C7ABF} = {EA282770-C145-4DDB-8394-A3D1FAF6890A}
 		{7D2CED13-BC97-449D-A458-51F17F1B31B2} = {B9685848-670D-40C5-A0F6-D195370594E7}
 		{E0468409-CC5D-4A75-BAB2-B174172B1599} = {EA282770-C145-4DDB-8394-A3D1FAF6890A}
+		{E25C1CD6-16B7-4DED-8996-8B1322840750} = {EA282770-C145-4DDB-8394-A3D1FAF6890A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D583379-3FA0-4D41-9B6A-DDF00ED79751}
