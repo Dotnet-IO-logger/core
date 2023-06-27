@@ -50,6 +50,11 @@ namespace Diol.Wpf.Core.Services
                 this.UpdateSignalrConnectionStatus(SignalRConnectionEnum.Reconnected);
             };
 
+            this.hubConnection.On("DiolLogsHubConnected", () => 
+            {
+                this.UpdateSignalrConnectionStatus(SignalRConnectionEnum.Connected);
+            });
+
             this.hubConnection.On<int>(
                 "ProcessingStarted",
                 (processId) => 

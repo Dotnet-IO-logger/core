@@ -124,6 +124,10 @@
 
         connection.on('LogReceived', logsReceivedHanndler);
 
+        connection.on('DiolLogsHubConnected', function(date) {
+            alert('DiolLogsHubConnected');
+        });
+
 
     </script>
 </body>

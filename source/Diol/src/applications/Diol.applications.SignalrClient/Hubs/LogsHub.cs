@@ -36,5 +36,13 @@ namespace Diol.applications.SignalrClient.Hubs
 
             await this.taskQueue.QueueLogsProcessing(processId);
         }
+
+        public override async Task OnConnectedAsync()
+        {
+            await this.Clients.Caller
+                .SendAsync("DiolLogsHubConnected");
+
+            await base.OnConnectedAsync();
+        }
     }
 }

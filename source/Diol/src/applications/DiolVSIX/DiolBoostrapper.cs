@@ -26,7 +26,7 @@ namespace DiolVSIX
 
         protected override DependencyObject CreateShell() 
         {
-            var mw = this.Container.Resolve<MainComponent>();
+            var mw = this.Container.Resolve<DiolComponent>();
 
             this.diolToolWindow.Content = mw;
 
@@ -60,6 +60,12 @@ namespace DiolVSIX
             // register aspnet
             containerRegistry.RegisterSingleton<AspnetService>();
             containerRegistry.RegisterSingleton<IStore<AspnetcoreModel>, AspnetcoreStore>();
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            base.ConfigureModuleCatalog(moduleCatalog);
+            moduleCatalog.AddModule<Diol.Wpf.Core.MainModule>();
         }
     }
 }
