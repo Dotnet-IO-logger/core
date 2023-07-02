@@ -1,20 +1,24 @@
-﻿using Diol.applications.SignalrClient.BackgroundWorkers;
+﻿using Diol.Aspnet.BackgroundWorkers;
 using Diol.Share.Services;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 
-namespace Diol.applications.SignalrClient.Hubs
+namespace Diol.Aspnet.Hubs
 {
     public class LogsHub : Hub
     {
         private readonly BackgroundTaskQueue taskQueue;
         private readonly DotnetProcessesService dotnetProcessesService;
+        private readonly ILogger<LogsHub> logger;
 
         public LogsHub(
-            BackgroundTaskQueue taskQueue, 
-            DotnetProcessesService dotnetProcessesService)
+            BackgroundTaskQueue taskQueue,
+            DotnetProcessesService dotnetProcessesService,
+            ILogger<LogsHub> logger)
         {
             this.taskQueue = taskQueue;
             this.dotnetProcessesService = dotnetProcessesService;
+            this.logger = logger;
         }
 
         public async Task GetProcesses(string message)
@@ -28,7 +32,7 @@ namespace Diol.applications.SignalrClient.Hubs
         public async Task Subscribe(int processId)
         {
             await this.Groups.AddToGroupAsync(
-                this.Context.ConnectionId, 
+                this.Context.ConnectionId,
                 processId.ToString());
 
             await this.Clients.Caller
@@ -39,6 +43,10 @@ namespace Diol.applications.SignalrClient.Hubs
 
         public override async Task OnConnectedAsync()
         {
+            this.logger.LogInformation(
+                "Client connected: {connectionId}",
+                this.Context.ConnectionId);
+
             await this.Clients.Caller
                 .SendAsync("DiolLogsHubConnected");
 

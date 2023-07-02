@@ -13,17 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Diol.Aspnet\Diol.Aspnet.csproj" />
     <ProjectReference Include="..\..\Diol.Core\Diol.Core.csproj" />
     <ProjectReference Include="..\..\Diol.Share\Diol.Share.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="setup.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
   
   <Target Name="ZipOutputPath" AfterTargets="Build" Condition="$(Configuration) == Release">
-    <ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(OutputPath)\..\DiolBackendService.zip" Overwrite="true" />
+    <ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(OutputPath)\..\Diol.application.SignalrClient.zip" Overwrite="true" />
   </Target>
 </Project>

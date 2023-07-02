@@ -1,5 +1,5 @@
 ﻿@page
-@model Diol.applications.SignalrClient.Pages.IndexModel
+@model Diol.Aspnet.Pages.IndexModel
 @{
 }
 
@@ -8,7 +8,7 @@
     <title>Diol signal r client</title>
 </head>
 <body>
-
+    
     <h1>Welcome to Diol signal r client</h1>
 
     <section>
@@ -16,9 +16,7 @@
         <p>Before starting we need to connect to signal R hub.</p>
 
         <button id="btn_connect_to_signalr"
-                onclick="connectToSignalR()">
-            Connect to signal r
-        </button>
+            onclick="connectToSignalR()">Connect to signal r</button>
         <span id="status_span"></span>
 
     </section>
@@ -29,9 +27,7 @@
 
         <input id="processId" type="text" />
         <button id="btn_connect_to_process"
-                onclick="connectToProcess()">
-            Connect to the process
-        </button>
+            onclick="connectToProcess()">Connect to the process</button>
     </section>
 
     <section>
@@ -62,13 +58,13 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
     <script type="text/javascript">
-
+        
         // create connection
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/logsHub")
             .configureLogging(signalR.LogLevel.Information)
             .build();
-
+        
         // utils
         function setStatusMessage(message) {
             document.getElementById("status_span").innerHTML = message;
@@ -99,7 +95,7 @@
 
         function addRow(category, event, correlationId, processId) {
             let row = document.createElement('tr');
-
+            
             let c1 = document.createElement('td');
             c1.innerHTML = category;
 
@@ -113,7 +109,7 @@
         }
 
         // setup
-        connection.onclose(function () {
+        connection.onclose(function() {
             setStatusMessage("connection failed");
         });
 
@@ -128,7 +124,7 @@
 
         connection.on('LogReceived', logsReceivedHanndler);
 
-        connection.on('DiolLogsHubConnected', function (date) {
+        connection.on('DiolLogsHubConnected', function(date) {
             alert('DiolLogsHubConnected');
         });
 
