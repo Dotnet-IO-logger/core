@@ -1,6 +1,9 @@
 ﻿$serviceName = 'DiolBackendService'
 $serviceDisplayName = 'Diol Backend Service'
 $exeName = 'DiolBackendService.exe'
+
+$username = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+
 $url = "http://localhost:62023/"
 
 $currentDir = (Get-Item .).FullName
@@ -21,7 +24,7 @@ Write-Host "Creating service $serviceName" -ForegroundColor Yellow
 
 # before start we also need to provide a user credentials for the service
 # user name should contains domain name (sometimes it is the same as computer name)
-New-Service -Name $serviceName -BinaryPathName "$exePath --urls=$url --contentRoot $currentDir" -DisplayName $serviceDisplayName -StartupType Automatic
+New-Service -Name $serviceName -BinaryPathName "$exePath --urls=$url --contentRoot $currentDir" -DisplayName $serviceDisplayName -StartupType Automatic -Credential $username
 
 Write-Host "$serviceName has installed" -ForegroundColor Green
 
