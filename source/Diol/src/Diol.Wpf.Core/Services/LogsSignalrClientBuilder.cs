@@ -25,7 +25,7 @@ namespace Diol.Wpf.Core.Services
         }
 
         // TODO: move setting to config
-        private string uri = "https://localhost:5001/logsHub";
+        private string uri = "http://localhost:62023/logsHub";
 
         public LogsSignalrClient BuildClient() 
         {
