@@ -1,20 +1,24 @@
-﻿using Diol.applications.SignalrClient.Consumers;
-using Diol.applications.SignalrClient.Hubs;
+﻿using Diol.Aspnet.Hubs;
 using Diol.Core.DiagnosticClients;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 using System.Threading.Channels;
 
-namespace Diol.applications.SignalrClient.BackgroundWorkers
+namespace Diol.Aspnet.BackgroundWorkers
 {
     public class BackgroundTaskQueue
     {
         private readonly Channel<Func<EventPipeEventSourceBuilder, CancellationToken, ValueTask>> _queue;
-
         private readonly IHubContext<LogsHub> hubContext;
+        private readonly ILogger<BackgroundTaskQueue> logger;
 
-        public BackgroundTaskQueue(IHubContext<LogsHub> hubContext, int capacity = 1)
+        public BackgroundTaskQueue(
+            IHubContext<LogsHub> hubContext,
+            ILogger<BackgroundTaskQueue> logger,
+            int capacity = 5)
         {
             this.hubContext = hubContext;
+            this.logger = logger;
 
             // Capacity should be set based on the expected application load and
             // number of concurrent threads accessing the queue.            
@@ -33,16 +37,20 @@ namespace Diol.applications.SignalrClient.BackgroundWorkers
         {
             if (workItem == null)
             {
+                this.logger.LogError(
+                    "QueueBackgroundWorkItemAsync args is null: {argName}", 
+                    nameof(workItem));
+
                 throw new ArgumentNullException(nameof(workItem));
             }
 
             await _queue.Writer.WriteAsync(workItem);
         }
 
-        public async ValueTask QueueLogsProcessing(int processId) 
+        public async ValueTask QueueLogsProcessing(int processId)
         {
             await this.QueueBackgroundWorkItemAsync(
-                async (builder, cancelationToken) => 
+                async (builder, cancelationToken) =>
                 {
                     var executor = builder
                         .SetProcessId(processId)
@@ -53,10 +61,14 @@ namespace Diol.applications.SignalrClient.BackgroundWorkers
                     {
                         while (!cancelationToken.IsCancellationRequested)
                         {
-                            await Task.Delay(TimeSpan.FromSeconds(5));
+                            await Task.Delay(TimeSpan.FromSeconds(2));
                         }
 
                         executor.Stop();
+
+                        this.logger.LogInformation(
+                            "Processing stopped. ProcessId: {processId}", 
+                            processId);
 
                         return Task.CompletedTask;
                     });
@@ -64,12 +76,28 @@ namespace Diol.applications.SignalrClient.BackgroundWorkers
                     // do processing
                     Task processing = Task.Run(async () =>
                     {
+                        this.logger.LogInformation(
+                            "Processing started. ProcessId: {processId}", 
+                            processId);
+
                         executor.Start();
+
+                        this.logger.LogInformation(
+                            "Processing finished. ProcessId: {processId}", 
+                            processId);
 
                         executor.Dispose();
                     });
 
+                    this.logger.LogInformation(
+                        "General processing being. ProcessId: {processId}", 
+                        processId);
+
                     Task.WaitAny(finish, processing);
+
+                    this.logger.LogInformation(
+                        "General processing finished. ProcessId: {processId}", 
+                        processId);
 
                     await this.hubContext.Clients
                         .Group(processId.ToString())
