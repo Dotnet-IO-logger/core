@@ -29,7 +29,7 @@ Write-Host "Creating service $serviceName" -ForegroundColor Yellow
 
 # before start we also need to provide a user credentials for the service
 # user name should contains domain name (sometimes it is the same as computer name)
-New-Service -Name $serviceName -BinaryPathName "$exePath --urls=$url --contentRoot $currentDir" -DisplayName $serviceDisplayName -StartupType Automatic -Credential $username
+New-Service -Name $serviceName -BinaryPathName "$exePath --urls=$url" -DisplayName $serviceDisplayName -StartupType Automatic -Credential $username
 
 Write-Host "$serviceName has installed" -ForegroundColor Green
 
