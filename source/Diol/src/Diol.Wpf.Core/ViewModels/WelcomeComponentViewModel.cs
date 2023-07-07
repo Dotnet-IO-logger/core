@@ -17,7 +17,7 @@ namespace Diol.Wpf.Core.ViewModels
         private readonly DotnetProcessesService dotnetService;
         private readonly IRegionManager regionManager;
         private readonly LogsSignalrClient logsSignalrClient;
-        const string diolBackendServiceName = "Diol.applications.SignalrClient";
+        const string diolBackendServiceName = "DiolBackendService";
 
         public WelcomeComponentViewModel(
             DotnetProcessesService dotnetService,

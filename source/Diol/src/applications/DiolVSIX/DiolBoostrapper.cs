@@ -49,8 +49,8 @@ namespace DiolVSIX
             containerRegistry.RegisterSingleton<DotnetProcessesService>();
             // for development we can use LocalDevelopmentProcessProvider
             // for real scenario use VsProcessProvider
-            containerRegistry.RegisterSingleton<IProcessProvider, LocalDevelopmentProcessProvider>();
-            //containerRegistry.RegisterSingleton<IProcessProvider, VsProcessProvider>();
+            // containerRegistry.RegisterSingleton<IProcessProvider, LocalDevelopmentProcessProvider>();
+            containerRegistry.RegisterSingleton<IProcessProvider, VsProcessProvider>();
             containerRegistry.RegisterSingleton<IApplicationStateService, VsApplicationStateService>();
 
             // register http
