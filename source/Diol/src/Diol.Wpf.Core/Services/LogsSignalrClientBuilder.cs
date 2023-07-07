@@ -1,4 +1,5 @@
 ﻿using Diol.Wpf.Core.Features.Aspnetcores;
+using Diol.Wpf.Core.Features.EntityFrameworks;
 using Diol.Wpf.Core.Features.Https;
 using Diol.Wpf.Core.Features.Shared;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -11,16 +12,19 @@ namespace Diol.Wpf.Core.Services
     {
         private HttpService httpService;
         private AspnetService aspnetService;
+        private EntityFrameworkService entityFrameworkService;
         private HubConnection connection;
         private readonly IEventAggregator eventAggregator;
 
         public LogsSignalrClientBuilder(
             HttpService httpService,
             AspnetService aspnetService,
+            EntityFrameworkService entityFrameworkService,
             IEventAggregator eventAggregator)
         {
             this.httpService = httpService;
             this.aspnetService = aspnetService;
+            this.entityFrameworkService = entityFrameworkService;
             this.eventAggregator = eventAggregator;
         }
 
@@ -38,7 +42,8 @@ namespace Diol.Wpf.Core.Services
                 this.connection, 
                 this.eventAggregator,
                 this.httpService,
-                this.aspnetService);
+                this.aspnetService,
+                this.entityFrameworkService);
         }
 
         public void Dispose()

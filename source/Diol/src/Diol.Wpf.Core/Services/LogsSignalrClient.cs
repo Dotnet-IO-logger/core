@@ -1,8 +1,10 @@
 ﻿using Diol.Share.Features;
 using Diol.Share.Features.Aspnetcores;
+using Diol.Share.Features.EntityFrameworks;
 using Diol.Share.Features.Httpclients;
 using Diol.Share.Utils;
 using Diol.Wpf.Core.Features.Aspnetcores;
+using Diol.Wpf.Core.Features.EntityFrameworks;
 using Diol.Wpf.Core.Features.Https;
 using Diol.Wpf.Core.Features.Shared;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -20,19 +22,22 @@ namespace Diol.Wpf.Core.Services
         private readonly IEventAggregator eventAggregator;
         private HttpService httpService;
         private AspnetService aspnetService;
+        private EntityFrameworkService entityFrameworkService;
 
 
         public LogsSignalrClient(
             HubConnection hubConnection, 
             IEventAggregator eventAggregator,
             HttpService httpService,
-            AspnetService aspnetService)
+            AspnetService aspnetService,
+            EntityFrameworkService entityFrameworkService)
         {
             this.hubConnection = hubConnection;
             this.eventAggregator = eventAggregator;
 
             this.httpService = httpService;
             this.aspnetService = aspnetService;
+            this.entityFrameworkService = entityFrameworkService;
 
             // setup signalr events
             this.hubConnection.Closed += async (error) => 
@@ -146,6 +151,24 @@ namespace Diol.Wpf.Core.Services
                 var value = JsonConvert.DeserializeObject<ResponseBodyDto>(valueAsJson);
 
                 this.aspnetService.Update(value);
+            }
+            else if (categoryName == "EntityFramework" && eventName == "ConnectionOpeningDto") 
+            {
+                var value = JsonConvert.DeserializeObject<ConnectionOpeningDto>(valueAsJson);
+
+                this.entityFrameworkService.Update(value);
+            }
+            else if (categoryName == "EntityFramework" && eventName == "CommandExecutingDto")
+            {
+                var value = JsonConvert.DeserializeObject<CommandExecutingDto>(valueAsJson);
+
+                this.entityFrameworkService.Update(value);
+            }
+            else if (categoryName == "EntityFramework" && eventName == "CommandExecutedDto")
+            {
+                var value = JsonConvert.DeserializeObject<CommandExecutedDto>(valueAsJson);
+
+                this.entityFrameworkService.Update(value);
             }
             else
             {

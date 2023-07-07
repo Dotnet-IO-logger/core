@@ -10,6 +10,6 @@ namespace Diol.Share.Features.EntityFrameworks
 
         public override string EventName => nameof(CommandExecutedDto);
 
-        public TimeSpan Elapsed { get; set; }
+        public TimeSpan ElapsedMilliseconds { get; set; }
     }
 }

@@ -122,7 +122,7 @@ namespace Diol.Core.TraceEventProcessors
             return new CommandExecutedDto() 
             {
                 CorrelationId = correlationId,
-                Elapsed = elapsedMs
+                ElapsedMilliseconds = elapsedMs
             };
         }
     }
