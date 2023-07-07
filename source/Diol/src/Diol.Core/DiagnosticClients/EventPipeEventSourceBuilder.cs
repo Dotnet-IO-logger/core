@@ -72,7 +72,8 @@ namespace Diol.Core.DiagnosticClients
                 this, 
                 new TraceEventRouter(
                     featureFlags.ContainsKey($"{nameof(AspnetcoreFeatureFlag)}") ? new HttpclientProcessor(this.EventObserver) : null,
-                    featureFlags.ContainsKey($"{nameof(HttpclientFeatureFlag)}") ? new AspnetcoreProcessor(this.EventObserver) : null));
+                    featureFlags.ContainsKey($"{nameof(HttpclientFeatureFlag)}") ? new AspnetcoreProcessor(this.EventObserver) : null,
+                    new EntityFrameworkProcessor(this.EventObserver)));
         }
     }
 }

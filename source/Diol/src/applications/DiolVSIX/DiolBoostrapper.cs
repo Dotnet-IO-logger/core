@@ -1,5 +1,6 @@
 ﻿using Diol.Share.Services;
 using Diol.Wpf.Core.Features.Aspnetcores;
+using Diol.Wpf.Core.Features.EntityFrameworks;
 using Diol.Wpf.Core.Features.Https;
 using Diol.Wpf.Core.Services;
 using Diol.Wpf.Core.Views;
@@ -60,6 +61,10 @@ namespace DiolVSIX
             // register aspnet
             containerRegistry.RegisterSingleton<AspnetService>();
             containerRegistry.RegisterSingleton<IStore<AspnetcoreModel>, AspnetcoreStore>();
+
+            // register entity framework
+            containerRegistry.RegisterSingleton<EntityFrameworkService>();
+            containerRegistry.RegisterSingleton<IStore<EntityFrameworkModel>, EntityFrameworkStore>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

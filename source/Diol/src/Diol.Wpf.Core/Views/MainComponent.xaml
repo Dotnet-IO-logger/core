@@ -44,6 +44,9 @@
             <TabItem Header="Aspnet core">
                 <local:AspnetComponent />
             </TabItem>
+            <TabItem Header="Entity framework">
+                <local:EntityFrameworkComponent />
+            </TabItem>
             <TabItem Header="Diagnostics">
                 <local:DiagnosticsView />
             </TabItem>

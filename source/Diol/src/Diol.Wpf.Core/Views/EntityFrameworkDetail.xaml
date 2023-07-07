@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="Diol.Wpf.Core.Views.EntityFrameworkDetail"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Diol.Wpf.Core.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" 
+             d:DesignWidth="450"
+             d:Background="White">
+    <Border>
+        <ScrollViewer>
+            <StackPanel>
+                <Button 
+                    Margin="8"
+                    Width="20" HorizontalAlignment="Left"
+                    Command="{Binding CloseCommand}"
+                    FontFamily="Segoe UI Symbol"
+                    Content="&#xE10A;" />
+
+                <GroupBox
+                    Header="General">
+                    <StackPanel>
+                        <TextBlock>Server</TextBlock>
+                        <TextBox 
+                            Text="{ Binding ConnectionOpening.Server }"
+                            IsReadOnly="True" />
+                        <TextBlock>Database</TextBlock>
+                        <TextBox 
+                            Text="{ Binding ConnectionOpening.Database }"
+                            IsReadOnly="True" />
+                        <TextBlock>Duration</TextBlock>
+                        <TextBox 
+                            Text="{ Binding CommandExecuted.ElapsedMilliseconds, StringFormat=ss\\:fff }"
+                            IsReadOnly="True" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                    Header="SQL">
+                    <TextBox 
+                        Text="{ Binding CommandExecuting.CommandText }"
+                        IsReadOnly="True"
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"
+                        VerticalScrollBarVisibility="Visible"
+                        MinHeight="150"/>
+                </GroupBox>
+
+                <GroupBox
+                    Header="Parameters">
+                    <TextBox 
+                        Text="{ Binding CommandExecuting.Parameters }"
+                        IsReadOnly="True"
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"
+                        VerticalScrollBarVisibility="Visible"
+                        MinHeight="150"/>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</UserControl>
