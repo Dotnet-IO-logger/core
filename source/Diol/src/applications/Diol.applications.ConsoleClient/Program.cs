@@ -23,7 +23,7 @@ Console.WriteLine("Running app");
 var dotnetProcessesService = services.GetRequiredService<DotnetProcessesService>();
 
 // we expect that the process is running (Diol.Playgrounds.PlaygroundApi.exe)
-var processName = "Diol.Playgrounds.PlaygroundApi";
+var processName = "LogsEfTestApp";
 
 var process = dotnetProcessesService.GetItemOrDefault(processName);
 

@@ -8,13 +8,16 @@ namespace Diol.Core.TraceEventProcessors
     {
         private IProcessor httpClientProcessor;
         private IProcessor aspnetcoreProcessor;
+        private IProcessor entityFrameworkProcessor;
 
         public TraceEventRouter(
             HttpclientProcessor httpClientProcessor,
-            AspnetcoreProcessor aspnetcoreProcessor)
+            AspnetcoreProcessor aspnetcoreProcessor,
+            EntityFrameworkProcessor entityFrameworkProcessor)
         {
             this.httpClientProcessor = httpClientProcessor;
             this.aspnetcoreProcessor = aspnetcoreProcessor;
+            this.entityFrameworkProcessor = entityFrameworkProcessor;
         }
 
         public IDisposable Subscribe(IObserver<TraceEvent> observer)
@@ -45,6 +48,12 @@ namespace Diol.Core.TraceEventProcessors
                 && this.aspnetcoreProcessor.CheckEventName(traceEvent.EventName))
             {
                 this.aspnetcoreProcessor.OnNext(traceEvent);
+            }
+            else if(this.entityFrameworkProcessor != null
+                && this.entityFrameworkProcessor.CheckLoggerName(loggerName)
+                && this.entityFrameworkProcessor.CheckEventName(traceEvent.EventName))
+            {
+                this.entityFrameworkProcessor.OnNext(traceEvent);
             }
         }   
     }
