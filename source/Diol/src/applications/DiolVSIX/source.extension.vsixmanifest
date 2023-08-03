@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="DiolVSIX.66bbb016-3110-40f6-a936-35f914a663e3" Version="1.4" Language="en-US" Publisher="Diol devs" />
+        <Identity Id="DiolVSIX.66bbb016-3110-40f6-a936-35f914a663e3" Version="1.5" Language="en-US" Publisher="Diol devs" />
         <DisplayName>Diol</DisplayName>
         <Description xml:space="preserve">Collect and show all dotnet IO logs when you debug an application in real time</Description>
         <MoreInfo>https://github.com/Dotnet-IO-logger/core/wiki</MoreInfo>
