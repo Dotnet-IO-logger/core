@@ -22,7 +22,7 @@ namespace Diol.Share.Services
         public int? GetProcessId()
         {
             // we expect that the process is running (Diol.Playgrounds.PlaygroundApi.exe)
-            var processName = "LogsEfTestApp";
+            var processName = "Diol.Playgrounds.PlaygroundApi";
             var process = this.dotnetService.GetItemOrDefault(processName);
 
             if (process == null)

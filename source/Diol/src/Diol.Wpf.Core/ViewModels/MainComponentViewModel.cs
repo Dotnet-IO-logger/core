@@ -17,15 +17,15 @@ namespace Diol.Wpf.Core.ViewModels
         private IProcessProvider dotnetService;
         private IEventAggregator eventAggregator;
         private IApplicationStateService applicationStateService;
-        private LogsSignalrClient logsSignalrClient;
+        private DiolExecutor diolExecutor;
 
         public MainComponentViewModel(
             IProcessProvider dotnetService,
-            HttpService httpService,
             IEventAggregator eventAggregator,
             IApplicationStateService applicationStateService,
-            LogsSignalrClient logsSignalrClient)
+            DiolExecutor diolExecutor)
         {
+            this.diolExecutor = diolExecutor;
             this.dotnetService = dotnetService;
 
             this.eventAggregator = eventAggregator;
@@ -43,40 +43,19 @@ namespace Diol.Wpf.Core.ViewModels
                 .GetEvent<ProcessFinished>()
                 .Subscribe(ProcessFinishedEventHandler, ThreadOption.UIThread);
 
-            this.eventAggregator
-                .GetEvent<SignalRConnectionEvent>()
-                .Subscribe(SignalRConnectionEventHandler, ThreadOption.UIThread);
-
             this.applicationStateService.Subscribe();
 
-            this.logsSignalrClient = logsSignalrClient;
-
-            CanProcess(false);
-        }
-
-        private void SignalRConnectionEventHandler(SignalRConnectionEnum obj)
-        {
-            if (obj == SignalRConnectionEnum.Connected 
-                || obj == SignalRConnectionEnum.Reconnected)
-            {
-                CanProcess(true);
-            }
-            else 
-            {
-                CanProcess(false);
-            }
+            CanProcess(true);
         }
 
         private void CanProcess(bool isConnected) 
         {
             if (isConnected)
             {
-                this.CanConnect = false;
                 this.CanExecute = true;
             }
             else 
             {
-                this.CanConnect = true;
                 this.CanExecute = false;
             }
         }
@@ -91,9 +70,7 @@ namespace Diol.Wpf.Core.ViewModels
             this.CanExecute = false;
         }
 
-        public ObservableCollection<HttpViewModel> HttpLogs { get; private set; } =
-            new ObservableCollection<HttpViewModel>();
-
+        #region Execute Command
         private bool _canExecute = true;
         public bool CanExecute
         {
@@ -115,12 +92,9 @@ namespace Diol.Wpf.Core.ViewModels
                 return;
             }
 
-            Task.Run(async () =>
+            Task.Run(() =>
             {
-                //this.CanExecute = false;
-                await this.logsSignalrClient
-                    .StartProcessing(processId.Value)
-                    .ConfigureAwait(false);
+                this.diolExecutor.StartProcessing(processId.Value);
             })
             .ContinueWith(t => 
             {
@@ -132,7 +106,9 @@ namespace Diol.Wpf.Core.ViewModels
             TaskScheduler.FromCurrentSynchronizationContext());
 
         }
+        #endregion
 
+        #region Clear Command
         private DelegateCommand _clearCommand = null;
         public DelegateCommand ClearCommand =>
             _clearCommand ?? (_clearCommand = new DelegateCommand(ClearExecute));
@@ -147,7 +123,9 @@ namespace Diol.Wpf.Core.ViewModels
                 .GetEvent<HttpItemSelectedEvent>()
                 .Publish(string.Empty);
         }
+        #endregion
 
+        #region Settings
         private DelegateCommand _settingsCommand = null;
         public DelegateCommand SettingsCommand =>
             _settingsCommand ?? (_settingsCommand = new DelegateCommand(SettingsExecute));
@@ -156,26 +134,7 @@ namespace Diol.Wpf.Core.ViewModels
         {
             // for debug purposes
         }
-
-        private bool _canConnect = true;
-        public bool CanConnect
-        {
-            get => this._canConnect;
-            set => SetProperty(ref this._canConnect, value);
-        }
-
-        private DelegateCommand _connectCommand = null;
-        public DelegateCommand ConnectCommand =>
-            _connectCommand ?? (_connectCommand = new DelegateCommand(ConnectExecute));
-
-        private void ConnectExecute()
-        {
-            this.CanConnect = false;
-            Task.Run(async () => 
-            {
-                await this.logsSignalrClient.ConnectAsync();
-            });
-        }
+        #endregion
 
         private void DebugModeRunnedEventHandler(bool obj)
         {

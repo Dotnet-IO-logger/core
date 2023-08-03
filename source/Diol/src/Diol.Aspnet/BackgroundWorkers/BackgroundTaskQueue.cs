@@ -74,7 +74,7 @@ namespace Diol.Aspnet.BackgroundWorkers
                     });
 
                     // do processing
-                    Task processing = Task.Run(async () =>
+                    Task processing = Task.Run(() =>
                     {
                         this.logger.LogInformation(
                             "Processing started. ProcessId: {processId}", 
