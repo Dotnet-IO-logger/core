@@ -14,21 +14,15 @@ namespace Diol.Wpf.Core.ViewModels
 {
     public class WelcomeComponentViewModel : BindableBase
     {
-        private readonly DotnetProcessesService dotnetService;
         private readonly IRegionManager regionManager;
-        private readonly LogsSignalrClient logsSignalrClient;
-        const string diolBackendServiceName = "DiolBackendService";
 
         public WelcomeComponentViewModel(
-            DotnetProcessesService dotnetService,
-            IRegionManager regionManager,
-            LogsSignalrClient logsSignalrClient)
+            IRegionManager regionManager)
         {
-            this.dotnetService = dotnetService;
             this.regionManager = regionManager;
-            this.logsSignalrClient = logsSignalrClient;
         }
 
+        #region Status
         private string _status;
         public string StatusMessage 
         {
@@ -42,8 +36,9 @@ namespace Diol.Wpf.Core.ViewModels
             get { return this._canGo; }
             set { SetProperty(ref this._canGo, value); }
         }
+        #endregion
 
-
+        #region GoCommand 
         private DelegateCommand _goCommand;
         public DelegateCommand GoCommand =>
             this._goCommand ?? (this._goCommand = new DelegateCommand(ExecuteGoCommand));
@@ -54,31 +49,11 @@ namespace Diol.Wpf.Core.ViewModels
 
             this.StatusMessage = "Seaching...";
 
-            var diolBackendService = this.dotnetService.GetItemOrDefault(diolBackendServiceName);
-
-            if (diolBackendService != null)
-            {
-                this.StatusMessage = "DiolBackendService is avaliable";
-
-                TryToConnect();
-
-                // navigate to main component
-                this.regionManager.RequestNavigate("MainRegion", "MainComponent");
-            }
-            else
-            {
-                this.StatusMessage = "DiolBackendService is not avaliable. Please run";
-            }
+            // navigate to main component
+            this.regionManager.RequestNavigate("MainRegion", "MainComponent");
 
             this.CanGo = true;
         }
-
-        private void TryToConnect()
-        {
-            Task.Run(async () =>
-            {
-                await this.logsSignalrClient.ConnectAsync();
-            });
-        }
+        #endregion
     }
 }

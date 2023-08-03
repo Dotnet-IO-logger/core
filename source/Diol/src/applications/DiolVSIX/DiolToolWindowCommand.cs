@@ -93,8 +93,7 @@ namespace DiolVSIX
                         typeof(DiolToolWindow),
                         0,
                         true,
-                        this.package.DisposalToken)
-                    .ConfigureAwait(false);
+                        this.package.DisposalToken);
 
                 //if ((null == window) || (null == window.Frame))
                 //{

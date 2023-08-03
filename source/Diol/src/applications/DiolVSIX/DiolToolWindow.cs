@@ -22,8 +22,6 @@ namespace DiolVSIX
         public const string WindowGuidString = "446919b1-4c51-4119-a6ea-6884faa68f06";
         public const string Title = "Diol";
 
-        private readonly RequiredServices requiredServices;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiolToolWindow"/> class.
         /// </summary>

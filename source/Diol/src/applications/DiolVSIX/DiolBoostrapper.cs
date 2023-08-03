@@ -37,16 +37,13 @@ namespace DiolVSIX
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // register all services here
-            containerRegistry.RegisterSingleton<LogsSignalrClientBuilder>();
-            containerRegistry.RegisterSingleton<LogsSignalrClient>(container =>
-            {
-                var builder = container.Resolve<LogsSignalrClientBuilder>();
-                return builder.BuildClient();
-            });
-
             containerRegistry.RegisterSingleton<RequiredServices>(() => this.requiredServices);
 
             // depends of scenario
+            containerRegistry.RegisterSingleton<DiolExecutor>();
+            containerRegistry.RegisterSingleton<DiolBuilder>();
+            containerRegistry.RegisterSingleton<WpfConsumer>();
+            containerRegistry.RegisterSingleton<DotnetProcessesService>();
             containerRegistry.RegisterSingleton<DotnetProcessesService>();
             // for development we can use LocalDevelopmentProcessProvider
             // for real scenario use VsProcessProvider
