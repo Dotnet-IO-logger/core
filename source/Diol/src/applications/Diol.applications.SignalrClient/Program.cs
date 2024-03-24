@@ -8,7 +8,7 @@ var appOptions = new WebApplicationOptions()
 
 var builder = WebApplication.CreateBuilder(appOptions);
 
-builder.Services.AddDiol();
+builder.Services.AddDiolWeb();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

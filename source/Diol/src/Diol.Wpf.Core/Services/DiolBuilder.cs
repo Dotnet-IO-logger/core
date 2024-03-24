@@ -1,12 +1,4 @@
 ﻿using Diol.Core.DiagnosticClients;
-using Diol.Core.TraceEventProcessors;
-using Diol.Share.Features.Aspnetcores;
-using Diol.Share.Features.Httpclients;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Diol.Wpf.Core.Services
 {
@@ -14,17 +6,9 @@ namespace Diol.Wpf.Core.Services
     {
         private readonly EventPipeEventSourceBuilder builder;
 
-        public DiolBuilder(
-            WpfConsumer wpfConsumer,
-            EventPublisher eventPublisher)
+        public DiolBuilder(EventPipeEventSourceBuilder builder)
         {
-            this.builder = new EventPipeEventSourceBuilder()
-                .SetProviders(EvenPipeHelper.Providers)
-                .SetEventObserver(eventPublisher)
-                .SetConsumers(new List<Diol.Core.Consumers.IConsumer>()
-                {
-                    wpfConsumer
-                });
+            this.builder = builder;
         }
 
         public EventPipeEventSourceBuilder GetBuilder()

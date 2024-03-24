@@ -2,7 +2,6 @@
 using Microsoft.Diagnostics.NETCore.Client;
 using Microsoft.Diagnostics.Tracing;
 using System;
-using System.Diagnostics;
 
 namespace Diol.Core.DiagnosticClients
 {

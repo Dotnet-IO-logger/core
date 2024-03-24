@@ -1,12 +1,13 @@
-﻿using Microsoft.Diagnostics.Tracing;
+﻿using Diol.Share.Features;
+using Microsoft.Diagnostics.Tracing;
 using System;
 
 namespace Diol.Core.TraceEventProcessors
 {
     public interface IProcessor : IObserver<TraceEvent>
     {
-        bool CheckLoggerName(string name);
+        bool CheckEvent(string loggerName, string eventName);
 
-        bool CheckEventName(string eventName);
+        BaseDto GetLogDto(int eventId, TraceEvent value);
     }
 }

@@ -6,7 +6,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddWindowsService();
 
-builder.Services.AddDiol();
+builder.Services.AddDiolWeb();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

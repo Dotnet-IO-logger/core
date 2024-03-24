@@ -1,4 +1,4 @@
-﻿using Diol.Core.Consumers;
+﻿using Diol.Share.Consumers;
 using Diol.Share.Features;
 using System.Diagnostics;
 using System.Text.Json;

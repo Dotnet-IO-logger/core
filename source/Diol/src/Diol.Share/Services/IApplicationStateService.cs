@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Diol.Share.Services
+﻿namespace Diol.Share.Services
 {
     public interface IApplicationStateService
     {

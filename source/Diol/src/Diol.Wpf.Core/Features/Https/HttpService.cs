@@ -41,7 +41,9 @@ namespace Diol.Wpf.Core.Features.Https
 
             this.store.Add(item, dto.CorrelationId);
 
-            this.eventAggregator.GetEvent<HttpRequestStartedEvent>().Publish(dto.CorrelationId);
+            this.eventAggregator
+                .GetEvent<HttpRequestStartedEvent>()
+                .Publish(dto.CorrelationId);
         }
 
         public void Update(RequestPipelineRequestHeaderDto dto)

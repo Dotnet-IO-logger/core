@@ -2,11 +2,6 @@
 using Diol.Share.Features.EntityFrameworks;
 using Diol.Wpf.Core.Services;
 using Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Diol.Wpf.Core.Features.EntityFrameworks
 {
@@ -16,7 +11,7 @@ namespace Diol.Wpf.Core.Features.EntityFrameworks
         private readonly IEventAggregator eventAggregator;
 
         public EntityFrameworkService(
-            Store<EntityFrameworkModel> store,
+            LocalStore<EntityFrameworkModel> store,
             IEventAggregator eventAggregator)
         {
             this.store = store;
