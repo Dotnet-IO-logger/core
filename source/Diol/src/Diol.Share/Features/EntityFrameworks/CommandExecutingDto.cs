@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Diol.Share.Features.EntityFrameworks
+﻿namespace Diol.Share.Features.EntityFrameworks
 {
     public class CommandExecutingDto : BaseDto
     {

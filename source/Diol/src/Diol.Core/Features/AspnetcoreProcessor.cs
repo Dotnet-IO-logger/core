@@ -1,77 +1,42 @@
-﻿using Diol.Share.Features;
+﻿using Diol.Core.TraceEventProcessors;
+using Diol.Share.Features;
 using Diol.Share.Features.Aspnetcores;
 using Microsoft.Diagnostics.Tracing;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
-namespace Diol.Core.TraceEventProcessors
+namespace Diol.Core.Features
 {
-    public class AspnetcoreProcessor : IProcessor
+    public class AspnetcoreProcessor : BaseProcessor
     {
         private static string DebugCorrelationId = string.Empty;
 
-        private readonly string loggerName = "Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware";
+        private const string LoggerName = "Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware";
 
-        private readonly string eventName = "MessageJson";
-
-        private EventPublisher eventObserver;
+        private const string EventName = "MessageJson";
 
         public AspnetcoreProcessor(EventPublisher eventObserver)
+            : base(eventObserver)
         {
-            this.eventObserver = eventObserver;
         }
 
-        public bool CheckEventName(string eventName)
+        public override bool CheckEvent(string loggerName, string eventName) =>
+            LoggerName == loggerName
+            && EventName == eventName;
+
+        public override BaseDto GetLogDto(int eventId, TraceEvent value)
         {
-            return eventName == this.eventName;
-        }
-
-        public bool CheckLoggerName(string name)
-        {
-            return name == this.loggerName;
-        }
-
-        public void OnCompleted()
-        {
-            Debug.WriteLine($"{nameof(AspnetcoreProcessor)} | {nameof(OnCompleted)}");
-        }
-
-        public void OnError(Exception error)
-        {
-            Debug.WriteLine($"{nameof(AspnetcoreProcessor)} | {nameof(OnError)}");
-        }
-
-        public void OnNext(TraceEvent value)
-        {
-            // if you run the app via VS -> for responce's activity ids will be incorrect.
-            var eventId = Convert.ToInt32(value.PayloadByName("EventId"));
-            var eventName = value.PayloadByName("EventName")?.ToString();
-
-            Debug.WriteLine($"{value.ActivityID} | {value.RelatedActivityID} | {eventName} | {eventId}");
-
-            BaseDto be;
-
             if (eventId == 1)
-                be = ParseRequestLog(value);
+                return ParseRequestLog(value);
             else if (eventId == 2)
-                be = ParseResponseLog(value);
+                return ParseResponseLog(value);
             else if (eventId == 3)
-                be = ParseRequestBody(value);
+                return ParseRequestBody(value);
             else if (eventId == 4)
-                be = ParseResponseBody(value);
+                return ParseResponseBody(value);
             else
-                be = null;
-
-            // send notification
-            if (be != null)
-            {
-                be.ProcessName = value.ProcessName;
-                be.ProcessId = value.ProcessID;
-
-                this.eventObserver.AddEvent(be);
-            }
+                return null;
         }
 
         /// <summary>

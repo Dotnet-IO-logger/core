@@ -1,18 +1,17 @@
 ﻿using Diol.applications.ConsoleClient;
+using Diol.Core;
 using Diol.Core.DiagnosticClients;
 using Diol.Share.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 Console.WriteLine("Welcome to Diol Console client");
 
-Console.WriteLine("Registering services");
 // register services
+Console.WriteLine("Registering services");
 var serviceCollection = new ServiceCollection();
-
-serviceCollection.AddSingleton(new DotnetProcessesService());
-serviceCollection.AddSingleton<EventPipeEventSourceBuilder>(
-    EventPipeEventSourceBuilder.CreateDefault()
-    .SetConsumers(new List<Diol.Core.Consumers.IConsumer>() { new ConsoleConsumer() }));
+serviceCollection.AddDiolCore<ConsoleConsumer, 
+    LocalDevelopmentProcessProvider, 
+    LocalApplicationStateService>();
 
 var services = serviceCollection.BuildServiceProvider();
 
@@ -20,24 +19,20 @@ var services = serviceCollection.BuildServiceProvider();
 Console.WriteLine("Running app");
 
 // get process
-var dotnetProcessesService = services.GetRequiredService<DotnetProcessesService>();
+var dotnetProcessesService = services.GetRequiredService<IProcessProvider>();
+var builder = services.GetRequiredService<EventPipeEventSourceBuilder>();
 
-// we expect that the process is running (Diol.Playgrounds.PlaygroundApi.exe)
-var processName = "LogsEfTestApp";
+var processId = dotnetProcessesService.GetProcessId();
 
-var process = dotnetProcessesService.GetItemOrDefault(processName);
-
-if (process == null) 
+if (processId == null) 
 {
-    Console.WriteLine($"Process {processName} not found. Please try again");
+    Console.WriteLine($"Process not found. Please try again");
     return;
 }
 
 // run process
-var builder = services.GetRequiredService<EventPipeEventSourceBuilder>();
-
 var eventPipeEventSourceWrapper = builder
-    .SetProcessId(process.Id)
+    .SetProcessId(processId.Value)
     .Build();
 
 eventPipeEventSourceWrapper.Start();

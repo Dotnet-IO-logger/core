@@ -11,25 +11,16 @@ namespace Diol.Aspnet.BackgroundWorkers
     public class LogsBackgroundWorker : BackgroundService
     {
         private readonly BackgroundTaskQueue taskQueue;
-        private readonly SignalRConsumer signalRConsumer;
         private EventPipeEventSourceBuilder builder;
         private readonly ILogger<LogsBackgroundWorker> logger;
 
         public LogsBackgroundWorker(
             BackgroundTaskQueue taskQueue,
-            SignalRConsumer signalRConsumer,
-            EventPublisher eventPublisher,
+            EventPipeEventSourceBuilder builder,
             ILogger<LogsBackgroundWorker> logger)
         {
             this.taskQueue = taskQueue;
-            this.signalRConsumer = signalRConsumer;
-            this.builder = new EventPipeEventSourceBuilder()
-                .SetProviders(EvenPipeHelper.Providers)
-                .SetEventObserver(eventPublisher)
-                .SetConsumers(new List<Core.Consumers.IConsumer>()
-                {
-                    this.signalRConsumer
-                });
+            this.builder = builder;
             this.logger = logger;
         }
 
@@ -39,13 +30,11 @@ namespace Diol.Aspnet.BackgroundWorkers
             while (!stoppingToken.IsCancellationRequested)
             {
                 var workItem = await this.taskQueue
-                    .DequeueAsync(stoppingToken)
-                    .ConfigureAwait(false);
+                    .DequeueAsync(stoppingToken);
 
                 this.logger.LogInformation("LogsBackgroundWorker work item queued");
 
-                await workItem(this.builder, stoppingToken)
-                    .ConfigureAwait(false);
+                await workItem(this.builder, stoppingToken);
 
                 this.logger.LogInformation("LogsBackgroundWorker work item executed");
             }

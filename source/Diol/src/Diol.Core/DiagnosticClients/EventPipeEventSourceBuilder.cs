@@ -1,8 +1,5 @@
-﻿using Diol.Core.Consumers;
-using Diol.Core.TraceEventProcessors;
-using Diol.Share.Features;
-using Diol.Share.Features.Aspnetcores;
-using Diol.Share.Features.Httpclients;
+﻿using Diol.Core.TraceEventProcessors;
+using Diol.Share.Consumers;
 using Microsoft.Diagnostics.NETCore.Client;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +8,7 @@ namespace Diol.Core.DiagnosticClients
 {
     public class EventPipeEventSourceBuilder
     {
-        public static EventPipeEventSourceBuilder CreateDefault() =>
-            new EventPipeEventSourceBuilder()
-                .SetProviders(EvenPipeHelper.Providers)
-                .SetEventObserver(new EventPublisher());
+        private IProcessorFactory processorFactory;
 
         public int ProcessId { get; private set; }
         public EventPipeEventSourceBuilder SetProcessId(int processId)
@@ -23,27 +17,20 @@ namespace Diol.Core.DiagnosticClients
             return this;
         }
 
-        public List<EventPipeProvider> Providers { get; private set; } = new List<EventPipeProvider>();
-        public EventPipeEventSourceBuilder SetProviders(IReadOnlyCollection<EventPipeProvider> providers)
-        {
-            this.Providers.Clear();
-            this.Providers = providers.ToList();
-            return this;
-        }
+        public List<EventPipeProvider> Providers => EvenPipeHelper.Providers.ToList();
 
-        public List<IConsumer> Consumers { get; private set; } = new List<IConsumer>();
-        public EventPipeEventSourceBuilder SetConsumers(List<IConsumer> consumers)
-        {
-            this.Consumers.Clear();
-            this.Consumers = consumers;
-            return this;
-        }
+        public IEnumerable<IConsumer> Consumers { get; private set; }
 
         public EventPublisher EventObserver { get; private set; }
-        public EventPipeEventSourceBuilder SetEventObserver(EventPublisher eventObserver)
+
+        public EventPipeEventSourceBuilder(
+            IEnumerable<IConsumer> consumers,
+            IProcessorFactory processorFactory,
+            EventPublisher eventObserver)
         {
+            this.Consumers = consumers;
+            this.processorFactory = processorFactory;
             this.EventObserver = eventObserver;
-            return this;
         }
 
         public EventPipeEventSourceWrapper Build() 
@@ -53,10 +40,7 @@ namespace Diol.Core.DiagnosticClients
 
             return new EventPipeEventSourceWrapper(
                 this, 
-                new TraceEventRouter(
-                    new HttpclientProcessor(this.EventObserver),
-                    new AspnetcoreProcessor(this.EventObserver),
-                    new EntityFrameworkProcessor(this.EventObserver)));
+                new TraceEventRouter(this.processorFactory));
         }
     }
 }

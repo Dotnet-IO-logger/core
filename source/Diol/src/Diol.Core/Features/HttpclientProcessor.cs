@@ -1,15 +1,15 @@
-﻿using Diol.Share.Features;
+﻿using Diol.Core.TraceEventProcessors;
+using Diol.Share.Features;
 using Diol.Share.Features.Httpclients;
 using Microsoft.Diagnostics.Tracing;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
-namespace Diol.Core.TraceEventProcessors
+namespace Diol.Core.Features
 {
-    public class HttpclientProcessor : IProcessor
+    public class HttpclientProcessor : BaseProcessor
     {
         private static string DebugCorrelationId = string.Empty;
 
@@ -19,66 +19,34 @@ namespace Diol.Core.TraceEventProcessors
 
         private readonly string eventName = "MessageJson";
 
-        private EventPublisher eventObserver;
-
         public HttpclientProcessor(EventPublisher eventObserver)
+            : base(eventObserver)
         {
-            this.eventObserver = eventObserver;
         }
 
-        public bool CheckEventName(string eventName)
+        private bool CheckEventName(string eventName) =>
+            eventName == this.eventName;
+
+        private bool CheckLoggerName(string name) =>
+            name.StartsWith(loggerNameBegin)
+                && name.EndsWith(loggerNameEnd);
+
+        public override bool CheckEvent(string loggerName, string eventName) =>
+            CheckLoggerName(loggerName)
+            && CheckEventName(eventName);
+
+        public override BaseDto GetLogDto(int eventId, TraceEvent value)
         {
-            return eventName == this.eventName;
-        }
-
-        public bool CheckLoggerName(string name)
-        {
-            return name.StartsWith(this.loggerNameBegin) 
-                && name.EndsWith(this.loggerNameEnd);
-        }
-
-        public void OnCompleted()
-        {
-            Debug.WriteLine($"{nameof(HttpclientProcessor)} | {nameof(OnCompleted)}");
-        }
-
-        public void OnError(Exception error)
-        {
-            Debug.WriteLine($"{nameof(HttpclientProcessor)} | {nameof(OnError)}");
-        }
-
-        public void OnNext(TraceEvent value)
-        {
-            var eventId = Convert.ToInt32(value.PayloadByName("EventId"));
-            var eventName = value.PayloadByName("EventName")?.ToString();
-
-            // ActivityId : Guid? 
-            // traceEvent.ActivityID - is correlation id.
-            // IMPORTANT:
-            // in debug mode, ActivityID will be not correct for eventId 101 and 103
-            Debug.WriteLine($"{value.ActivityID} | {eventName}");
-
-            BaseDto be;
-
             if (eventId == 100)
-                be = ParseRequestPipelineStart(value);
+                return ParseRequestPipelineStart(value);
             else if (eventId == 101)
-                be = ParseRequestPipelineEnd(value);
+                return ParseRequestPipelineEnd(value);
             else if (eventId == 102)
-                be = ParseRequestPipelineRequestHeader(value);
+                return ParseRequestPipelineRequestHeader(value);
             else if (eventId == 103)
-                be = ParseRequestPipelineResponseHeader(value);
+                return ParseRequestPipelineResponseHeader(value);
             else
-                be = null;
-
-            // send notification
-            if (be != null)
-            {
-                be.ProcessName = value.ProcessName;
-                be.ProcessId = value.ProcessID;
-
-                this.eventObserver.AddEvent(be);
-            }
+                return null;
         }
 
         /// <summary>
@@ -93,7 +61,7 @@ namespace Diol.Core.TraceEventProcessors
             var uri = arguments["Uri"];
 
             var correlationId = traceEvent.ActivityID.ToString();
-            
+
 #if DEBUG
             //DebugCorrelationId = correlationId;
 #endif

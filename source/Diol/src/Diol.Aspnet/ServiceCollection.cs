@@ -1,6 +1,7 @@
 ﻿using Diol.Aspnet.BackgroundWorkers;
 using Diol.Aspnet.Consumers;
 using Diol.Aspnet.Hubs;
+using Diol.Core;
 using Diol.Core.TraceEventProcessors;
 using Diol.Share.Services;
 using Microsoft.AspNetCore.Builder;
@@ -13,7 +14,7 @@ namespace Diol.Aspnet
 {
     public static class ServiceCollection
     {
-        public static IServiceCollection AddDiol(this IServiceCollection services)
+        public static IServiceCollection AddDiolWeb(this IServiceCollection services)
         {
             services.AddLogging();
 
@@ -22,9 +23,11 @@ namespace Diol.Aspnet
                 setting.EnableDetailedErrors = true;
             });
             
-            services.AddSingleton<EventPublisher>();
-            services.AddSingleton<SignalRConsumer>();
-            services.AddSingleton<DotnetProcessesService>();
+            services.AddDiolCore<
+                SignalRConsumer,
+                LocalDevelopmentProcessProvider,
+                LocalApplicationStateService>();
+
             services.AddHostedService<LogsBackgroundWorker>();
             services.AddSingleton<BackgroundTaskQueue>(ctx =>
             {

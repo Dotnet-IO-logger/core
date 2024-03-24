@@ -1,7 +1,7 @@
 ﻿using Diol.Share.Features;
 using System;
 
-namespace Diol.Core.Consumers
+namespace Diol.Share.Consumers
 {
     public interface IConsumer : IObserver<BaseDto>
     {

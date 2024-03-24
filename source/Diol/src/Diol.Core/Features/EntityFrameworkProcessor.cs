@@ -1,15 +1,14 @@
-﻿using Diol.Share.Features;
+﻿using Diol.Core.TraceEventProcessors;
+using Diol.Share.Features;
 using Diol.Share.Features.EntityFrameworks;
 using Microsoft.Diagnostics.Tracing;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
-namespace Diol.Core.TraceEventProcessors
+namespace Diol.Core.Features
 {
-    public class EntityFrameworkProcessor : IProcessor
+    public class EntityFrameworkProcessor : BaseProcessor
     {
         private readonly string loggerNameBegin = "Microsoft.EntityFrameworkCore.Database";
         private readonly string loggerNameEndConnection = "Connection";
@@ -17,63 +16,36 @@ namespace Diol.Core.TraceEventProcessors
 
         private readonly string eventName = "MessageJson";
 
-        private EventPublisher eventObserver;
-
         public EntityFrameworkProcessor(EventPublisher eventObserver)
+            : base(eventObserver)
         {
-            this.eventObserver = eventObserver;
         }
 
-        public bool CheckEventName(string eventName)
+        private bool CheckEventName(string eventName) =>
+            eventName == this.eventName;
+
+        private bool CheckLoggerName(string name) =>
+            name.StartsWith(loggerNameBegin)
+            && (name.EndsWith(loggerNameEndConnection)
+                || name.EndsWith(loggerNameEndCommand));
+
+        public override bool CheckEvent(string loggerName, string eventName) =>
+            CheckLoggerName(loggerName)
+            && CheckEventName(eventName);
+
+        public override BaseDto GetLogDto(int eventId, TraceEvent value)
         {
-            return eventName == this.eventName;
-        }
-
-        public bool CheckLoggerName(string name)
-        {
-            return name.StartsWith(this.loggerNameBegin)
-                && (name.EndsWith(this.loggerNameEndConnection)
-                               || name.EndsWith(this.loggerNameEndCommand));
-        }
-
-        public void OnCompleted()
-        {
-            Debug.WriteLine($"{nameof(EntityFrameworkProcessor)} | {nameof(OnCompleted)}");
-        }
-
-        public void OnError(Exception error)
-        {
-            Debug.WriteLine($"{nameof(EntityFrameworkProcessor)} | {nameof(OnError)}");
-        }
-
-        public void OnNext(TraceEvent value)
-        {
-            var eventId = Convert.ToInt32(value.PayloadByName("EventId"));
-            var eventName = value.PayloadByName("EventName")?.ToString();
-
-            Debug.WriteLine($"{value.ActivityID} | {eventName} | {eventId}");
-
-            BaseDto be;
-
             if (eventId == 20000)
-                be = ConnectionOpening(value);
+                return ConnectionOpening(value);
             else if (eventId == 20100)
-                be = CommandExecuting(value);
+                return CommandExecuting(value);
             else if (eventId == 20101)
-                be = CommandExecuted(value);
+                return CommandExecuted(value);
             else
-                be = null;
-
-            // send notifications
-            if (be != null)
-            {
-                be.ProcessName = value.ProcessName;
-                be.ProcessId = value.ProcessID;
-
-                this.eventObserver.AddEvent(be);
-            }
+                return null;
         }
-        private ConnectionOpeningDto ConnectionOpening(TraceEvent traceEvent) 
+
+        private ConnectionOpeningDto ConnectionOpening(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
             var arguments = JsonConvert.DeserializeObject<Dictionary<string, string>>(argumentsAsJson);
@@ -101,7 +73,7 @@ namespace Diol.Core.TraceEventProcessors
             arguments.TryGetValue("parameters", out string parameters);
             arguments.TryGetValue("commandText", out string commandText);
 
-            return new CommandExecutingDto() 
+            return new CommandExecutingDto()
             {
                 CorrelationId = correlationId,
                 Parameters = parameters,
@@ -119,7 +91,7 @@ namespace Diol.Core.TraceEventProcessors
 
             var correlationId = traceEvent.ActivityID.ToString();
 
-            return new CommandExecutedDto() 
+            return new CommandExecutedDto()
             {
                 CorrelationId = correlationId,
                 ElapsedMilliseconds = elapsedMs

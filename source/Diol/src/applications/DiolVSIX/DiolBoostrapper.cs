@@ -1,4 +1,5 @@
 ﻿using Diol.Share.Services;
+using Diol.Wpf.Core;
 using Diol.Wpf.Core.Features.Aspnetcores;
 using Diol.Wpf.Core.Features.EntityFrameworks;
 using Diol.Wpf.Core.Features.Https;
@@ -36,14 +37,20 @@ namespace DiolVSIX
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+
             // register all services here
+            containerRegistry.AddDiolWpf<
+                WpfConsumer, 
+                VsProcessProvider, 
+                VsApplicationStateService>();
+
+            // vs specific dependencies
             containerRegistry.RegisterSingleton<RequiredServices>(() => this.requiredServices);
 
             // depends of scenario
             containerRegistry.RegisterSingleton<DiolExecutor>();
             containerRegistry.RegisterSingleton<DiolBuilder>();
             containerRegistry.RegisterSingleton<WpfConsumer>();
-            containerRegistry.RegisterSingleton<DotnetProcessesService>();
             containerRegistry.RegisterSingleton<DotnetProcessesService>();
             // for development we can use LocalDevelopmentProcessProvider
             // for real scenario use VsProcessProvider

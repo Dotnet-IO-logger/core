@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Diol.Wpf.Core.Services
 {
@@ -17,7 +14,7 @@ namespace Diol.Wpf.Core.Services
         void Clear();
     }
 
-    public class Store<TEntity> : IStore<TEntity>
+    public class LocalStore<TEntity> : IStore<TEntity>
     {
         private Dictionary<string, TEntity> store = new Dictionary<string, TEntity>();
         

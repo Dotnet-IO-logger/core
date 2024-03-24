@@ -1,9 +1,8 @@
 ﻿using Diol.Aspnet.Hubs;
-using Diol.Core.Consumers;
+using Diol.Share.Consumers;
 using Diol.Share.Features;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 using System.Text.Json;
 
 namespace Diol.Aspnet.Consumers
