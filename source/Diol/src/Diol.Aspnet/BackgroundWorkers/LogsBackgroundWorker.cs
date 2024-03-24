@@ -25,11 +25,6 @@ namespace Diol.Aspnet.BackgroundWorkers
             this.signalRConsumer = signalRConsumer;
             this.builder = new EventPipeEventSourceBuilder()
                 .SetProviders(EvenPipeHelper.Providers)
-                .SetFeatures(new List<Share.Features.BaseFeatureFlag>()
-                {
-                    new AspnetcoreFeatureFlag(),
-                    new HttpclientFeatureFlag()
-                })
                 .SetEventObserver(eventPublisher)
                 .SetConsumers(new List<Core.Consumers.IConsumer>()
                 {
