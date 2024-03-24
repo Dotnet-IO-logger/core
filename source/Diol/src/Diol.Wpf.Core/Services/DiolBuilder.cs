@@ -20,11 +20,6 @@ namespace Diol.Wpf.Core.Services
         {
             this.builder = new EventPipeEventSourceBuilder()
                 .SetProviders(EvenPipeHelper.Providers)
-                .SetFeatures(new List<Share.Features.BaseFeatureFlag>()
-                {
-                    new AspnetcoreFeatureFlag(),
-                    new HttpclientFeatureFlag()
-                })
                 .SetEventObserver(eventPublisher)
                 .SetConsumers(new List<Diol.Core.Consumers.IConsumer>()
                 {

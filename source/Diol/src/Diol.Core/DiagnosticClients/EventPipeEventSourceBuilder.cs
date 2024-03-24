@@ -14,11 +14,6 @@ namespace Diol.Core.DiagnosticClients
         public static EventPipeEventSourceBuilder CreateDefault() =>
             new EventPipeEventSourceBuilder()
                 .SetProviders(EvenPipeHelper.Providers)
-                .SetFeatures(new List<BaseFeatureFlag>() 
-                {
-                    new AspnetcoreFeatureFlag(),
-                    new HttpclientFeatureFlag()
-                })
                 .SetEventObserver(new EventPublisher());
 
         public int ProcessId { get; private set; }
@@ -33,14 +28,6 @@ namespace Diol.Core.DiagnosticClients
         {
             this.Providers.Clear();
             this.Providers = providers.ToList();
-            return this;
-        }
-
-        public List<BaseFeatureFlag> Features { get; private set; } = new List<BaseFeatureFlag>();
-        public EventPipeEventSourceBuilder SetFeatures(List<BaseFeatureFlag> features)
-        {
-            this.Features.Clear();
-            this.Features = features;
             return this;
         }
 
@@ -61,18 +48,14 @@ namespace Diol.Core.DiagnosticClients
 
         public EventPipeEventSourceWrapper Build() 
         {
-            var featureFlags = this.Features
-                .Where(x => x.IsEnabled)
-                .ToDictionary(x => x.Name, x => x);
-
             foreach (var consumer in this.Consumers)
                 this.EventObserver.Subscribe(consumer);
 
             return new EventPipeEventSourceWrapper(
                 this, 
                 new TraceEventRouter(
-                    featureFlags.ContainsKey($"{nameof(AspnetcoreFeatureFlag)}") ? new HttpclientProcessor(this.EventObserver) : null,
-                    featureFlags.ContainsKey($"{nameof(HttpclientFeatureFlag)}") ? new AspnetcoreProcessor(this.EventObserver) : null,
+                    new HttpclientProcessor(this.EventObserver),
+                    new AspnetcoreProcessor(this.EventObserver),
                     new EntityFrameworkProcessor(this.EventObserver)));
         }
     }
