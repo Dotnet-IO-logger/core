@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Task = System.Threading.Tasks.Task;
+using System.Threading.Tasks;
 
 namespace DiolVSIX
 {
@@ -45,7 +45,9 @@ namespace DiolVSIX
         /// <param name="cancellationToken">A cancellation token to monitor for initialization cancellation, which can occur when VS is shutting down.</param>
         /// <param name="progress">A provider for progress updates.</param>
         /// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
-        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+        protected override async Task InitializeAsync(
+            CancellationToken cancellationToken, 
+            IProgress<ServiceProgressData> progress)
         {
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
@@ -55,15 +57,22 @@ namespace DiolVSIX
 
         public override IVsAsyncToolWindowFactory GetAsyncToolWindowFactory(Guid toolWindowType)
         {
-            return toolWindowType.Equals(Guid.Parse(DiolToolWindow.WindowGuidString)) ? this : null;
+            return toolWindowType.Equals(Guid.Parse(DiolToolWindow.WindowGuidString)) 
+                ? this 
+                : null;
         }
 
         protected override string GetToolWindowTitle(Type toolWindowType, int id)
         {
-            return toolWindowType == typeof(DiolToolWindow) ? DiolToolWindow.Title : base.GetToolWindowTitle(toolWindowType, id);
+            return toolWindowType == typeof(DiolToolWindow) 
+                ? DiolToolWindow.Title 
+                : base.GetToolWindowTitle(toolWindowType, id);
         }
 
-        protected override async System.Threading.Tasks.Task<object> InitializeToolWindowAsync(Type toolWindowType, int id, CancellationToken cancellationToken)
+        protected override async Task<object> InitializeToolWindowAsync(
+            Type toolWindowType, 
+            int id, 
+            CancellationToken cancellationToken)
         {
             //return base.InitializeToolWindowAsync(toolWindowType, id, cancellationToken);
 

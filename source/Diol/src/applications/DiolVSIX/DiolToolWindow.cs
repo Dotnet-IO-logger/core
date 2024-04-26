@@ -34,10 +34,12 @@ namespace DiolVSIX
             // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
             // the object returned by the Content property.
-            var contol = new DiolToolWindowControl();
-            var diolBootstrapper = new DiolBoostrapper(contol, requiredServices);
+            var toolWindowControl = new DiolToolWindowControl();
+            var diolBootstrapper = new DiolBootstrapper(
+                toolWindowControl, 
+                requiredServices);
 
-            this.Content = contol;
+            this.Content = toolWindowControl;
 
             diolBootstrapper.Run();
         }

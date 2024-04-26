@@ -69,7 +69,7 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DiolBoostrapper.cs" />
+    <Compile Include="DiolBootstrapper.cs" />
     <Compile Include="DiolToolWindow.cs" />
     <Compile Include="DiolToolWindowCommand.cs" />
     <Compile Include="DiolToolWindowControl.xaml.cs">
@@ -168,15 +168,7 @@
   </Target>
   <Target Name="RestoreSuppressedAssemblies" AfterTargets="GetVsixSourceItems">
     <ItemGroup>
-      <VsixSourceItem Include="@(VSIXCopyLocalReferenceSourceItem)"
-        Condition=" '%(Extension)' != '.pdb' and (
-                    '%(Filename)' == 'Microsoft.ApplicationInsights' or
-                    '%(Filename)' == 'Microsoft.Bcl.AsyncInterfaces' or
-                    '%(Filename)' == 'Microsoft.VisualStudio.RpcContracts' or 
-                    '%(Filename)' == 'System.Buffers' or 
-                    '%(Filename)' == 'System.IO.Pipelines' or 
-                    '%(Filename)' == 'System.Memory' or 
-                    '%(Filename)' == 'System.Numerics.Vectors') " />
+      <VsixSourceItem Include="@(VSIXCopyLocalReferenceSourceItem)" Condition=" '%(Extension)' != '.pdb' and (&#xD;&#xA;                    '%(Filename)' == 'Microsoft.ApplicationInsights' or&#xD;&#xA;                    '%(Filename)' == 'Microsoft.Bcl.AsyncInterfaces' or&#xD;&#xA;                    '%(Filename)' == 'Microsoft.VisualStudio.RpcContracts' or &#xD;&#xA;                    '%(Filename)' == 'System.Buffers' or &#xD;&#xA;                    '%(Filename)' == 'System.IO.Pipelines' or &#xD;&#xA;                    '%(Filename)' == 'System.Memory' or &#xD;&#xA;                    '%(Filename)' == 'System.Numerics.Vectors') " />
     </ItemGroup>
   </Target>
 </Project>

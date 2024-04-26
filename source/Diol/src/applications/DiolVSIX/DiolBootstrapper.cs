@@ -9,12 +9,12 @@ using System.Windows;
 
 namespace DiolVSIX
 {
-    public class DiolBoostrapper : PrismBootstrapper
+    public class DiolBootstrapper : PrismBootstrapper
     {
         private readonly DiolToolWindowControl diolToolWindow;
         private readonly RequiredServices requiredServices;
 
-        public DiolBoostrapper(
+        public DiolBootstrapper(
             DiolToolWindowControl diolToolWindow,
             RequiredServices requiredServices)
         {
