@@ -24,10 +24,10 @@ namespace Diol.Core.DiagnosticClients
 
         public void Start()
         {
-            try 
+            try
             {
                 var client = new DiagnosticsClient(this.builder.ProcessId);
-                using (var session = client.StartEventPipeSession(this.builder.Providers, false)) 
+                using (var session = client.StartEventPipeSession(this.builder.Providers, false))
                 {
                     this.source = new EventPipeEventSource(session.EventStream);
 
@@ -36,9 +36,18 @@ namespace Diol.Core.DiagnosticClients
                     source.Process();
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.Error.WriteLine(ex.ToString());
+            }
+            finally 
+            {
+                // Unsubscribe from the event
+                if (this.source != null)
+                {
+                    this.source.Dynamic.All -= this.traceEventRouter.TraceEvent;
+                    this.source.Dispose();
+                }
             }
         }
 

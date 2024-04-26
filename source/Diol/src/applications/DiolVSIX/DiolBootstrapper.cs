@@ -2,6 +2,10 @@
 using Diol.Wpf.Core.Services;
 using Diol.Wpf.Core.Views;
 using DiolVSIX.Services;
+using EnvDTE;
+using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
+using Prism.Events;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Unity;
@@ -12,14 +16,11 @@ namespace DiolVSIX
     public class DiolBootstrapper : PrismBootstrapper
     {
         private readonly DiolToolWindowControl diolToolWindow;
-        private readonly RequiredServices requiredServices;
 
         public DiolBootstrapper(
-            DiolToolWindowControl diolToolWindow,
-            RequiredServices requiredServices)
+            DiolToolWindowControl diolToolWindow)
         {
             this.diolToolWindow = diolToolWindow;
-            this.requiredServices = requiredServices;
         }
 
         protected override DependencyObject CreateShell() 
@@ -33,14 +34,21 @@ namespace DiolVSIX
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // register all services here
-            containerRegistry.AddDiolWpf<
-                WpfConsumer, 
-                VsProcessProvider, 
-                VsApplicationStateService>();
+            ThreadHelper.ThrowIfNotOnUIThread();
+            var applicationObject = ServiceProvider.GlobalProvider.GetService(typeof(DTE)) as DTE2;
+            var debuggerEvents = applicationObject.Events.DebuggerEvents;
 
-            // vs specific dependencies
-            containerRegistry.RegisterSingleton<RequiredServices>(() => this.requiredServices);
+            // register all services here
+            containerRegistry.AddDiolWpf<WpfConsumer, VsProcessProvider, VsApplicationStateService>(
+                (IContainerProvider container) =>
+                {
+                    return new VsProcessProvider(applicationObject);
+                },
+                (IContainerProvider container) => 
+                {
+                    var eventAggregator = container.Resolve<IEventAggregator>();
+                    return new VsApplicationStateService(debuggerEvents, eventAggregator);
+                });
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

@@ -69,20 +69,13 @@ namespace DiolVSIX
                 : base.GetToolWindowTitle(toolWindowType, id);
         }
 
-        protected override async Task<object> InitializeToolWindowAsync(
-            Type toolWindowType, 
-            int id, 
-            CancellationToken cancellationToken)
-        {
-            //return base.InitializeToolWindowAsync(toolWindowType, id, cancellationToken);
-
-            var dte = await GetServiceAsync(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
-
-            return new RequiredServices() 
-            {
-                Dte = dte
-            };
-        }
+        //protected override async Task<object> InitializeToolWindowAsync(
+        //    Type toolWindowType, 
+        //    int id, 
+        //    CancellationToken cancellationToken)
+        //{
+        //    return base.InitializeToolWindowAsync(toolWindowType, id, cancellationToken);
+        //}
 
         #endregion
     }

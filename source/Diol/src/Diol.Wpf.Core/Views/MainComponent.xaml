@@ -17,15 +17,16 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0">
-            <MenuItem
-                Command="{Binding StartCommand}"
-                IsEnabled="{Binding CanExecute}"
-                FontFamily="Segoe UI Symbol"
-                Header="&#xE102;"/>
             <MenuItem 
                 Command="{Binding ClearCommand}"
                 FontFamily="Segoe UI Symbol"
                 Header="&#xE107;" />
+            <MenuItem
+                Command="{Binding StartCommand}"
+                IsEnabled="{Binding CanExecute}"
+                FontFamily="Segoe UI Symbol"
+                Header="&#xE102;"
+                Visibility="{Binding DebugMenuItemVisibility}"/>
             <!--<MenuItem 
                 Command="{Binding SettingsCommand}"
                 FontFamily="Segoe UI Symbol"

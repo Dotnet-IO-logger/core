@@ -25,7 +25,7 @@ namespace DiolVSIX
         /// <summary>
         /// Initializes a new instance of the <see cref="DiolToolWindow"/> class.
         /// </summary>
-        public DiolToolWindow(RequiredServices requiredServices) : base(null)
+        public DiolToolWindow() : base(null)
         {
             //this.dte = dte;
 
@@ -35,9 +35,7 @@ namespace DiolVSIX
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
             // the object returned by the Content property.
             var toolWindowControl = new DiolToolWindowControl();
-            var diolBootstrapper = new DiolBootstrapper(
-                toolWindowControl, 
-                requiredServices);
+            var diolBootstrapper = new DiolBootstrapper(toolWindowControl);
 
             this.Content = toolWindowControl;
 

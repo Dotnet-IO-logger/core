@@ -46,6 +46,12 @@ namespace Diol.Wpf.Core.ViewModels
             this.applicationStateService.Subscribe();
 
             CanProcess(true);
+
+            this.DebugMenuItemVisibility = Visibility.Hidden;
+
+#if DEBUG
+            this.DebugMenuItemVisibility = Visibility.Visible;
+#endif
         }
 
         private void CanProcess(bool isConnected) 
@@ -71,6 +77,15 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         #region Execute Command
+
+        private Visibility _debugMenuItemVisibility;
+
+        public Visibility DebugMenuItemVisibility
+        {
+            get => _debugMenuItemVisibility;
+            set => SetProperty(ref this._debugMenuItemVisibility, value);
+        }
+
         private bool _canExecute = true;
         public bool CanExecute
         {

@@ -1,25 +1,24 @@
 ﻿using Diol.Share.Services;
+using EnvDTE80;
 
 namespace DiolVSIX.Services
 {
     public class VsProcessProvider : IProcessProvider
     {
-        private readonly RequiredServices requiredServices;
+        private readonly DTE2 dte;
 
-        public VsProcessProvider(RequiredServices requiredServices)
+        public VsProcessProvider(DTE2 dte)
         {
-            this.requiredServices = requiredServices;
+            this.dte = dte;
         }
 
         public int? GetProcessId()
         {
-            var dte = this.requiredServices.Dte;
-
             int? result = null;
 
             if (dte.Debugger?.DebuggedProcesses?.Count > 0) 
             {
-                foreach (EnvDTE.Process process in dte.Debugger.DebuggedProcesses) 
+                foreach (EnvDTE.Process process in this.dte.Debugger.DebuggedProcesses) 
                 {
                     result = process.ProcessID;
                     break;

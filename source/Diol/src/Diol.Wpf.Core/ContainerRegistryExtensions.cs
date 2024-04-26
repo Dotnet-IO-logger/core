@@ -8,6 +8,7 @@ using Diol.Wpf.Core.Features.EntityFrameworks;
 using Diol.Wpf.Core.Features.Https;
 using Diol.Wpf.Core.Services;
 using Prism.Ioc;
+using System;
 
 namespace Diol.Wpf.Core
 {
@@ -52,6 +53,49 @@ namespace Diol.Wpf.Core
             //containerRegistry.RegisterSingleton<IStore<EntityFrameworkModel>, LocalStore<EntityFrameworkModel>>();
 
             return containerRegistry;
-        } 
+        }
+
+        public static IContainerRegistry AddDiolWpf<TConsumer, TProcessProvider, TApplicationStateService>(
+            this IContainerRegistry containerRegistry,
+            Func<IContainerProvider, TProcessProvider> processProviderFactoryDelegate,
+            Func<IContainerProvider, TApplicationStateService> applicationStateServiceFactoryDelegate)
+            where TConsumer : class, IConsumer
+            where TProcessProvider : class, IProcessProvider
+            where TApplicationStateService : class, IApplicationStateService
+        {
+            // depends of scenario
+            containerRegistry.RegisterSingleton<DiolExecutor>();
+            containerRegistry.RegisterSingleton<DiolBuilder>();
+
+            containerRegistry.RegisterSingleton<DotnetProcessesService>();
+            containerRegistry.RegisterSingleton<EventPublisher>();
+            containerRegistry.RegisterSingleton<IProcessorFactory, ProcessorFactory>();
+            containerRegistry.RegisterSingleton<EventPipeEventSourceBuilder>();
+
+            // register processors
+            containerRegistry.Register<IProcessor, AspnetcoreProcessor>(nameof(AspnetcoreProcessor));
+            containerRegistry.Register<IProcessor, HttpclientProcessor>(nameof(HttpclientProcessor));
+            containerRegistry.Register<IProcessor, EntityFrameworkProcessor>(nameof(EntityFrameworkProcessor));
+
+            containerRegistry.RegisterSingleton<IConsumer, TConsumer>();
+            containerRegistry.RegisterSingleton<IProcessProvider>(processProviderFactoryDelegate);
+            containerRegistry.RegisterSingleton<IApplicationStateService>(applicationStateServiceFactoryDelegate);
+
+            containerRegistry.RegisterSingleton(typeof(IStore<>), typeof(LocalStore<>));
+
+            // register http
+            containerRegistry.RegisterSingleton<HttpService>();
+            //containerRegistry.RegisterSingleton<IStore<HttpModel>, LocalStore<HttpModel>>();
+
+            // register aspnet
+            containerRegistry.RegisterSingleton<AspnetService>();
+            //containerRegistry.RegisterSingleton<IStore<AspnetcoreModel>, LocalStore<AspnetcoreModel>>();
+
+            // register entity framework
+            containerRegistry.RegisterSingleton<EntityFrameworkService>();
+            //containerRegistry.RegisterSingleton<IStore<EntityFrameworkModel>, LocalStore<EntityFrameworkModel>>();
+
+            return containerRegistry;
+        }
     }
 }
