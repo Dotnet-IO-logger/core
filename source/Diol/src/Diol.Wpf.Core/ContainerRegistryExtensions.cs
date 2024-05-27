@@ -14,8 +14,16 @@ namespace Diol.Wpf.Core
 {
     public static class ContainerRegistryExtensions
     {
+        /// <summary>
+        /// Registers the necessary services and dependencies for DiolWpf.
+        /// </summary>
+        /// <typeparam name="TConsumer">The type of the consumer.</typeparam>
+        /// <typeparam name="TProcessProvider">The type of the process provider.</typeparam>
+        /// <typeparam name="TApplicationStateService">The type of the application state service.</typeparam>
+        /// <param name="containerRegistry">The container registry.</param>
+        /// <returns>The updated container registry.</returns>
         public static IContainerRegistry AddDiolWpf<TConsumer, TProcessProvider, TApplicationStateService>(
-            this IContainerRegistry containerRegistry) 
+            this IContainerRegistry containerRegistry)
             where TConsumer : class, IConsumer
             where TProcessProvider : class, IProcessProvider
             where TApplicationStateService : class, IApplicationStateService
@@ -31,7 +39,7 @@ namespace Diol.Wpf.Core
 
             // register processors
             containerRegistry.Register<IProcessor, AspnetcoreProcessor>(nameof(AspnetcoreProcessor));
-            containerRegistry.Register<IProcessor, HttpclientProcessor>(nameof(HttpclientProcessor));
+            containerRegistry.Register<IProcessor, HttpClientProcessor>(nameof(HttpClientProcessor));
             containerRegistry.Register<IProcessor, EntityFrameworkProcessor>(nameof(EntityFrameworkProcessor));
 
             containerRegistry.RegisterSingleton<IConsumer, TConsumer>();
@@ -55,6 +63,16 @@ namespace Diol.Wpf.Core
             return containerRegistry;
         }
 
+        /// <summary>
+        /// Registers the necessary services and dependencies for DiolWpf with custom process provider and application state service.
+        /// </summary>
+        /// <typeparam name="TConsumer">The type of the consumer.</typeparam>
+        /// <typeparam name="TProcessProvider">The type of the process provider.</typeparam>
+        /// <typeparam name="TApplicationStateService">The type of the application state service.</typeparam>
+        /// <param name="containerRegistry">The container registry.</param>
+        /// <param name="processProviderFactoryDelegate">The factory delegate for creating the process provider.</param>
+        /// <param name="applicationStateServiceFactoryDelegate">The factory delegate for creating the application state service.</param>
+        /// <returns>The updated container registry.</returns>
         public static IContainerRegistry AddDiolWpf<TConsumer, TProcessProvider, TApplicationStateService>(
             this IContainerRegistry containerRegistry,
             Func<IContainerProvider, TProcessProvider> processProviderFactoryDelegate,
@@ -74,7 +92,7 @@ namespace Diol.Wpf.Core
 
             // register processors
             containerRegistry.Register<IProcessor, AspnetcoreProcessor>(nameof(AspnetcoreProcessor));
-            containerRegistry.Register<IProcessor, HttpclientProcessor>(nameof(HttpclientProcessor));
+            containerRegistry.Register<IProcessor, HttpClientProcessor>(nameof(HttpClientProcessor));
             containerRegistry.Register<IProcessor, EntityFrameworkProcessor>(nameof(EntityFrameworkProcessor));
 
             containerRegistry.RegisterSingleton<IConsumer, TConsumer>();

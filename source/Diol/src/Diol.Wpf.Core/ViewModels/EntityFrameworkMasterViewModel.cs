@@ -2,24 +2,30 @@
 using Diol.Wpf.Core.Features.Shared;
 using Prism.Events;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Diol.Wpf.Core.ViewModels
 {
+    /// <summary>
+    /// View model for the Entity Framework master view.
+    /// </summary>
     internal class EntityFrameworkMasterViewModel : BindableBase
     {
         private EntityFrameworkService service;
         private IEventAggregator eventAggregator;
 
+        /// <summary>
+        /// Gets or sets the collection of Entity Framework view models.
+        /// </summary>
         public ObservableCollection<EntityFrameworkViewModel> EntityFrameworkLogs { get; private set; } =
             new ObservableCollection<EntityFrameworkViewModel>();
 
         private EntityFrameworkViewModel _selectedItem;
+
+        /// <summary>
+        /// Gets or sets the selected Entity Framework view model.
+        /// </summary>
         public EntityFrameworkViewModel SelectedItem
         {
             get => this._selectedItem;
@@ -38,6 +44,11 @@ namespace Diol.Wpf.Core.ViewModels
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EntityFrameworkMasterViewModel"/> class.
+        /// </summary>
+        /// <param name="service">The Entity Framework service.</param>
+        /// <param name="eventAggregator">The event aggregator.</param>
         public EntityFrameworkMasterViewModel(
             EntityFrameworkService service,
             IEventAggregator eventAggregator)
@@ -91,7 +102,7 @@ namespace Diol.Wpf.Core.ViewModels
                 return;
             }
 
-            var vm = new EntityFrameworkViewModel() 
+            var vm = new EntityFrameworkViewModel()
             {
                 Key = item.Key,
                 Database = item?.ConnectionOpening?.Database,

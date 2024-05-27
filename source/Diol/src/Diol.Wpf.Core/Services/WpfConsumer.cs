@@ -10,6 +10,9 @@ using System.Diagnostics;
 
 namespace Diol.Wpf.Core.Services
 {
+    /// <summary>
+    /// Represents a WPF consumer that implements the <see cref="IConsumer"/> interface.
+    /// </summary>
     public class WpfConsumer : IConsumer
     {
         private readonly IEventAggregator eventAggregator;
@@ -17,10 +20,17 @@ namespace Diol.Wpf.Core.Services
         private readonly AspnetService aspnetService;
         private readonly EntityFrameworkService entityFrameworkService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WpfConsumer"/> class.
+        /// </summary>
+        /// <param name="eventAggregator">The event aggregator.</param>
+        /// <param name="httpService">The HTTP service.</param>
+        /// <param name="aspnetService">The ASP.NET service.</param>
+        /// <param name="entityFrameworkService">The Entity Framework service.</param>
         public WpfConsumer(
-            IEventAggregator eventAggregator, 
-            HttpService httpService, 
-            AspnetService aspnetService, 
+            IEventAggregator eventAggregator,
+            HttpService httpService,
+            AspnetService aspnetService,
             EntityFrameworkService entityFrameworkService)
         {
             this.eventAggregator = eventAggregator;
@@ -29,13 +39,23 @@ namespace Diol.Wpf.Core.Services
             this.entityFrameworkService = entityFrameworkService;
         }
 
+        /// <summary>
+        /// Handles the completion of the consumer.
+        /// </summary>
         public void OnCompleted() =>
             Debug.WriteLine($"{nameof(WpfConsumer)} | {nameof(OnCompleted)}");
 
-
+        /// <summary>
+        /// Handles the error occurred in the consumer.
+        /// </summary>
+        /// <param name="error">The error that occurred.</param>
         public void OnError(Exception error) =>
             Debug.WriteLine($"{nameof(WpfConsumer)} | {nameof(OnError)}");
 
+        /// <summary>
+        /// Handles the next value received by the consumer.
+        /// </summary>
+        /// <param name="value">The value received by the consumer.</param>
         public void OnNext(BaseDto value)
         {
             if (value.CategoryName == "HttpClient")
@@ -46,7 +66,7 @@ namespace Diol.Wpf.Core.Services
             {
                 this.aspnetService.Update(value);
             }
-            else if (value.CategoryName == "EntityFramework") 
+            else if (value.CategoryName == "EntityFramework")
             {
                 this.entityFrameworkService.Update(value);
             }

@@ -9,17 +9,22 @@ using System.Linq;
 
 namespace Diol.Core.Features
 {
-    public class HttpclientProcessor : BaseProcessor
+    /// <summary>
+    /// Represents a processor for HttpClient events.
+    /// </summary>
+    public class HttpClientProcessor : BaseProcessor
     {
-        private static string DebugCorrelationId = string.Empty;
-
         private readonly string loggerNameBegin = "System.Net.Http.HttpClient";
 
         private readonly string loggerNameEnd = "LogicalHandler";
 
         private readonly string eventName = "MessageJson";
 
-        public HttpclientProcessor(EventPublisher eventObserver)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpClientProcessor"/> class.
+        /// </summary>
+        /// <param name="eventObserver">The event observer.</param>
+        public HttpClientProcessor(EventPublisher eventObserver)
             : base(eventObserver)
         {
         }
@@ -31,10 +36,22 @@ namespace Diol.Core.Features
             name.StartsWith(loggerNameBegin)
                 && name.EndsWith(loggerNameEnd);
 
+        /// <summary>
+        /// Checks if the logger name and event name match the expected values.
+        /// </summary>
+        /// <param name="loggerName">The logger name.</param>
+        /// <param name="eventName">The event name.</param>
+        /// <returns><c>true</c> if the logger name and event name match the expected values; otherwise, <c>false</c>.</returns>
         public override bool CheckEvent(string loggerName, string eventName) =>
             CheckLoggerName(loggerName)
             && CheckEventName(eventName);
 
+        /// <summary>
+        /// Gets the log DTO based on the event ID and trace event.
+        /// </summary>
+        /// <param name="eventId">The event ID.</param>
+        /// <param name="value">The trace event.</param>
+        /// <returns>The log DTO.</returns>
         public override BaseDto GetLogDto(int eventId, TraceEvent value)
         {
             if (eventId == 100)
@@ -50,9 +67,10 @@ namespace Diol.Core.Features
         }
 
         /// <summary>
-        /// eventId 100 - eventName RequestPipelineStart
+        /// Parses the RequestPipelineStart event and returns the corresponding DTO.
         /// </summary>
-        /// <param name="traceEvent"></param>
+        /// <param name="traceEvent">The trace event.</param>
+        /// <returns>The RequestPipelineStart DTO.</returns>
         public static RequestPipelineStartDto ParseRequestPipelineStart(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
@@ -61,10 +79,6 @@ namespace Diol.Core.Features
             var uri = arguments["Uri"];
 
             var correlationId = traceEvent.ActivityID.ToString();
-
-#if DEBUG
-            //DebugCorrelationId = correlationId;
-#endif
 
             return new RequestPipelineStartDto
             {
@@ -75,9 +89,10 @@ namespace Diol.Core.Features
         }
 
         /// <summary>
-        /// eventId 102 - eventName RequestPipelineRequestHeader
+        /// Parses the RequestPipelineRequestHeader event and returns the corresponding DTO.
         /// </summary>
-        /// <param name="traceEvent"></param>
+        /// <param name="traceEvent">The trace event.</param>
+        /// <returns>The RequestPipelineRequestHeader DTO.</returns>
         public static RequestPipelineRequestHeaderDto ParseRequestPipelineRequestHeader(TraceEvent traceEvent)
         {
             var headersAsText = traceEvent.PayloadByName("FormattedMessage")?.ToString();
@@ -85,10 +100,6 @@ namespace Diol.Core.Features
             var result = ParseHeaders(headersAsText);
 
             var correlationId = traceEvent.ActivityID.ToString();
-
-#if DEBUG
-            //correlationId = DebugCorrelationId;
-#endif
 
             return new RequestPipelineRequestHeaderDto
             {
@@ -98,9 +109,10 @@ namespace Diol.Core.Features
         }
 
         /// <summary>
-        /// eventId 101 - eventName RequestPipelineEnd
+        /// Parses the RequestPipelineEnd event and returns the corresponding DTO.
         /// </summary>
-        /// <param name="traceEvent"></param>
+        /// <param name="traceEvent">The trace event.</param>
+        /// <returns>The RequestPipelineEnd DTO.</returns>
         public static RequestPipelineEndDto ParseRequestPipelineEnd(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
@@ -109,10 +121,6 @@ namespace Diol.Core.Features
             var statusCode = arguments["StatusCode"];
 
             var correlationId = traceEvent.ActivityID.ToString();
-
-#if DEBUG
-            //correlationId = DebugCorrelationId;
-#endif
 
             // parse from milisecond to TimeSpan
             return new RequestPipelineEndDto
@@ -124,9 +132,10 @@ namespace Diol.Core.Features
         }
 
         /// <summary>
-        /// eventId 103 - eventName RequestPipelineResponseHeader
+        /// Parses the RequestPipelineResponseHeader event and returns the corresponding DTO.
         /// </summary>
-        /// <param name="traceEvent"></param>
+        /// <param name="traceEvent">The trace event.</param>
+        /// <returns>The RequestPipelineResponseHeader DTO.</returns>
         public static RequestPipelineResponseHeaderDto ParseRequestPipelineResponseHeader(TraceEvent traceEvent)
         {
             var headersAsText = traceEvent.PayloadByName("FormattedMessage")?.ToString();
@@ -134,10 +143,6 @@ namespace Diol.Core.Features
             var result = ParseHeaders(headersAsText);
 
             var correlationId = traceEvent.ActivityID.ToString();
-
-#if DEBUG
-            //correlationId = DebugCorrelationId;
-#endif
 
             return new RequestPipelineResponseHeaderDto
             {

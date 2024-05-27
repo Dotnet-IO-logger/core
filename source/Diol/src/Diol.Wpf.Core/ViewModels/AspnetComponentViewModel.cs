@@ -5,10 +5,17 @@ using System.Windows;
 
 namespace Diol.Wpf.Core.ViewModels
 {
+    /// <summary>
+    /// View model for the ASP.NET component.
+    /// </summary>
     public class AspnetComponentViewModel : BindableBase
     {
         private IEventAggregator eventAggregator;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AspnetComponentViewModel"/> class.
+        /// </summary>
+        /// <param name="eventAggregator">The event aggregator.</param>
         public AspnetComponentViewModel(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
@@ -20,6 +27,10 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private GridLength _detailWidth = new GridLength(0, GridUnitType.Star);
+
+        /// <summary>
+        /// Gets or sets the width of the detail.
+        /// </summary>
         public GridLength DetailWidth
         {
             get => this._detailWidth;

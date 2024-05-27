@@ -1,36 +1,42 @@
-﻿using Diol.Share.Services;
-using Diol.Wpf.Core.Services;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Diol.Wpf.Core.ViewModels
 {
+    /// <summary>
+    /// View model for the WelcomeComponent.
+    /// </summary>
     public class WelcomeComponentViewModel : BindableBase
     {
         private readonly IRegionManager regionManager;
 
-        public WelcomeComponentViewModel(
-            IRegionManager regionManager)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WelcomeComponentViewModel"/> class.
+        /// </summary>
+        /// <param name="regionManager">The region manager.</param>
+        public WelcomeComponentViewModel(IRegionManager regionManager)
         {
             this.regionManager = regionManager;
         }
 
         #region Status
         private string _status;
-        public string StatusMessage 
+
+        /// <summary>
+        /// Gets or sets the status message.
+        /// </summary>
+        public string StatusMessage
         {
             get { return this._status; }
             set { SetProperty(ref this._status, value); }
         }
 
         private bool _canGo = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the Go command can be executed.
+        /// </summary>
         public bool CanGo
         {
             get { return this._canGo; }
@@ -40,6 +46,10 @@ namespace Diol.Wpf.Core.ViewModels
 
         #region GoCommand 
         private DelegateCommand _goCommand;
+
+        /// <summary>
+        /// Gets the Go command.
+        /// </summary>
         public DelegateCommand GoCommand =>
             this._goCommand ?? (this._goCommand = new DelegateCommand(ExecuteGoCommand));
 
@@ -47,7 +57,7 @@ namespace Diol.Wpf.Core.ViewModels
         {
             this.CanGo = false;
 
-            this.StatusMessage = "Seaching...";
+            this.StatusMessage = "Searching...";
 
             // navigate to main component
             this.regionManager.RequestNavigate("MainRegion", "MainComponent");

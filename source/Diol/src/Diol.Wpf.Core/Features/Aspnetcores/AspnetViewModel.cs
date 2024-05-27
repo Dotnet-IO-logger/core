@@ -2,9 +2,16 @@
 
 namespace Diol.Wpf.Core.Features.Aspnetcores
 {
+    /// <summary>
+    /// Represents the view model for ASP.NET core features.
+    /// </summary>
     public class AspnetViewModel : BindableBase
     {
         private string _key;
+
+        /// <summary>
+        /// Gets or sets the key.
+        /// </summary>
         public string Key
         {
             get => this._key;
@@ -12,6 +19,10 @@ namespace Diol.Wpf.Core.Features.Aspnetcores
         }
 
         private string _method;
+
+        /// <summary>
+        /// Gets or sets the method.
+        /// </summary>
         public string Method
         {
             get => this._method;
@@ -19,6 +30,10 @@ namespace Diol.Wpf.Core.Features.Aspnetcores
         }
 
         private string _uri;
+
+        /// <summary>
+        /// Gets or sets the URI.
+        /// </summary>
         public string Uri
         {
             get => this._uri;
@@ -26,6 +41,10 @@ namespace Diol.Wpf.Core.Features.Aspnetcores
         }
 
         private int? _responseStatusCode;
+
+        /// <summary>
+        /// Gets or sets the response status code.
+        /// </summary>
         public int? ResponseStatusCode
         {
             get => this._responseStatusCode;

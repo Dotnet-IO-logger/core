@@ -5,10 +5,17 @@ using System.Windows;
 
 namespace Diol.Wpf.Core.ViewModels
 {
+    /// <summary>
+    /// Represents the view model for the HTTP component.
+    /// </summary>
     public class HttpComponentViewModel : BindableBase
     {
         private IEventAggregator eventAggregator;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpComponentViewModel"/> class.
+        /// </summary>
+        /// <param name="eventAggregator">The event aggregator.</param>
         public HttpComponentViewModel(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
@@ -20,6 +27,10 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private GridLength _detailWidth = new GridLength(0, GridUnitType.Star);
+
+        /// <summary>
+        /// Gets or sets the width of the detail.
+        /// </summary>
         public GridLength DetailWidth
         {
             get => this._detailWidth;

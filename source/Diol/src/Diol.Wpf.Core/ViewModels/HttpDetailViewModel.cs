@@ -9,34 +9,53 @@ using System.Collections.ObjectModel;
 
 namespace Diol.Wpf.Core.ViewModels
 {
+    /// <summary>
+    /// ViewModel for the HTTP detail view.
+    /// </summary>
     public class HttpDetailViewModel : BindableBase
     {
         private HttpService service;
         private IEventAggregator eventAggregator;
 
         private RequestPipelineStartDto _request;
-        public RequestPipelineStartDto Request 
+        /// <summary>
+        /// Gets or sets the request object.
+        /// </summary>
+        public RequestPipelineStartDto Request
         {
             get => this._request;
             set => SetProperty(ref this._request, value);
-
         }
 
+        /// <summary>
+        /// Gets the collection of request headers.
+        /// </summary>
         public ObservableCollection<KeyValuePair<string, string>> RequestHeaders { get; private set; } =
             new ObservableCollection<KeyValuePair<string, string>>();
 
         private RequestPipelineEndDto _response;
-        public RequestPipelineEndDto Response 
+        /// <summary>
+        /// Gets or sets the response object.
+        /// </summary>
+        public RequestPipelineEndDto Response
         {
             get => this._response;
-            set => SetProperty(ref this._response, value); 
+            set => SetProperty(ref this._response, value);
         }
 
+        /// <summary>
+        /// Gets the collection of response headers.
+        /// </summary>
         public ObservableCollection<KeyValuePair<string, string>> ResponseHeaders { get; set; } =
             new ObservableCollection<KeyValuePair<string, string>>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpDetailViewModel"/> class.
+        /// </summary>
+        /// <param name="service">The HTTP service.</param>
+        /// <param name="eventAggregator">The event aggregator.</param>
         public HttpDetailViewModel(
-            HttpService service, 
+            HttpService service,
             IEventAggregator eventAggregator)
         {
             this.service = service;
@@ -52,6 +71,9 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private DelegateCommand _closeCommand = null;
+        /// <summary>
+        /// Gets the command to close the HTTP detail view.
+        /// </summary>
         public DelegateCommand CloseCommand =>
             _closeCommand ?? (_closeCommand = new DelegateCommand(CloseExecute));
 
@@ -76,14 +98,14 @@ namespace Diol.Wpf.Core.ViewModels
 
             var item = this.service.GetItemOrDefault(obj);
 
-            if (item == null) 
+            if (item == null)
             {
                 return;
             }
 
             this.Request = item.Request;
-            
-            if(item.RequestMetadata != null && item.RequestMetadata.Headers != null) 
+
+            if (item.RequestMetadata != null && item.RequestMetadata.Headers != null)
             {
                 foreach (var header in item.RequestMetadata.Headers)
                 {
@@ -93,7 +115,7 @@ namespace Diol.Wpf.Core.ViewModels
 
             this.Response = item.Response;
 
-            if (item.ResponseMetadata != null && item.ResponseMetadata.Headers != null) 
+            if (item.ResponseMetadata != null && item.ResponseMetadata.Headers != null)
             {
                 foreach (var header in item.ResponseMetadata?.Headers)
                 {

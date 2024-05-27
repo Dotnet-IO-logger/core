@@ -6,12 +6,14 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace Diol.Wpf.Core.ViewModels
 {
+    /// <summary>
+    /// Represents the view model for the main component.
+    /// </summary>
     public class MainComponentViewModel : BindableBase
     {
         private IProcessProvider dotnetService;
@@ -19,6 +21,13 @@ namespace Diol.Wpf.Core.ViewModels
         private IApplicationStateService applicationStateService;
         private DiolExecutor diolExecutor;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainComponentViewModel"/> class.
+        /// </summary>
+        /// <param name="dotnetService">The dotnet service.</param>
+        /// <param name="eventAggregator">The event aggregator.</param>
+        /// <param name="applicationStateService">The application state service.</param>
+        /// <param name="diolExecutor">The Diol executor.</param>
         public MainComponentViewModel(
             IProcessProvider dotnetService,
             IEventAggregator eventAggregator,
@@ -54,13 +63,13 @@ namespace Diol.Wpf.Core.ViewModels
 #endif
         }
 
-        private void CanProcess(bool isConnected) 
+        private void CanProcess(bool isConnected)
         {
             if (isConnected)
             {
                 this.CanExecute = true;
             }
-            else 
+            else
             {
                 this.CanExecute = false;
             }
@@ -80,6 +89,9 @@ namespace Diol.Wpf.Core.ViewModels
 
         private Visibility _debugMenuItemVisibility;
 
+        /// <summary>
+        /// Gets or sets the visibility of the debug menu item.
+        /// </summary>
         public Visibility DebugMenuItemVisibility
         {
             get => _debugMenuItemVisibility;
@@ -87,6 +99,10 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private bool _canExecute = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the command can be executed.
+        /// </summary>
         public bool CanExecute
         {
             get => this._canExecute;
@@ -94,6 +110,10 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private DelegateCommand _startCommand = null;
+
+        /// <summary>
+        /// Gets the command to start execution.
+        /// </summary>
         public DelegateCommand StartCommand =>
             _startCommand ?? (_startCommand = new DelegateCommand(StartExecute));
 
@@ -111,13 +131,13 @@ namespace Diol.Wpf.Core.ViewModels
             {
                 this.diolExecutor.StartProcessing(processId.Value);
             })
-            .ContinueWith(t => 
+            .ContinueWith(t =>
             {
-                if (t.IsFaulted) 
+                if (t.IsFaulted)
                 {
                     //this.CanExecute = true;
                 }
-            }, 
+            },
             TaskScheduler.FromCurrentSynchronizationContext());
 
         }
@@ -125,6 +145,10 @@ namespace Diol.Wpf.Core.ViewModels
 
         #region Clear Command
         private DelegateCommand _clearCommand = null;
+
+        /// <summary>
+        /// Gets the command to clear data.
+        /// </summary>
         public DelegateCommand ClearCommand =>
             _clearCommand ?? (_clearCommand = new DelegateCommand(ClearExecute));
 
@@ -142,6 +166,10 @@ namespace Diol.Wpf.Core.ViewModels
 
         #region Settings
         private DelegateCommand _settingsCommand = null;
+
+        /// <summary>
+        /// Gets the command to open settings.
+        /// </summary>
         public DelegateCommand SettingsCommand =>
             _settingsCommand ?? (_settingsCommand = new DelegateCommand(SettingsExecute));
 
