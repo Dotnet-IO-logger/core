@@ -5,23 +5,31 @@ using System;
 
 namespace Diol.Core.DiagnosticClients
 {
+    /// <summary>
+    /// Wrapper class for EventPipeEventSource that provides functionality to start and stop event tracing.
+    /// </summary>
     public class EventPipeEventSourceWrapper : IDisposable
     {
         private readonly EventPipeEventSourceBuilder builder;
-
-        private TraceEventRouter traceEventRouter;
-
+        private readonly TraceEventRouter traceEventRouter;
         private EventPipeEventSource source;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventPipeEventSourceWrapper"/> class.
+        /// </summary>
+        /// <param name="builder">The EventPipeEventSourceBuilder instance.</param>
+        /// <param name="traceEventRouter">The TraceEventRouter instance.</param>
         public EventPipeEventSourceWrapper(
             EventPipeEventSourceBuilder builder,
             TraceEventRouter traceEventRouter)
         {
             this.traceEventRouter = traceEventRouter;
-
             this.builder = builder;
         }
 
+        /// <summary>
+        /// Starts the event tracing.
+        /// </summary>
         public void Start()
         {
             try
@@ -33,14 +41,14 @@ namespace Diol.Core.DiagnosticClients
 
                     this.source.Dynamic.All += this.traceEventRouter.TraceEvent;
 
-                    source.Process();
+                    this.source.Process();
                 }
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex.ToString());
             }
-            finally 
+            finally
             {
                 // Unsubscribe from the event
                 if (this.source != null)
@@ -51,7 +59,10 @@ namespace Diol.Core.DiagnosticClients
             }
         }
 
-        public void Stop() 
+        /// <summary>
+        /// Stops the event tracing.
+        /// </summary>
+        public void Stop()
         {
             try
             {
@@ -63,6 +74,9 @@ namespace Diol.Core.DiagnosticClients
             }
         }
 
+        /// <summary>
+        /// Disposes the EventPipeEventSource instance.
+        /// </summary>
         public void Dispose()
         {
             this.source?.Dispose();

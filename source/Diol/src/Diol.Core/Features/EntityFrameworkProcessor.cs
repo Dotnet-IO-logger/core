@@ -1,6 +1,8 @@
 ﻿using Diol.Core.TraceEventProcessors;
+using Diol.Core.Utils;
 using Diol.Share.Features;
 using Diol.Share.Features.EntityFrameworks;
+using Diol.Share.Services;
 using Microsoft.Diagnostics.Tracing;
 using Newtonsoft.Json;
 using System;
@@ -8,6 +10,9 @@ using System.Collections.Generic;
 
 namespace Diol.Core.Features
 {
+    /// <summary>
+    /// Represents a processor for Entity Framework events.
+    /// </summary>
     public class EntityFrameworkProcessor : BaseProcessor
     {
         private readonly string loggerNameBegin = "Microsoft.EntityFrameworkCore.Database";
@@ -16,6 +21,10 @@ namespace Diol.Core.Features
 
         private readonly string eventName = "MessageJson";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EntityFrameworkProcessor"/> class.
+        /// </summary>
+        /// <param name="eventObserver">The event observer.</param>
         public EntityFrameworkProcessor(EventPublisher eventObserver)
             : base(eventObserver)
         {
@@ -29,10 +38,22 @@ namespace Diol.Core.Features
             && (name.EndsWith(loggerNameEndConnection)
                 || name.EndsWith(loggerNameEndCommand));
 
+        /// <summary>
+        /// Checks if the event matches the logger name and event name for Entity Framework events.
+        /// </summary>
+        /// <param name="loggerName">The logger name.</param>
+        /// <param name="eventName">The event name.</param>
+        /// <returns><c>true</c> if the event matches the logger name and event name; otherwise, <c>false</c>.</returns>
         public override bool CheckEvent(string loggerName, string eventName) =>
             CheckLoggerName(loggerName)
             && CheckEventName(eventName);
 
+        /// <summary>
+        /// Gets the log DTO for the specified event ID and trace event.
+        /// </summary>
+        /// <param name="eventId">The event ID.</param>
+        /// <param name="value">The trace event.</param>
+        /// <returns>The log DTO.</returns>
         public override BaseDto GetLogDto(int eventId, TraceEvent value)
         {
             if (eventId == 20000)
@@ -52,8 +73,8 @@ namespace Diol.Core.Features
 
             var correlationId = traceEvent.ActivityID.ToString();
 
-            arguments.TryGetValue("database", out string database);
-            arguments.TryGetValue("server", out string server);
+            arguments.TryGetValueAndRemove("database", out string database);
+            arguments.TryGetValueAndRemove("server", out string server);
 
             return new ConnectionOpeningDto()
             {
@@ -70,14 +91,33 @@ namespace Diol.Core.Features
 
             var correlationId = traceEvent.ActivityID.ToString();
 
-            arguments.TryGetValue("parameters", out string parameters);
-            arguments.TryGetValue("commandText", out string commandText);
+            arguments.TryGetValueAndRemove("parameters", out string parameters);
+            arguments.TryGetValueAndRemove("commandText", out string commandText);
+
+            var commandName = string.Empty;
+            var tableName = string.Empty;
+
+            if (!string.IsNullOrEmpty(commandText)) 
+            {
+                commandName = SqlQueryService.ExtractOperationNameFromQuery(commandText);
+                
+                if (commandName == SqlQueryService.SELECT) 
+                    tableName = SqlQueryService.ExtractTableNameFromSelectQuery(commandText);
+                else if (commandName == SqlQueryService.INSERT)
+                    tableName = SqlQueryService.ExtractTableNameFromInsertQuery(commandText);
+                else if (commandName == SqlQueryService.UPDATE)
+                    tableName = SqlQueryService.ExtractTableNameFromUpdateQuery(commandText);
+                else if (commandName == SqlQueryService.DELETE)
+                    tableName = SqlQueryService.ExtractTableNameFromDeleteQuery(commandText);
+            }
 
             return new CommandExecutingDto()
             {
                 CorrelationId = correlationId,
                 Parameters = parameters,
-                CommandText = commandText
+                CommandText = commandText,
+                OperationName = commandName,
+                TableName = tableName
             };
         }
 
@@ -86,7 +126,7 @@ namespace Diol.Core.Features
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
             var arguments = JsonConvert.DeserializeObject<Dictionary<string, string>>(argumentsAsJson);
 
-            arguments.TryGetValue("elapsed", out string elapsed);
+            arguments.TryGetValueAndRemove("elapsed", out string elapsed);
             var elapsedMs = TimeSpan.FromMilliseconds(double.Parse(elapsed));
 
             var correlationId = traceEvent.ActivityID.ToString();

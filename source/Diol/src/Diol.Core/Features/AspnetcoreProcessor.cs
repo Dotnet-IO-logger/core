@@ -1,4 +1,5 @@
 ﻿using Diol.Core.TraceEventProcessors;
+using Diol.Core.Utils;
 using Diol.Share.Features;
 using Diol.Share.Features.Aspnetcores;
 using Microsoft.Diagnostics.Tracing;
@@ -8,10 +9,11 @@ using System.Collections.Generic;
 
 namespace Diol.Core.Features
 {
+    /// <summary>
+    /// Processor for ASP.NET Core events.
+    /// </summary>
     public class AspnetcoreProcessor : BaseProcessor
     {
-        private static string DebugCorrelationId = string.Empty;
-
         private const string LoggerName = "Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware";
 
         private const string EventName = "MessageJson";
@@ -21,10 +23,22 @@ namespace Diol.Core.Features
         {
         }
 
+        /// <summary>
+        /// Checks if the event matches the logger name and event name.
+        /// </summary>
+        /// <param name="loggerName">The logger name.</param>
+        /// <param name="eventName">The event name.</param>
+        /// <returns>True if the event matches, otherwise false.</returns>
         public override bool CheckEvent(string loggerName, string eventName) =>
             LoggerName == loggerName
             && EventName == eventName;
 
+        /// <summary>
+        /// Gets the corresponding log DTO based on the event ID.
+        /// </summary>
+        /// <param name="eventId">The event ID.</param>
+        /// <param name="value">The trace event.</param>
+        /// <returns>The log DTO.</returns>
         public override BaseDto GetLogDto(int eventId, TraceEvent value)
         {
             if (eventId == 1)
@@ -40,35 +54,27 @@ namespace Diol.Core.Features
         }
 
         /// <summary>
-        /// eventId 1 - eventName RequestLog
+        /// Parses the trace event to a RequestLogDto.
         /// </summary>
-        /// <param name="traceEvent"></param>
+        /// <param name="traceEvent">The trace event.</param>
+        /// <returns>The RequestLogDto.</returns>
         private RequestLogDto ParseRequestLog(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
             var arguments = JsonConvert.DeserializeObject<Dictionary<string, string>>(argumentsAsJson);
 
             // Protocol: http/2
-            arguments.TryGetValue("Protocol", out var protocol);
-            arguments.Remove("");
+            arguments.TryGetValueAndRemove("Protocol", out var protocol);
             // Method: GET
-            arguments.TryGetValue("Method", out var method);
-            arguments.Remove("Method");
+            arguments.TryGetValueAndRemove("Method", out var method);
             // Scheme: https
-            arguments.TryGetValue("Scheme", out var scheme);
-            arguments.Remove("Scheme");
+            arguments.TryGetValueAndRemove("Scheme", out var scheme);
             // Host: localhost:5001
-            arguments.TryGetValue("Host", out var host);
-            arguments.Remove("Host");
+            arguments.TryGetValueAndRemove("Host", out var host);
             // Path: /WeatherForecast
-            arguments.TryGetValue("Path", out var path);
-            arguments.Remove("Path");
+            arguments.TryGetValueAndRemove("Path", out var path);
 
             var correlationId = traceEvent.ActivityID.ToString();
-
-#if DEBUG
-            //DebugCorrelationId = correlationId;
-#endif
 
             // all other is headers or metadata
             // create event
@@ -85,30 +91,25 @@ namespace Diol.Core.Features
         }
 
         /// <summary>
-        /// eventId 2 - eventName ResponseLog
+        /// Parses the trace event to a ResponseLogDto.
         /// </summary>
-        /// <param name="traceEvent"></param>
+        /// <param name="traceEvent">The trace event.</param>
+        /// <returns>The ResponseLogDto.</returns>
         public ResponseLogDto ParseResponseLog(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
             var arguments = JsonConvert.DeserializeObject<Dictionary<string, string>>(argumentsAsJson);
 
             // StatusCode: 200
-            arguments.TryGetValue("StatusCode", out var statusCode);
-            arguments.Remove("StatusCode");
+            arguments.TryGetValueAndRemove("StatusCode", out var statusCode);
 
             // ContentType: application/json; charset=utf-8
             // can be null
-            arguments.TryGetValue("ContentType", out var contentType);
-            arguments.Remove("ContentType");
+            arguments.TryGetValueAndRemove("ContentType", out var contentType);
 
             // all other is headers or metadata
 
             var correlationId = traceEvent.ActivityID.ToString();
-
-#if DEBUG
-            //correlationId = DebugCorrelationId;
-#endif
 
             // create event
             return new ResponseLogDto
@@ -121,9 +122,10 @@ namespace Diol.Core.Features
         }
 
         /// <summary>
-        /// eventId 3 - eventName RequestBody
+        /// Parses the trace event to a RequestBodyDto.
         /// </summary>
-        /// <param name="traceEvent"></param>
+        /// <param name="traceEvent">The trace event.</param>
+        /// <returns>The RequestBodyDto.</returns>
         public RequestBodyDto ParseRequestBody(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
@@ -133,16 +135,11 @@ namespace Diol.Core.Features
             arguments.Remove("{OriginalFormat}");
 
             // Body
-            arguments.TryGetValue("Body", out var body);
-            arguments.Remove("Body");
+            arguments.TryGetValueAndRemove("Body", out var body);
 
             // all other is headers or metadata
 
             var correlationId = traceEvent.ActivityID.ToString();
-
-#if DEBUG
-            //correlationId = DebugCorrelationId;
-#endif
 
             // create event
             return new RequestBodyDto
@@ -154,9 +151,10 @@ namespace Diol.Core.Features
         }
 
         /// <summary>
-        /// eventId 4 - eventName ResponseBody
+        /// Parses the trace event to a ResponseBodyDto.
         /// </summary>
-        /// <param name="traceEvent"></param>
+        /// <param name="traceEvent">The trace event.</param>
+        /// <returns>The ResponseBodyDto.</returns>
         public ResponseBodyDto ParseResponseBody(TraceEvent traceEvent)
         {
             var argumentsAsJson = traceEvent.PayloadByName("ArgumentsJson")?.ToString();
@@ -166,16 +164,11 @@ namespace Diol.Core.Features
             arguments.Remove("{OriginalFormat}");
 
             // Body
-            arguments.TryGetValue("Body", out var body);
-            arguments.Remove("Body");
+            arguments.TryGetValueAndRemove("Body", out var body);
 
             // all other is headers or metadata
 
             var correlationId = traceEvent.ActivityID.ToString();
-
-#if DEBUG
-            //correlationId = DebugCorrelationId;
-#endif
 
             // create event
             return new ResponseBodyDto

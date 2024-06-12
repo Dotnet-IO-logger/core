@@ -7,12 +7,18 @@ using Prism.Mvvm;
 
 namespace Diol.Wpf.Core.ViewModels
 {
+    /// <summary>
+    /// View model for the Entity Framework detail view.
+    /// </summary>
     public class EntityFrameworkDetailViewModel : BindableBase
     {
         private EntityFrameworkService service;
         private IEventAggregator eventAggregator;
 
         private ConnectionOpeningDto _connectionOpening;
+        /// <summary>
+        /// Gets or sets the connection opening details.
+        /// </summary>
         public ConnectionOpeningDto ConnectionOpening
         {
             get => this._connectionOpening;
@@ -20,6 +26,9 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private CommandExecutingDto _commandExecuting;
+        /// <summary>
+        /// Gets or sets the command executing details.
+        /// </summary>
         public CommandExecutingDto CommandExecuting
         {
             get => this._commandExecuting;
@@ -27,12 +36,20 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private CommandExecutedDto _commandExecuted;
+        /// <summary>
+        /// Gets or sets the command executed details.
+        /// </summary>
         public CommandExecutedDto CommandExecuted
         {
             get => this._commandExecuted;
             set => SetProperty(ref this._commandExecuted, value);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EntityFrameworkDetailViewModel"/> class.
+        /// </summary>
+        /// <param name="service">The Entity Framework service.</param>
+        /// <param name="eventAggregator">The event aggregator.</param>
         public EntityFrameworkDetailViewModel(
             EntityFrameworkService service,
             IEventAggregator eventAggregator)
@@ -43,13 +60,16 @@ namespace Diol.Wpf.Core.ViewModels
             this.eventAggregator
                 .GetEvent<EntityFrameworkItemSelectedEvent>()
                 .Subscribe(HandleEntityFrameworkItemSelectedEvent, ThreadOption.UIThread);
-        
+
             this.eventAggregator
                 .GetEvent<ClearDataEvent>()
                 .Subscribe(HandleClearDataEvent, ThreadOption.UIThread);
         }
 
         private DelegateCommand _closeCommand = null;
+        /// <summary>
+        /// Gets the command to close the view.
+        /// </summary>
         public DelegateCommand CloseCommand =>
             _closeCommand ?? (_closeCommand = new DelegateCommand(CloseExecute));
 

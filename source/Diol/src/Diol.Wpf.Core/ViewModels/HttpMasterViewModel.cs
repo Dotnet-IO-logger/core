@@ -7,23 +7,33 @@ using System.Linq;
 
 namespace Diol.Wpf.Core.ViewModels
 {
+    /// <summary>
+    /// ViewModel for the HttpMasterView.
+    /// </summary>
     public class HttpMasterViewModel : BindableBase
     {
         private HttpService service;
         private IEventAggregator eventAggregator;
 
+        /// <summary>
+        /// Gets or sets the collection of HttpViewModels representing the HTTP logs.
+        /// </summary>
         public ObservableCollection<HttpViewModel> HttpLogs { get; private set; } =
             new ObservableCollection<HttpViewModel>();
 
         private HttpViewModel _selectedItem;
-        public HttpViewModel SelectedItem 
+
+        /// <summary>
+        /// Gets or sets the currently selected HttpViewModel.
+        /// </summary>
+        public HttpViewModel SelectedItem
         {
             get => this._selectedItem;
-            set 
+            set
             {
                 SetProperty(ref this._selectedItem, value);
 
-                if (this._selectedItem == null) 
+                if (this._selectedItem == null)
                 {
                     return;
                 }
@@ -34,6 +44,11 @@ namespace Diol.Wpf.Core.ViewModels
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpMasterViewModel"/> class.
+        /// </summary>
+        /// <param name="service">The HttpService instance.</param>
+        /// <param name="eventAggregator">The IEventAggregator instance.</param>
         public HttpMasterViewModel(
             HttpService service,
             IEventAggregator eventAggregator)
@@ -93,7 +108,7 @@ namespace Diol.Wpf.Core.ViewModels
             vm.DurationInMiliSeconds = item?.Response?.ElapsedMilliseconds;
         }
 
-        private void HandleClearDataEvent(string obj) 
+        private void HandleClearDataEvent(string obj)
         {
             this.HttpLogs.Clear();
         }

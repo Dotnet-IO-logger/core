@@ -8,12 +8,18 @@ using System.Collections.ObjectModel;
 
 namespace Diol.Wpf.Core.ViewModels
 {
+    /// <summary>
+    /// ViewModel for the AspnetDetail view.
+    /// </summary>
     public class AspnetDetailViewModel : BindableBase
     {
         private AspnetService service;
         private IEventAggregator eventAggregator;
 
         private string _uri;
+        /// <summary>
+        /// Gets or sets the URI.
+        /// </summary>
         public string Uri
         {
             get => this._uri;
@@ -21,6 +27,9 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private string _method;
+        /// <summary>
+        /// Gets or sets the HTTP method.
+        /// </summary>
         public string Method
         {
             get => this._method;
@@ -28,6 +37,9 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private string _protocol;
+        /// <summary>
+        /// Gets or sets the protocol.
+        /// </summary>
         public string Protocol
         {
             get => this._protocol;
@@ -35,6 +47,9 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private int? _statusCode;
+        /// <summary>
+        /// Gets or sets the status code.
+        /// </summary>
         public int? StatusCode
         {
             get => this._statusCode;
@@ -42,6 +57,9 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private string _requestBodyAsString;
+        /// <summary>
+        /// Gets or sets the request body as a string.
+        /// </summary>
         public string RequestBodyAsString
         {
             get => this._requestBodyAsString;
@@ -49,18 +67,32 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private string _responseBodyAsString;
+        /// <summary>
+        /// Gets or sets the response body as a string.
+        /// </summary>
         public string ResponseBodyAsString
         {
             get => this._responseBodyAsString;
             set => SetProperty(ref this._responseBodyAsString, value);
         }
 
+        /// <summary>
+        /// Gets the collection of request headers.
+        /// </summary>
         public ObservableCollection<KeyValuePair<string, string>> RequestHeaders { get; private set; } =
             new ObservableCollection<KeyValuePair<string, string>>();
 
+        /// <summary>
+        /// Gets or sets the collection of response headers.
+        /// </summary>
         public ObservableCollection<KeyValuePair<string, string>> ResponseHeaders { get; set; } =
             new ObservableCollection<KeyValuePair<string, string>>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AspnetDetailViewModel"/> class.
+        /// </summary>
+        /// <param name="service">The AspnetService instance.</param>
+        /// <param name="eventAggregator">The IEventAggregator instance.</param>
         public AspnetDetailViewModel(
             AspnetService service,
             IEventAggregator eventAggregator)
@@ -78,6 +110,9 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private DelegateCommand _closeCommand = null;
+        /// <summary>
+        /// Gets the command to close the view.
+        /// </summary>
         public DelegateCommand CloseCommand =>
             _closeCommand ?? (_closeCommand = new DelegateCommand(CloseExecute));
 
@@ -104,7 +139,7 @@ namespace Diol.Wpf.Core.ViewModels
             this.Protocol = item.Request.Protocol;
             this.StatusCode = item?.Response?.StatusCode;
 
-            if(item.Request.Metadata != null)
+            if (item.Request.Metadata != null)
             {
                 foreach (var header in item.Request.Metadata)
                 {

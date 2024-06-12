@@ -2,7 +2,6 @@
 using Diol.Aspnet.Consumers;
 using Diol.Aspnet.Hubs;
 using Diol.Core;
-using Diol.Core.TraceEventProcessors;
 using Diol.Share.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
@@ -12,8 +11,16 @@ using Microsoft.Extensions.Logging;
 
 namespace Diol.Aspnet
 {
+    /// <summary>
+    /// Provides extension methods to configure DIOL web services.
+    /// </summary>
     public static class ServiceCollection
     {
+        /// <summary>
+        /// Adds DIOL web services to the specified <see cref="IServiceCollection"/>.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+        /// <returns>The modified <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddDiolWeb(this IServiceCollection services)
         {
             services.AddLogging();
@@ -22,7 +29,7 @@ namespace Diol.Aspnet
             {
                 setting.EnableDetailedErrors = true;
             });
-            
+
             services.AddDiolCore<
                 SignalRConsumer,
                 LocalDevelopmentProcessProvider,
@@ -41,9 +48,17 @@ namespace Diol.Aspnet
         }
     }
 
-    public static class  WebApplcationCollection
+    /// <summary>
+    /// Provides extension methods to configure DIOL web application.
+    /// </summary>
+    public static class WebApplicationCollection
     {
-        public static IEndpointRouteBuilder UseDiol(this IEndpointRouteBuilder builder) 
+        /// <summary>
+        /// Maps the DIOL logs hub to the specified endpoint.
+        /// </summary>
+        /// <param name="builder">The <see cref="IEndpointRouteBuilder"/> to map the hub to.</param>
+        /// <returns>The modified <see cref="IEndpointRouteBuilder"/>.</returns>
+        public static IEndpointRouteBuilder UseDiol(this IEndpointRouteBuilder builder)
         {
             builder.MapHub<LogsHub>("/logsHub");
 

@@ -7,15 +7,25 @@ using System.Linq;
 
 namespace Diol.Wpf.Core.ViewModels
 {
+    /// <summary>
+    /// View model for the AspnetMasterView.
+    /// </summary>
     public class AspnetMasterViewModel : BindableBase
     {
         private AspnetService service;
         private IEventAggregator eventAggregator;
 
+        /// <summary>
+        /// Gets or sets the collection of AspnetViewModels.
+        /// </summary>
         public ObservableCollection<AspnetViewModel> AspnetLogs { get; private set; } =
             new ObservableCollection<AspnetViewModel>();
 
         private AspnetViewModel _selectedItem;
+
+        /// <summary>
+        /// Gets or sets the selected AspnetViewModel.
+        /// </summary>
         public AspnetViewModel SelectedItem
         {
             get => this._selectedItem;
@@ -34,6 +44,11 @@ namespace Diol.Wpf.Core.ViewModels
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AspnetMasterViewModel"/> class.
+        /// </summary>
+        /// <param name="service">The AspnetService.</param>
+        /// <param name="eventAggregator">The event aggregator.</param>
         public AspnetMasterViewModel(
             AspnetService service,
             IEventAggregator eventAggregator)
@@ -41,17 +56,17 @@ namespace Diol.Wpf.Core.ViewModels
             this.service = service;
             this.eventAggregator = eventAggregator;
 
-               this.eventAggregator
-                    .GetEvent<AspnetRequestStartedEvent>()
-                    .Subscribe(HandleAspnetRequestStartedEvent, ThreadOption.UIThread);
-    
-                this.eventAggregator
-                    .GetEvent<AspnetRequestEndedEvent>()
-                    .Subscribe(HandleAspnetRequestEndedEvent, ThreadOption.UIThread);
-    
-                this.eventAggregator
-                    .GetEvent<ClearDataEvent>()
-                    .Subscribe(HandleClearDataEvent, ThreadOption.UIThread);
+            this.eventAggregator
+                .GetEvent<AspnetRequestStartedEvent>()
+                .Subscribe(HandleAspnetRequestStartedEvent, ThreadOption.UIThread);
+
+            this.eventAggregator
+                .GetEvent<AspnetRequestEndedEvent>()
+                .Subscribe(HandleAspnetRequestEndedEvent, ThreadOption.UIThread);
+
+            this.eventAggregator
+                .GetEvent<ClearDataEvent>()
+                .Subscribe(HandleClearDataEvent, ThreadOption.UIThread);
         }
 
         private void HandleAspnetRequestStartedEvent(string obj)

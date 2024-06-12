@@ -1,19 +1,21 @@
 ﻿using Diol.Wpf.Core.Features.EntityFrameworks;
 using Prism.Events;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Diol.Wpf.Core.ViewModels
 {
+    /// <summary>
+    /// Represents the view model for the EntityFrameworkComponent.
+    /// </summary>
     public class EntityFrameworkComponentViewModel : BindableBase
     {
         private IEventAggregator eventAggregator;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EntityFrameworkComponentViewModel"/> class.
+        /// </summary>
+        /// <param name="eventAggregator">The event aggregator.</param>
         public EntityFrameworkComponentViewModel(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
@@ -24,6 +26,10 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         private GridLength _detailWidth = new GridLength(0, GridUnitType.Star);
+
+        /// <summary>
+        /// Gets or sets the width of the detail.
+        /// </summary>
         public GridLength DetailWidth
         {
             get => this._detailWidth;
