@@ -2,6 +2,7 @@
 using Diol.Core.Utils;
 using Diol.Share.Features;
 using Diol.Share.Features.EntityFrameworks;
+using Diol.Share.Services;
 using Microsoft.Diagnostics.Tracing;
 using Newtonsoft.Json;
 using System;
@@ -93,11 +94,30 @@ namespace Diol.Core.Features
             arguments.TryGetValueAndRemove("parameters", out string parameters);
             arguments.TryGetValueAndRemove("commandText", out string commandText);
 
+            var commandName = string.Empty;
+            var tableName = string.Empty;
+
+            if (!string.IsNullOrEmpty(commandText)) 
+            {
+                commandName = SqlQueryService.ExtractOperationNameFromQuery(commandText);
+                
+                if (commandName == SqlQueryService.SELECT) 
+                    tableName = SqlQueryService.ExtractTableNameFromSelectQuery(commandText);
+                else if (commandName == SqlQueryService.INSERT)
+                    tableName = SqlQueryService.ExtractTableNameFromInsertQuery(commandText);
+                else if (commandName == SqlQueryService.UPDATE)
+                    tableName = SqlQueryService.ExtractTableNameFromUpdateQuery(commandText);
+                else if (commandName == SqlQueryService.DELETE)
+                    tableName = SqlQueryService.ExtractTableNameFromDeleteQuery(commandText);
+            }
+
             return new CommandExecutingDto()
             {
                 CorrelationId = correlationId,
                 Parameters = parameters,
-                CommandText = commandText
+                CommandText = commandText,
+                OperationName = commandName,
+                TableName = tableName
             };
         }
 

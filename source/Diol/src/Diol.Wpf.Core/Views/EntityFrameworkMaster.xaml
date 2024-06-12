@@ -21,15 +21,20 @@
         HeadersVisibility="Column">
         <DataGrid.Columns>
             <DataGridTextColumn 
-                Header="Database"
+                Header="Action"
                 Width="60"
                 MinWidth="40"
-                Binding="{Binding Database}"/>
+                Binding="{Binding Operation}"/>
             <DataGridTextColumn 
-                Header="Server"
+                Header="Table"
+                Width="60"
+                MinWidth="40"
+                Binding="{Binding Table}"/>
+            <DataGridTextColumn 
+                Header="Database"
                 Width="*"
-                MinWidth="150"
-                Binding="{Binding Server}"/>
+                MinWidth="40"
+                Binding="{Binding Database}"/>
             <DataGridTextColumn 
                 Header="Duration (s)"
                 Width="100"

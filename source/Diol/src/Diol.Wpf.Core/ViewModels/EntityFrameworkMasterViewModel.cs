@@ -61,6 +61,10 @@ namespace Diol.Wpf.Core.ViewModels
                 .Subscribe(HandleEntityFrameworkConnectionStartedEvent, ThreadOption.UIThread);
 
             this.eventAggregator
+                .GetEvent<EntityFrameworkQueryExecutingEvent>()
+                .Subscribe(HandleEntityFrameworkQueryExecutingEvent, ThreadOption.UIThread);
+
+            this.eventAggregator
                 .GetEvent<EntityFrameworkConnectionEndedEvent>()
                 .Subscribe(HandleEntityFrameworkConnectionEndedEvent, ThreadOption.UIThread);
 
@@ -91,6 +95,26 @@ namespace Diol.Wpf.Core.ViewModels
             }
 
             vm.DurationInMiliSeconds = item?.CommandExecuted?.ElapsedMilliseconds;
+        }
+
+        private void HandleEntityFrameworkQueryExecutingEvent(string obj)
+        {
+            var item = this.service.GetItemOrDefault(obj);
+
+            if (item == null)
+            {
+                return;
+            }
+
+            var vm = this.EntityFrameworkLogs.FirstOrDefault(x => x.Key == item.Key);
+
+            if (vm == null)
+            {
+                return;
+            }
+
+            vm.Operation = item?.CommandExecuting?.OperationName;
+            vm.Table = item?.CommandExecuting?.TableName;
         }
 
         private void HandleEntityFrameworkConnectionStartedEvent(string obj)

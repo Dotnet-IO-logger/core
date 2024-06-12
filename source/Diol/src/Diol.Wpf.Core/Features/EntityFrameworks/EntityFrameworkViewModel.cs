@@ -43,6 +43,20 @@ namespace Diol.Wpf.Core.Features.EntityFrameworks
 
         private TimeSpan? _durationInMiliSeconds;
 
+        private string _operation;
+        public string Operation
+        {
+            get => this._operation;
+            set => SetProperty(ref this._operation, value);
+        }
+
+        private string _table;
+        public string Table
+        {
+            get => this._table;
+            set => SetProperty(ref this._table, value);
+        }
+
         /// <summary>
         /// Gets or sets the duration in milliseconds.
         /// </summary>

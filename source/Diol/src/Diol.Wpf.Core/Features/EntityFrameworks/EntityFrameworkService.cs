@@ -79,6 +79,10 @@ namespace Diol.Wpf.Core.Features.EntityFrameworks
 
             item.CommandExecuting = dto;
 
+            this.eventAggregator
+                .GetEvent<EntityFrameworkQueryExecutingEvent>()
+                .Publish(dto.CorrelationId);
+
             this.store.Update(item, dto.CorrelationId);
         }
 
