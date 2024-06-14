@@ -27,4 +27,4 @@ jobs:
 
     - name: Run Unit Tests
       run: |
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" ${{ env.TEST_PROJECT_PATH }} 
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" **/Diol.Tests.Units.dll 
