@@ -27,4 +27,7 @@ jobs:
 
     - name: Run Unit Tests
       run: |
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" **/Diol.Tests.Units.dll 
+        Get-ChildItem -Recurse -Filter Diol.Tests.Units.dll -Path source/Diol/tests/unit/Diol.Tests.Units/bin | ForEach-Object {
+          & "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" $_.FullName
+        }
+      shell: pwsh
