@@ -3,6 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace Units;
 
+/// <summary>
+/// Test class for SqlQueryParser.
+/// </summary>
 [TestClass]
 public class SqlQueryParserTest
 {
