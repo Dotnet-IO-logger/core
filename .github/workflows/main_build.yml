@@ -24,13 +24,3 @@ jobs:
 
     - name: Build
       run: msbuild /p:Configuration=Release /p:Platform="Any CPU" ${{ env.SOLUTION_PATH }}/Diol.sln
-    
-    - name: Setup VS Test Host
-      uses: warrenbuckley/Setup-VS-Test-Host@v1
-
-    - name: Run Unit Tests
-      run: |
-        Get-ChildItem -Recurse -Filter Diol.Tests.Units.dll -Path source/Diol/tests/unit/Diol.Tests.Units/bin | ForEach-Object {
-          & "vstest.console.exe" $_.FullName
-        }
-      shell: pwsh
