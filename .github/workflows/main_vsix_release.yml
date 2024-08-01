@@ -1,0 +1,27 @@
+name: main_vsix_release
+
+on:
+  pull_request:
+    branches: [ main ]
+
+env:
+  SOLUTION_PATH: source/Diol/src/Diol.sln
+  VSIX_PROJECT_PATH: source/Diol/src/applications/DiolVSIX/DiolVSIX.csproj
+  VSIX_OUTPUT_PATH: distr/diolvsix
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Restore NuGet packages
+      run: msbuild /t:restore ${{ env.SOLUTION_PATH }}
+
+    - name: Build
+      run: msbuild /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath=${{ env.VSIX_OUTPUT_PATH }} ${{ env.VSIX_PROJECT_PATH }}
