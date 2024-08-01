@@ -1,19 +1,24 @@
 {
+    "$schema": "http://json.schemastore.org/vsix-publish",
     "categories": ["Coding", "Other", "Testing"],
-    "displayName": "Diol",
-    "description": "Dotnet Input-Output Logger (Diol) is a free and open-source tool you can easily see and explore logs during debugging your dotnet application in real time.",
-    "version": "1.7",
-    "publisher": {
-        "name": "Diol devs",
-        "displayName": "Diol devs",
-        "email": "olzhabaev.sh@outlook.com"
+    "identity": {
+        "displayName": "Diol",
+        "description": "Dotnet Input-Output Logger (Diol) is a free and open-source tool you can easily see and explore logs during debugging your dotnet application in real time.",
+        "icon": "Resources/logo.png",
+        "installTargets": [{
+            "sku": "Microsoft.VisualStudio.Community",
+            "version": "[17.0, 18.0)"
+        }],
+        "internalName": "Diol",
+        "language": "en-US",
+        "tags": ["Visual Studio", "logger", "aspnetcore", "entityframework", "http"],
+        "version": "1.7",
+        "vsixId": "DiolVSIX.66bbb016-3110-40f6-a936-35f914a663e3"
     },
-    "links": {
-        "repository": "https://github.com/Dotnet-IO-logger/core",
-        "license": "https://github.com/Dotnet-IO-logger/core/blob/main/LICENSE",
-        "homepage": "https://github.com/Dotnet-IO-logger/core/wiki"
-    },
-    "tags": ["Visual Studio", "logger", "aspnetcore", "entityframework", "http"],
-    "icon": "Resources/logo.png",
-    "installationTarget": ["Microsoft.VisualStudio.Community", "Version=\"[17.0, 18.0)\""]
+    "overview": "Readme.md",
+    "priceCategory": "free",
+    "publisher": "Diol devs",
+    "private": false,
+    "qna": true,
+    "repo": "https://github.com/cezarypiatek/MappingGenerator"
 }
