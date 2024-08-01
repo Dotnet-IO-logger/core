@@ -7,7 +7,7 @@ on:
 env:
   SOLUTION_PATH: source/Diol/Diol.sln
   VSIX_PROJECT_PATH: source/Diol/src/applications/DiolVSIX/DiolVSIX.csproj
-  VSIX_OUTPUT_PATH: distr/diolvsix
+  VSIX_OUTPUT_PATH: distr/diol
 
 jobs:
   build:
@@ -24,4 +24,11 @@ jobs:
       run: msbuild /t:restore ${{ env.SOLUTION_PATH }}
 
     - name: Build
-      run: msbuild /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath=${{ env.VSIX_OUTPUT_PATH }} ${{ env.VSIX_PROJECT_PATH }}
+      run: msbuild /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath=${{ github.workspace }}/${{ env.VSIX_OUTPUT_PATH }} ${{ env.VSIX_PROJECT_PATH }}
+    
+    - name: Publish extension to Marketplace
+      run: |
+        echo "$(VsixPublisher.exe publish -payload \"${{ github.workspace }}/${{ env.VSIX_OUTPUT_PATH }}/DiolVSIX.vsix\" -publishManifest \"${{ github.workspace }}/${{ env.VSIX_OUTPUT_PATH }}/publishManifest.json\" -personalAccessToken ${{ secrets.VS_PUBLISHER_ACCESS_TOKEN }})"
+      env:
+        VS_PUBLISHER_ACCESS_TOKEN: ${{ secrets.VS_PUBLISHER_ACCESS_TOKEN }}
+    

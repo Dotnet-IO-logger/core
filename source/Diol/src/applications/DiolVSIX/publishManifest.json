@@ -1,0 +1,19 @@
+{
+    "categories": ["Coding", "Other", "Testing"],
+    "displayName": "Diol",
+    "description": "Dotnet Input-Output Logger (Diol) is a free and open-source tool you can easily see and explore logs during debugging your dotnet application in real time.",
+    "version": "1.7",
+    "publisher": {
+        "name": "Diol devs",
+        "displayName": "Diol devs",
+        "email": "olzhabaev.sh@outlook.com"
+    },
+    "links": {
+        "repository": "https://github.com/Dotnet-IO-logger/core",
+        "license": "https://github.com/Dotnet-IO-logger/core/blob/main/LICENSE",
+        "homepage": "https://github.com/Dotnet-IO-logger/core/wiki"
+    },
+    "tags": ["Visual Studio", "logger", "aspnetcore", "entityframework", "http"],
+    "icon": "Resources/logo.png",
+    "installationTarget": ["Microsoft.VisualStudio.Community", "Version=\"[17.0, 18.0)\""]
+}
