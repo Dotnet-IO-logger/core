@@ -3,6 +3,8 @@ name: main_build
 on:
   pull_request:
     branches: [ main ]
+    paths:
+      - 'source/**'
 
 env:
   SOLUTION_PATH: source/Diol/Diol.sln
