@@ -5,8 +5,7 @@ on:
     branches: [ main ]
 
 env:
-  SOLUTION_PATH: source/Diol
-  TEST_PROJECT_PATH: tests/unit/Diol.Tests.Units/bin/Release/net48/Diol.Tests.Units.dll
+  SOLUTION_PATH: source/Diol/Diol.sln
 
 jobs:
   build:
@@ -23,4 +22,4 @@ jobs:
       run: msbuild /t:restore ${{ env.SOLUTION_PATH }}
 
     - name: Build
-      run: msbuild /p:Configuration=Release /p:Platform="Any CPU" ${{ env.SOLUTION_PATH }}/Diol.sln
+      run: msbuild /p:Configuration=Release /p:Platform="Any CPU" ${{ env.SOLUTION_PATH }}
