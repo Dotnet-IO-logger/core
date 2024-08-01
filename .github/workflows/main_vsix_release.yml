@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 env:
-  SOLUTION_PATH: source/Diol/src/Diol.sln
+  SOLUTION_PATH: source/Diol/Diol.sln
   VSIX_PROJECT_PATH: source/Diol/src/applications/DiolVSIX/DiolVSIX.csproj
   VSIX_OUTPUT_PATH: distr/diolvsix
 
