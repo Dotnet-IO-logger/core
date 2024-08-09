@@ -30,5 +30,10 @@
 
         /// <inheritdoc/>
         public override string EventName => nameof(CommandExecutingDto);
+
+        /// <summary>
+        /// Flag is the query is a part of a transaction.
+        /// </summary>
+        public bool IsTransaction { get; set; }
     }
 }

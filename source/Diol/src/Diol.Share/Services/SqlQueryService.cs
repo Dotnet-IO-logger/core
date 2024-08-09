@@ -107,5 +107,15 @@ namespace Diol.Share.Services
 
             return string.Empty;
         }
+
+        /// <summary>
+        /// Check if the query is a part of a transaction.
+        /// </summary>
+        /// <param name="sqlQuery"></param>
+        /// <returns></returns>
+        public static bool IsTransaction(string sqlQuery) 
+        {
+            return sqlQuery.Contains("IMPLICIT_TRANSACTIONS");
+        }
     }
 }

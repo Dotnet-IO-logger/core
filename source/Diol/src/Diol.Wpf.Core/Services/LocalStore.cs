@@ -47,7 +47,7 @@ namespace Diol.Wpf.Core.Services
         private Dictionary<string, TEntity> store = new Dictionary<string, TEntity>();
 
         /// <inheritdoc/>
-        public string Add(TEntity entity, string key)
+        public virtual string Add(TEntity entity, string key)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -58,7 +58,7 @@ namespace Diol.Wpf.Core.Services
         }
 
         /// <inheritdoc/>
-        public TEntity GetItemOrDefault(string id)
+        public virtual TEntity GetItemOrDefault(string id)
         {
             if (!string.IsNullOrEmpty(id) && this.store.ContainsKey(id))
             {
@@ -68,7 +68,7 @@ namespace Diol.Wpf.Core.Services
         }
 
         /// <inheritdoc/>
-        public string Update(TEntity entity, string key)
+        public virtual string Update(TEntity entity, string key)
         {
             if (this.store.ContainsKey(key))
             {
