@@ -18,7 +18,6 @@ namespace Diol.Wpf.Core.ViewModels
     {
         private IProcessProvider dotnetService;
         private IEventAggregator eventAggregator;
-        private IApplicationStateService applicationStateService;
         private DiolExecutor diolExecutor;
 
         /// <summary>
@@ -26,19 +25,16 @@ namespace Diol.Wpf.Core.ViewModels
         /// </summary>
         /// <param name="dotnetService">The dotnet service.</param>
         /// <param name="eventAggregator">The event aggregator.</param>
-        /// <param name="applicationStateService">The application state service.</param>
         /// <param name="diolExecutor">The Diol executor.</param>
         public MainComponentViewModel(
             IProcessProvider dotnetService,
             IEventAggregator eventAggregator,
-            IApplicationStateService applicationStateService,
             DiolExecutor diolExecutor)
         {
             this.diolExecutor = diolExecutor;
             this.dotnetService = dotnetService;
 
             this.eventAggregator = eventAggregator;
-            this.applicationStateService = applicationStateService;
 
             this.eventAggregator
                 .GetEvent<DebugModeRunnedEvent>()
@@ -51,8 +47,6 @@ namespace Diol.Wpf.Core.ViewModels
             this.eventAggregator
                 .GetEvent<ProcessFinished>()
                 .Subscribe(ProcessFinishedEventHandler, ThreadOption.UIThread);
-
-            this.applicationStateService.Subscribe();
 
             CanProcess(true);
 
