@@ -1,11 +1,16 @@
 ﻿using Diol.Share.Features.Httpclients;
 using Diol.Wpf.Core.Features.Https;
 using Diol.Wpf.Core.Features.Shared;
+using Diol.Wpf.Core.Services;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Diol.Wpf.Core.ViewModels
 {
@@ -49,6 +54,8 @@ namespace Diol.Wpf.Core.ViewModels
         public ObservableCollection<KeyValuePair<string, string>> ResponseHeaders { get; set; } =
             new ObservableCollection<KeyValuePair<string, string>>();
 
+        public ICommand CopyCommand { get; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpDetailViewModel"/> class.
         /// </summary>
@@ -68,6 +75,8 @@ namespace Diol.Wpf.Core.ViewModels
             this.eventAggregator
                 .GetEvent<ClearDataEvent>()
                 .Subscribe(HandleClearDataEvent, ThreadOption.UIThread);
+
+            this.CopyCommand = new RelayCommand(CopySelectedData);
         }
 
         private DelegateCommand _closeCommand = null;
@@ -121,6 +130,19 @@ namespace Diol.Wpf.Core.ViewModels
                 {
                     this.ResponseHeaders.Add(new KeyValuePair<string, string>(header.Key, header.Value));
                 }
+            }
+        }
+
+        private void CopySelectedData(object parameter)
+        {
+            if (parameter is DataGrid dataGrid && dataGrid.SelectedItems != null)
+            {
+                var sb = new StringBuilder();
+                foreach (var item in dataGrid.SelectedItems)
+                {
+                    sb.AppendLine(item.ToString());
+                }
+                Clipboard.SetText(sb.ToString());
             }
         }
     }

@@ -24,7 +24,8 @@
         <GridSplitter 
             Grid.Column="1"
             Width="5"
-            HorizontalAlignment="Stretch"/>
+            HorizontalAlignment="Stretch"
+            IsEnabled="False"/>
 
         <local:EntityFrameworkDetail Grid.Column="2" />
     </Grid>

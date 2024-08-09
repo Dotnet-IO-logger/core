@@ -18,15 +18,16 @@
                 x:Name="cd_detail"
                 Width="{Binding DetailWidth}" />
         </Grid.ColumnDefinitions>
-        
+
         <local:HttpMaster Grid.Column="0"/>
-        
+
         <GridSplitter 
             Grid.Column="1"
             Width="5"
-            HorizontalAlignment="Stretch"/>
+            HorizontalAlignment="Stretch" 
+            IsEnabled="False"/>
 
-        <local:HttpDetail Grid.Column="2" />
+        <local:HttpDetail Grid.Column="2"/>
 
     </Grid>
 </UserControl>

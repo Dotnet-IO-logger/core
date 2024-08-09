@@ -19,7 +19,6 @@
                     Command="{Binding CloseCommand}"
                     FontFamily="Segoe UI Symbol"
                     Content="&#xE10A;" />
-
                 <GroupBox
                     Header="General">
                     <StackPanel>
@@ -41,25 +40,49 @@
                             IsReadOnly="True" />
                     </StackPanel>
                 </GroupBox>
-
                 <GroupBox
                     Header="Request headers">
                     <DataGrid
                         ItemsSource="{Binding RequestHeaders}"
                         AutoGenerateColumns="False"
                         IsReadOnly="True"
-                        HeadersVisibility="None">
+                        HeadersVisibility="None"
+                        ScrollViewer.CanContentScroll="False"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                         <DataGrid.Columns>
-                            <DataGridTextColumn 
+                            <DataGridTemplateColumn
                                 Header="Key"
                                 Width="auto" 
-                                MinWidth="70"
-                                Binding="{Binding Key}"/>
-                            <DataGridTextColumn 
-                                Header="Value"
-                                Width="*"
-                                Binding="{Binding Value}"/>
+                                MaxWidth="70">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Text="{Binding Key}"
+                                            TextWrapping="Wrap"
+                                            FontWeight="Bold"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Header="Key"
+                                Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Text="{Binding Value}"
+                                            TextWrapping="Wrap"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
+                        <DataGrid.InputBindings>
+                            <KeyBinding 
+                                Key="C"
+                                Modifiers="Ctrl"
+                                Command="{Binding CopyCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                        </DataGrid.InputBindings>
                     </DataGrid>
                 </GroupBox>
 
@@ -80,18 +103,43 @@
                         ItemsSource="{Binding ResponseHeaders}"
                         AutoGenerateColumns="False"
                         IsReadOnly="True"
-                        HeadersVisibility="None">
+                        HeadersVisibility="None"
+                        ScrollViewer.CanContentScroll="False"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                         <DataGrid.Columns>
-                            <DataGridTextColumn 
+                            <DataGridTemplateColumn
                                 Header="Key"
                                 Width="auto" 
-                                MinWidth="70"
-                                Binding="{Binding Key}"/>
-                            <DataGridTextColumn 
-                                Header="Value"
-                                Width="*"
-                                Binding="{Binding Value}"/>
+                                MaxWidth="70">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Text="{Binding Key}"
+                                            TextWrapping="Wrap" 
+                                            FontWeight="Bold"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Header="Key"
+                                Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Text="{Binding Value}"
+                                            TextWrapping="Wrap"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
+                        <DataGrid.InputBindings>
+                            <KeyBinding 
+                                Key="C"
+                                Modifiers="Ctrl"
+                                Command="{Binding CopyCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                        </DataGrid.InputBindings>
                     </DataGrid>
                 </GroupBox>
 
