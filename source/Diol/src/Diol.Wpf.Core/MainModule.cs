@@ -16,11 +16,8 @@ namespace Diol.Wpf.Core
         /// <param name="containerProvider">The container provider.</param>
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            var applicationStateService = containerProvider.Resolve<IApplicationStateService>();
-            applicationStateService.Subscribe();
-
             var regionManager = containerProvider.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion("MainRegion", typeof(Views.WelcomeComponent));
+            regionManager.RegisterViewWithRegion("MainRegion", typeof(Views.MainComponent));
         }
 
         /// <summary>

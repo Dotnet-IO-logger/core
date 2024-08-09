@@ -18,6 +18,7 @@ namespace Diol.Wpf.Core.ViewModels
     {
         private IProcessProvider dotnetService;
         private IEventAggregator eventAggregator;
+        private IApplicationStateService applicationStateService;
         private DiolExecutor diolExecutor;
 
         /// <summary>
@@ -29,11 +30,12 @@ namespace Diol.Wpf.Core.ViewModels
         public MainComponentViewModel(
             IProcessProvider dotnetService,
             IEventAggregator eventAggregator,
+            IApplicationStateService applicationStateService,
             DiolExecutor diolExecutor)
         {
             this.diolExecutor = diolExecutor;
             this.dotnetService = dotnetService;
-
+            this.applicationStateService = applicationStateService;
             this.eventAggregator = eventAggregator;
 
             this.eventAggregator
@@ -49,6 +51,8 @@ namespace Diol.Wpf.Core.ViewModels
                 .Subscribe(ProcessFinishedEventHandler, ThreadOption.UIThread);
 
             CanProcess(true);
+
+            this.applicationStateService.Subscribe();
 
             this.DebugMenuItemVisibility = Visibility.Hidden;
 
