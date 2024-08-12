@@ -18,39 +18,40 @@
         IsReadOnly="True"
         HorizontalScrollBarVisibility="Visible"
         HeadersVisibility="Column">
-        <DataGrid.RowStyle>
-            <Style TargetType="DataGridRow">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding Method}" Value="GET">
-                        <Setter Property="Background" Value="#61affe"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Method}" Value="POST">
-                        <Setter Property="Background" Value="#49cc90"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Method}" Value="PUT">
-                        <Setter Property="Background" Value="#fca130"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Method}" Value="DELETE">
-                        <Setter Property="Background" Value="#f93e3e"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Method}" Value="PATCH">
-                        <Setter Property="Background" Value="#50e3c2"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Method}" Value="HEAD">
-                        <Setter Property="Background" Value="#800080"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Method}" Value="OPTIONS">
-                        <Setter Property="Background" Value="#008080"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </DataGrid.RowStyle>
         <DataGrid.Columns>
             <DataGridTextColumn 
                 Header="Method"
                 Width="60"
                 MinWidth="40"
-                Binding="{Binding Method}" />
+                Binding="{Binding Method}">
+                <DataGridTextColumn.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Method}" Value="GET">
+                                <Setter Property="Background" Value="#61affe"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Method}" Value="POST">
+                                <Setter Property="Background" Value="#49cc90"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Method}" Value="PUT">
+                                <Setter Property="Background" Value="#fca130"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Method}" Value="DELETE">
+                                <Setter Property="Background" Value="#f93e3e"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Method}" Value="PATCH">
+                                <Setter Property="Background" Value="#50e3c2"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Method}" Value="HEAD">
+                                <Setter Property="Background" Value="#800080"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Method}" Value="OPTIONS">
+                                <Setter Property="Background" Value="#008080"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGridTextColumn.CellStyle>
+            </DataGridTextColumn>
             <DataGridTextColumn 
                 Header="Uri"
                 Width="*"
@@ -60,7 +61,20 @@
                 Header="Status"
                 Width="60"
                 MinWidth="40"
-                Binding="{Binding ResponseStatusCode}" />
+                Binding="{Binding ResponseStatusCode}">
+                <DataGridTextColumn.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ResponseStatusCode}" Value="200">
+                                <Setter Property="Background" Value="#49cc90"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ResponseStatusCode}" Value="500">
+                                <Setter Property="Background" Value="#f93e3e"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGridTextColumn.CellStyle>
+            </DataGridTextColumn>
             <DataGridTextColumn 
                 Header="Duration (s)"
                 Width="100"

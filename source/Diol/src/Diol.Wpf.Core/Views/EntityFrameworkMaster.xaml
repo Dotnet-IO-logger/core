@@ -19,30 +19,31 @@
         IsReadOnly="True"
         HorizontalScrollBarVisibility="Visible"
         HeadersVisibility="Column">
-        <DataGrid.RowStyle>
-            <Style TargetType="DataGridRow">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding Method}" Value="SELECT">
-                        <Setter Property="Background" Value="#61affe"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Method}" Value="INSERT">
-                        <Setter Property="Background" Value="#49cc90"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Method}" Value="UPDATE">
-                        <Setter Property="Background" Value="#fca130"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Method}" Value="DELETE">
-                        <Setter Property="Background" Value="#f93e3e"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </DataGrid.RowStyle>
         <DataGrid.Columns>
             <DataGridTextColumn 
                 Header="Action"
                 Width="60"
                 MinWidth="40"
-                Binding="{Binding Operation}"/>
+                Binding="{Binding Operation}">
+                <DataGridTextColumn.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Operation}" Value="SELECT">
+                                <Setter Property="Background" Value="#61affe"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Operation}" Value="INSERT">
+                                <Setter Property="Background" Value="#49cc90"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Operation}" Value="UPDATE">
+                                <Setter Property="Background" Value="#fca130"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Operation}" Value="DELETE">
+                                <Setter Property="Background" Value="#f93e3e"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGridTextColumn.CellStyle>
+            </DataGridTextColumn>
             <DataGridTextColumn 
                 Header="Table"
                 Width="60"
