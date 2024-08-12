@@ -25,3 +25,18 @@ jobs:
 
     - name: Build
       run: msbuild /p:Configuration=Release /p:Platform="Any CPU" ${{ env.SOLUTION_PATH }}
+      
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+        
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal --logger trx --results-directory TestResults ${{ env.SOLUTION_PATH }}
+      
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: Test Results
+        path: TestResults/*.trx
+        reporter: dotnet-trx
