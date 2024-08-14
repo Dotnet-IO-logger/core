@@ -1,4 +1,9 @@
-﻿$packageName = 'DiolBackendService'
+﻿# if you want to use the tool from nuget feed:
+dotnet nuget add source --username [GithubUserName] --password [YourApiKey] --name github-diol https://nuget.pkg.github.com/Dotnet-IO-logger/index.json
+dotnet tool install -g DiolBackendService
+
+# if you want to install it locally
+$packageName = 'DiolBackendService'
 $packagePath = '.\distrib\release\DiolBackendService'
 
 $csProjPath = '.\DiolBackendService.csproj'
