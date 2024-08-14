@@ -6,7 +6,7 @@ on:
 env:
   CSPROJ_PATH: 'source/Diol/src/applications/DiolBackendService/DiolBackendService.csproj'
   NUPKGNAME: 'DiolBackendService'
-  DISTR_PATH: ${{ github.workspace }}/distr
+  DISTR_PATH: ${{ github.workspace }}\distr
 
 jobs:
   build:
@@ -32,5 +32,5 @@ jobs:
     - name: Push
       run: |
         dotnet nuget add source https://nuget.pkg.github.com/Dotnet-IO-logger/index.json --name github --username Dotnet-IO-logger --password ${{ secrets.GITHUB_TOKEN }}
-        dotnet nuget push "${{ env.DISTR_PATH }}/*.nupkg" --source "https://nuget.pkg.github.com/Dotnet-IO-logger/index.json"
+        dotnet nuget push "${{ env.DISTR_PATH }}\*.nupkg" --source "https://nuget.pkg.github.com/Dotnet-IO-logger/index.json"
 
