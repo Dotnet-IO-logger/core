@@ -1,10 +1,10 @@
-name: DiolBackendService Release
+name: Main DiolBackendService Release
 
 on:
   workflow_dispatch:
 
 env:
-  CSPROJ_PATH: 'source/src/applications/DiolBackendService/DiolBackendService.csproj'
+  CSPROJ_PATH: 'source/Diol/src/applications/DiolBackendService/DiolBackendService.csproj'
   NUPKGNAME: 'DiolBackendService'
   DISTR_PATH: ${{ github.workspace }}/distr
 
