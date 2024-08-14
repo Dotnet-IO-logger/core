@@ -25,10 +25,12 @@ jobs:
       run: dotnet build ${{ env.CSPROJ_PATH }} --configuration Release
       
     - name: Pack
-      run: dotnet pack ${{ env.CSPROJ_PATH }} --configuration Release --output ${{ env.DISTR_PATH }}
+      run: | 
+        dotnet pack ${{ env.CSPROJ_PATH }} --configuration Release --output ${{ env.DISTR_PATH }}
+        ls ${{ env.DISTR_PATH }}
     
     - name: Push
       run: |
         dotnet nuget add source https://nuget.pkg.github.com/Dotnet-IO-logger/index.json --name github --username Dotnet-IO-logger --password ${{ secrets.GITHUB_TOKEN }}
-        dotnet nuget push "nupkgs/*.nupkg" --source "https://nuget.pkg.github.com/Dotnet-IO-logger/index.json"
+        dotnet nuget push "${{ env.DISTR_PATH }}/*.nupkg" --source "https://nuget.pkg.github.com/Dotnet-IO-logger/index.json"
 
