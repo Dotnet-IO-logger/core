@@ -9,33 +9,39 @@
 </head>
 <body>
 
-    <h1>Welcome to Diol signal r client</h1>
-
     <section>
-
-        <p>Before starting we need to connect to signal R hub.</p>
-
-        <button id="btn_connect_to_signalr"
-                onclick="connectToSignalR()">
-            Connect to signal r
-        </button>
-        <span id="status_span"></span>
-
+        <h1>Welcome to Diol signal r client</h1>
     </section>
 
     <section>
 
-        <p>Then, we need to connect to the process by id. You can find an id by specific endpoint.</p>
+        <h2>Connect to a process</h2>
 
-        <input id="processId" type="text" />
-        <button id="btn_connect_to_process"
-                onclick="connectToProcess()">
-            Connect to the process
-        </button>
+        <div>
+            <p>Before starting we need to connect to signal R hub.</p>
+
+            <button id="btn_connect_to_signalr"
+                    onclick="connectToSignalR()">
+                Connect to signal r
+            </button>
+            <span id="status_span"></span>
+
+        </div>
+        
+        <div>
+            <p>Then, we need to connect to the process by id. You can find an id by specific endpoint.</p>
+
+            <input id="processId" type="text" />
+            <button id="btn_connect_to_process"
+                    onclick="connectToProcess()">
+                Connect to the process
+            </button>
+        </div>
     </section>
 
     <section>
-        <p>Now new data should come. you can always clear the table</p>
+
+        <h2>Logs</h2>
 
         <button id="btn_clear"
                 onclick="refreshTable()">
