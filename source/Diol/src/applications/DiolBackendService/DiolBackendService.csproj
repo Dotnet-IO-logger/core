@@ -8,6 +8,12 @@
     <IsPackable>true</IsPackable>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>DiolBackendService</ToolCommandName>
+    <PackageId>DiolBackendService</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Diol devs</Authors>
+    <Company>Diol devs</Company>
+    <PackageDescription>DiolBackendService provides DIOL logic without UX</PackageDescription>
+    <RepositoryUrl>https://github.com/Dotnet-IO-logger/core</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,9 +30,5 @@
     <None Update="ReadME.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="distrib\" />
   </ItemGroup>
 </Project>
