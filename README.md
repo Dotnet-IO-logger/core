@@ -2,28 +2,23 @@
 
 ![diol-main-banner](/content/images/diol-main-banner.png)
 
-`D`otnet `I`nput-`O`utput `L`ogger (`Diol`) is a free and open-source tool created by dotnet.
+Dotnet Input-Output Logger (`Diol`) is a **free** and **open-source** Visual Studio extension created by dotnet.
 
 With `Diol` you can easily see and explore logs during debugging your `dotnet` application in real time.
 
-Let's say **stop** for tons of log messages in our code!
+**Stop** making tons of log messages in our code!
 
 ## Features
 
 * **99.9%** zero touch approach. Just plug and play!
-* **No need** to install any external dependencies to your project
-* **No need** to modify your existing code
+* **No need** to install any external dependencies to your project or modify your soruce code
 * Supports next log types:
-    * **Http** requests and responces
-    * **Aspnet core** (controllers and minimal API)
-    * **SQL** (Entity Framework) 
+    * **HttpClient** requests and responces
+    * **Aspnet core** controllers and minimal API
+    * **SQL** via Entity Framework
     * **Web sockets & SignalR** (comming soon)
     * **gRPC** (comming soon)
 * 3rd party **SDK** can be integrated as well (_1_)
-
-### Additional feature
-
-Our backend service is available for you to integrate with your own UI app. It's free and easy to use, and it offers many features and benefits. To learn more, please visit [diol backend service doc](https://github.com/Dotnet-IO-logger/core/wiki/1.-Diol-backend-service).
 
 ## How to use
 
@@ -37,11 +32,28 @@ We have a [guide](https://github.com/Dotnet-IO-logger/core/wiki/1.-Getting-start
 
 ### DEMOs
 
-We prepared **5 minute** demo projects for each DIOL feature you may want to check:
+We have prepared DEMOs on how to set up and use DIOL, and we’ve divided them by areas.
 
-* [HttpClient demo](https://github.com/Dotnet-IO-logger/Playground/tree/main/source/Diol.Demo/src/Example1HttpLoggingSample)
-* [AspNET endpoints demo](https://github.com/Dotnet-IO-logger/Playground/tree/main/source/Diol.Demo/src/Example2AspnetEndpointLoggingSample)
-* **EntityFramework demo** is comming soon...
+The DEMOs are pre-set and straightforward.
+
+You don’t need to create anything from scratch or write any code.
+
+Please feel free to use them for your personal learning or for making DEMO for your audience.
+
+| Name | Duration | Description |
+| :--- | :--- | :--- |
+| [HttpClient demo](https://github.com/Dotnet-IO-logger/Playground/tree/main/source/Diol.Demo/src/Example1HttpLoggingSample) | ~5 minutes | How to setup DIOL to for HttpClient logs |
+| [AspNET endpoints demo](https://github.com/Dotnet-IO-logger/Playground/tree/main/source/Diol.Demo/src/Example2AspnetEndpointLoggingSample) | ~5 minutes | How to setup DIOL for asp.net endpoints and controllers logs |
+| **EntityFramework** | x | Comming soon... |
+
+## Additional feature
+
+In case if you want to reuse DIOL logic for your application you may want to check [diol backend service doc](https://github.com/Dotnet-IO-logger/core/wiki/1.-Diol-backend-service).
+
+Highlights:
+
+* **Easy to install**: Distributed as a dotnet cli command. Can be installed via `dotnet isntall` command
+* **SignalR service**: Supports realtime notification for each log
 
 ## Feedback and contribution
 
