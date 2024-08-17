@@ -35,6 +35,14 @@ We have a [guide](https://github.com/Dotnet-IO-logger/core/wiki/1.-Getting-start
 
 ![main](/content/screenshots/main.png)
 
+### DEMOs
+
+We prepared **5 minute** demo projects for each DIOL feature you may want to check:
+
+* [HttpClient demo](https://github.com/Dotnet-IO-logger/Playground/tree/main/source/Diol.Demo/src/Example1HttpLoggingSample)
+* [AspNET endpoints demo](https://github.com/Dotnet-IO-logger/Playground/tree/main/source/Diol.Demo/src/Example2AspnetEndpointLoggingSample)
+* **EntityFramework demo** is comming soon...
+
 ## Feedback and contribution
 
 Please feel free to reach out our Wiki to find more information
