@@ -19,6 +19,9 @@ public class SqlQueryParserTest
     [DataRow(
         "SELECT [p].[Id], [p].[CategoryId], [p].[Name]\r\nFROM [Products] AS [p]",
         "Products")]
+    [DataRow(
+        "SELECT \"c\".\"Id\", \"c\".\"Name\", \"c\".\"State\"\r\nFROM \"Categories\" AS \"c\"",
+        "Categories")]
     public void TestExtractTableNameFromSelectQuery(string sqlQuery, string expectedTableName)
     {
         var res = SqlQueryService.ExtractTableNameFromSelectQuery(sqlQuery);
@@ -33,6 +36,9 @@ public class SqlQueryParserTest
     [DataRow(
         "SET IMPLICIT_TRANSACTIONS OFF;\r\nSET NOCOUNT ON;\r\nINSERT INTO [Products] ([CategoryId], [Name])\r\nOUTPUT INSERTED.[Id]\r\nVALUES (@p0, @p1);",
         "Products")]
+    [DataRow(
+        "INSERT INTO \"EventLogs\" (\"EventNameId\")\r\nVALUES (@p0)\r\nRETURNING \"Id\";",
+        "EventLogs")]
     public void TestExtractTableNameFromInsertQuery(string sqlQuery, string expectedTableName)
     {
         var res = SqlQueryService.ExtractTableNameFromInsertQuery(sqlQuery);
