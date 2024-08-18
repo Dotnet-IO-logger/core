@@ -24,7 +24,7 @@ namespace Diol.Share.Services
         public static string ExtractTableNameFromSelectQuery(string sqlQuery)
         {
             string pattern = @"FROM\s+\[?(\w+)\]?";
-            Match match = Regex.Match(sqlQuery, pattern, RegexOptions.IgnoreCase);
+            Match match = Regex.Match(NormalizeQuery(sqlQuery), pattern, RegexOptions.IgnoreCase);
 
             if (match.Success)
             {
@@ -42,7 +42,7 @@ namespace Diol.Share.Services
         public static string ExtractTableNameFromInsertQuery(string sqlQuery)
         {
             string pattern = @"INTO\s+\[?(\w+)\]?";
-            Match match = Regex.Match(sqlQuery, pattern, RegexOptions.IgnoreCase);
+            Match match = Regex.Match(NormalizeQuery(sqlQuery), pattern, RegexOptions.IgnoreCase);
 
             if (match.Success)
             {
@@ -60,7 +60,7 @@ namespace Diol.Share.Services
         public static string ExtractTableNameFromUpdateQuery(string sqlQuery)
         {
             string pattern = @"UPDATE\s+\[?(\w+)\]?";
-            Match match = Regex.Match(sqlQuery, pattern, RegexOptions.IgnoreCase);
+            Match match = Regex.Match(NormalizeQuery(sqlQuery), pattern, RegexOptions.IgnoreCase);
 
             if (match.Success)
             {
@@ -78,7 +78,7 @@ namespace Diol.Share.Services
         public static string ExtractTableNameFromDeleteQuery(string sqlQuery)
         {
             string pattern = @"FROM\s+\[?(\w+)\]?";
-            Match match = Regex.Match(sqlQuery, pattern, RegexOptions.IgnoreCase);
+            Match match = Regex.Match(NormalizeQuery(sqlQuery), pattern, RegexOptions.IgnoreCase);
 
             if (match.Success)
             {
@@ -95,7 +95,7 @@ namespace Diol.Share.Services
         /// <returns>The operation name.</returns>
         public static string ExtractOperationNameFromQuery(string sqlQuery)
         {
-            var splitedQuery = sqlQuery.ToUpperInvariant().Split('\n', ' ');
+            var splitedQuery = NormalizeQuery(sqlQuery).ToUpperInvariant().Split('\n', ' ');
 
             foreach (var item in splitedQuery)
             {
@@ -116,6 +116,15 @@ namespace Diol.Share.Services
         public static bool IsTransaction(string sqlQuery) 
         {
             return sqlQuery.Contains("IMPLICIT_TRANSACTIONS");
+        }
+
+        private static string NormalizeQuery(string sqlQuery)
+        {
+            string pattern = "\"([^\"]*)\"";
+            string replacement = "[$1]";
+            string result = Regex.Replace(sqlQuery, pattern, replacement);
+
+            return result;
         }
     }
 }
