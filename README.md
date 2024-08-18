@@ -22,7 +22,7 @@ With `Diol` you can easily see and explore logs during debugging your `dotnet` a
 
 ## How to use
 
-We have a [guide](https://github.com/Dotnet-IO-logger/core/wiki/1.-Getting-started-guide) how to install and use `Diol` but in short:
+We have a [guide](https://github.com/Dotnet-IO-logger/core/wiki) how to install and use `Diol` but in short:
 
 1. Start debugging your dotnet application
 2. Call your endpoint
