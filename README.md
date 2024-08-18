@@ -44,7 +44,7 @@ Please feel free to use them for your personal learning or for making DEMO for y
 | :--- | :--- | :--- |
 | [HttpClient demo](https://github.com/Dotnet-IO-logger/Playground/tree/main/source/Diol.Demo/src/Example1HttpLoggingSample) | ~5 minutes | How to setup DIOL to for HttpClient logs |
 | [AspNET endpoints demo](https://github.com/Dotnet-IO-logger/Playground/tree/main/source/Diol.Demo/src/Example2AspnetEndpointLoggingSample) | ~5 minutes | How to setup DIOL for asp.net endpoints and controllers logs |
-| **EntityFramework** | x | Comming soon... |
+| [EntityFramework demo](https://github.com/Dotnet-IO-logger/Playground/tree/main/source/Diol.Demo/src/Example3EntityFrameworkLoggingSample) | ~15 minutes | How to setup DIOL for EntityFramework logs |
 
 ## Additional feature
 
