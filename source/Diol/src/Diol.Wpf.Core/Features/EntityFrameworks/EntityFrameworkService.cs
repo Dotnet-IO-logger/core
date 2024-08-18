@@ -2,6 +2,7 @@
 using Diol.Share.Features.EntityFrameworks;
 using Diol.Wpf.Core.Services;
 using Prism.Events;
+using System.Collections.Generic;
 
 namespace Diol.Wpf.Core.Features.EntityFrameworks
 {
@@ -12,6 +13,8 @@ namespace Diol.Wpf.Core.Features.EntityFrameworks
     {
         private readonly IStore<EntityFrameworkModel> store;
         private readonly IEventAggregator eventAggregator;
+
+        private readonly Dictionary<string, int> multipleQueries = new Dictionary<string, int>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EntityFrameworkService"/> class.
@@ -33,6 +36,11 @@ namespace Diol.Wpf.Core.Features.EntityFrameworks
         /// <returns>The Entity Framework model item with the specified key, or the default value if not found.</returns>
         public EntityFrameworkModel GetItemOrDefault(string key)
         {
+            if (this.multipleQueries.Count >= 128) 
+            {
+                this.multipleQueries.Clear();
+            }
+
             return this.store.GetItemOrDefault(key);
         }
 
@@ -69,6 +77,44 @@ namespace Diol.Wpf.Core.Features.EntityFrameworks
         /// <param name="dto">The command executing DTO.</param>
         public void Update(CommandExecutingDto dto)
         {
+            if(!this.multipleQueries.ContainsKey(dto.CorrelationId))
+            {
+                this.multipleQueries.Add(dto.CorrelationId, 0);
+            }
+            else
+            {
+                this.multipleQueries[dto.CorrelationId]++;
+                var relationId = this.multipleQueries[dto.CorrelationId];
+
+                var correlationId = $"{dto.CorrelationId}_{relationId}";
+
+                var prevItem = this.store
+                    .GetItemOrDefault(dto.CorrelationId);
+
+                if (prevItem == null) 
+                {
+                    return;
+                }
+
+                var processId = prevItem.ConnectionOpening.ProcessId;
+                var processName = prevItem.ConnectionOpening.ProcessName;
+                var server = prevItem.ConnectionOpening.Server;
+                var databaseName = prevItem.ConnectionOpening.Database;
+
+                var createItem = new ConnectionOpeningDto() 
+                {
+                    CorrelationId = correlationId,
+                    ProcessId = processId,
+                    ProcessName = processName,
+                    Server = server,
+                    Database = databaseName,
+                };
+
+                this.Update(createItem);
+
+                dto.CorrelationId = correlationId;
+            }
+
             var item = this.store
                 .GetItemOrDefault(dto.CorrelationId);
 
@@ -92,6 +138,13 @@ namespace Diol.Wpf.Core.Features.EntityFrameworks
         /// <param name="dto">The command executed DTO.</param>
         public void Update(CommandExecutedDto dto)
         {
+            if(this.multipleQueries.ContainsKey(dto.CorrelationId))
+            {
+                var relationId = this.multipleQueries[dto.CorrelationId];
+                var correlationId = relationId > 0 ? $"{dto.CorrelationId}_{relationId}" : dto.CorrelationId;
+                dto.CorrelationId = correlationId;
+            }
+
             var item = this.store
                 .GetItemOrDefault(dto.CorrelationId);
 
