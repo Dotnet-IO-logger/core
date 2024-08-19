@@ -2,7 +2,7 @@
 
 ![diol-main-banner](/content/images/diol-main-banner.png)
 
-Dotnet Input-Output Logger (`Diol`) is a **free** and **open-source** Visual Studio extension created by dotnet.
+Dotnet Input-Output Logger (`Diol`) is a **free** and **open-source** Visual Studio extension created with dotnet.
 
 With `Diol` you can easily see and explore logs during debugging your `dotnet` application in real time.
 
@@ -13,7 +13,7 @@ With `Diol` you can easily see and explore logs during debugging your `dotnet` a
 * **99.9%** zero touch approach. Just plug and play!
 * **No need** to install any external dependencies to your project or modify your source code
 * Supports next log types:
-    * **HttpClient** requests and responces
+    * **HttpClient** requests and responses
     * **Aspnet core** controllers and minimal API
     * **SQL** via Entity Framework
     * **Web sockets & SignalR** (comming soon)
