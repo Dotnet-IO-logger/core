@@ -2,43 +2,31 @@
 
 ![diol-main-banner](/content/images/diol-main-banner.png)
 
-Dotnet Input-Output Logger (`Diol`) is a **free** and **open-source** Visual Studio extension created with dotnet.
+**Dotnet Input-Output Logger (DIOL)** is a free and open-source tool created for .NET developers. With DIOL, you can easily see and explore logs during debugging your .NET application in real time. 
 
-With `Diol` you can easily see and explore logs during debugging your `dotnet` application in real time.
-
-**Stop** making tons of log messages in our code!
+Say **goodbye** to tons of log messages in your code!
 
 ## Features
 
-* **99.9%** zero touch approach. Just plug and play!
-* **No need** to install any external dependencies to your project or modify your source code
-* Supports next log types:
-    * **HttpClient** requests and responses
-    * **Aspnet core** controllers and minimal API
-    * **SQL** via Entity Framework
-    * **Web sockets & SignalR** (comming soon)
-    * **gRPC** (comming soon)
-* 3rd party **SDK** can be integrated as well (_1_)
+DIOL offers a **99.9% zero-touch approach**. Just plug and play! There’s no need to install any external dependencies to your project or modify your existing code. DIOL supports the following log types:
+
+* **HTTP** requests and responses
+* **ASP.NET Core** (controllers and minimal API)
+* **SQL** (Entity Framework)
+* **WebSockets & SignalR** (coming soon)
+* **gRPC** (coming soon)
+
+DIOL can also be integrated with third-party SDKs that have standard internal implementation and use the default .NET logging system
 
 ## How to use
 
-We have a [guide](https://github.com/Dotnet-IO-logger/core/wiki) how to install and use `Diol` but in short:
-
-1. Start debugging your dotnet application
-2. Call your endpoint
-3. Watch your logs in `Diol tool window`!
+Start debugging your .NET application, call your endpoint, and watch your logs in the DIOL tool window! [See more](https://github.com/Dotnet-IO-logger/core/wiki)
 
 ![main](/content/screenshots/main.png)
 
 ### DEMOs
 
 We have prepared DEMOs on how to set up and use DIOL, and we’ve divided them by areas.
-
-The DEMOs are pre-set and straightforward.
-
-You don’t need to create anything from scratch or write any code.
-
-Please feel free to use them for your personal learning or for making DEMO for your audience.
 
 | Name | Duration | Description |
 | :--- | :--- | :--- |
@@ -57,10 +45,6 @@ Highlights:
 
 ## Feedback and contribution
 
-Please feel free to reach out our Wiki to find more information
+We are open to new ideas and help from the community! 
 
-We are open for new ideas and help from community!
-
-## Appendix
-
-_1_. If they have standard internal implementation and use default logging dotnet system.
+Please feel free to check out our **Wiki** for more information.
