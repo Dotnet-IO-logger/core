@@ -166,7 +166,7 @@ And there’s another hitch: When your code talks to the internet with lots of r
 
 ## Introducing DIOL
 
-Meet `DIOL`, the new Visual Studio extension that’s here to revolutionize the way you work with logs in your .NET applications. 
+Meet `DIOL`, the new Visual Studio extension that’s here to bring the way you work with logs in your .NET applications in the next level. 
 
 It’s **free**, **open-source**, and designed to make your life as a .NET engineer a whole lot easier.
 
