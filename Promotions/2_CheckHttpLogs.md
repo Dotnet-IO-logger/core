@@ -9,7 +9,8 @@
 
 *A random day...*
 
-JD: Hey, I'm stuck! Your service isn't responding as expected.
+JD: Hey, I'm stuck! 
+Your service isn't responding as expected.
 
 Support engineer: What does the error message say?
 
@@ -24,15 +25,21 @@ Support engineer: Can you show me an example of how you're sending the request?
 JD: Sure, here's what I did: 
 `httpClient.DefaultRequestHeaders.Add("no", "no");`
 
-Support engineer: Ah, I see the problem. By adding a header with 'no', you're actually sending a header. You need to send the request without adding any headers at all. Just leave it blank.
+Support engineer: Ah, I see the problem. 
+By adding a header with 'no', you're actually sending a header. 
+You need to send the request without adding any headers at all. 
+Just leave it blank.
 
 *The next day...*
 
-JD: Hey, I removed the ‘no’ header, and it worked! But now I’m lost with the response headers.
+JD: Hey, I removed the ‘no’ header, and it worked! 
+But now I’m lost with the response headers.
 
 Support engineer: What headers are you getting back in the response?
 
-JD: The documentation says I should get a ‘your-key’ header with a key. I see the key, but the value is… ‘System.String[]’? That can’t be right, can it?
+JD: The documentation says I should get a ‘your-key’ header with a key. 
+I see the key, but the value is… ‘System.String[]’? 
+That can’t be right, can it?
 
 Support engineer: How are you reading the headers?
 
@@ -47,18 +54,21 @@ foreach (var item in response.Headers)
 
 Support engineer: 🤦
 
-Support engineer: That’s the type, not the value! You need to access the actual value, not just the type of the object.
+Support engineer: That’s the type, not the value! 
+You need to access the actual value, not just the type of the object.
 
 JD: So you’re telling me ‘System.String[]’ isn’t some newfangled encryption I need to decode?
 
-Support engineer: No, JD, it’s just the type indicating it’s an array of strings. Here, let me show you how to get the actual value:
+Support engineer: No, JD, it’s just the type indicating it’s an array of strings. 
+Here, let me show you how to get the actual value:
 
 foreach (var item in response.Headers) 
 {
     Debug.WriteLine($"[Key: {item.Key}, Value: {item.Value}]");
 }
 
-JD: Oh, so the real value was hiding in plain sight! And here I was, ready to dive into the world of string arrays as if it was a treasure map…
+JD: Oh, so the real value was hiding in plain sight! 
+And here I was, ready to dive into the world of string arrays as if it was a treasure map…
 
 Support engineer: Sometimes, the treasure is not in the ‘X’ that marks the spot, but in understanding the map itself.
 
