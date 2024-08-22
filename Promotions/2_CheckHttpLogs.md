@@ -1,7 +1,12 @@
 # See Your .NET Logs Clearly with DIOL: Easy Logging for HttpClient
 
+For new .NET developers, debugging HTTP requests can be tricky. 
+How long does it take to figure out what’s wrong? 
+And how far can that journey take us?
 
-## Opening story
+Let me tell you a story.
+
+## Backstory
 
 > Disclaimer: This story is a work of fiction intended for humorous purposes. Any resemblance to actual events, locales, or persons, living or dead, is purely coincidental. The scenarios and conversations are entirely fictional and should not be taken as technical advice or factual representation.
 
@@ -10,38 +15,39 @@
 *A random day...*
 
 JD: Hey, I'm stuck! 
-Your service isn't responding as expected.
+Your service does not work.
 
 Support engineer: What does the error message say?
 
-JD: It tells me to 'send no headers'.
+JD: It tells me to 'Please send a request with no headers'.
 
-Support engineer: And what are you sending?
+Support engineer: And what do you send?
 
 JD: A request with no headers, just like it asked.
 
-Support engineer: Can you show me an example of how you're sending the request?
+Support engineer: Can you show me an example of how you send the request?
 
 JD: Sure, here's what I did: 
-`httpClient.DefaultRequestHeaders.Add("no", "no");`
+httpClient.DefaultRequestHeaders.Add("no", "no");
+var response = await httpClient.GetAsync("https://www.xxxxx.xx/api/yyyyy");
 
 Support engineer: Ah, I see the problem. 
 By adding a header with 'no', you're actually sending a header. 
 You need to send the request without adding any headers at all. 
-Just leave it blank.
+Just leave them empty.
 
 *The next day...*
 
 JD: Hey, I removed the ‘no’ header, and it worked! 
 But now I’m lost with the response headers.
 
-Support engineer: What headers are you getting back in the response?
+Support engineer: What headers do get back in the response?
 
 JD: The documentation says I should get a ‘your-key’ header with a key. 
 I see the key, but the value is… ‘System.String[]’? 
 That can’t be right, can it?
 
-Support engineer: How are you reading the headers?
+Support engineer: How do you read the headers?
 
 JD: Like this:
 
@@ -68,7 +74,7 @@ foreach (var item in response.Headers)
 }
 
 JD: Oh, so the real value was hiding in plain sight! 
-And here I was, ready to dive into the world of string arrays as if it was a treasure map…
+And here I was ready to dive into the world of string arrays as if it was a treasure map…
 
 Support engineer: Sometimes, the treasure is not in the ‘X’ that marks the spot, but in understanding the map itself.
 
@@ -109,7 +115,7 @@ public class MyService
 * **Response Headers**: The headers returned by the server in the response.
 * **Response Information**: Status code, reason phrase, and other response details.
 
-These logs are invaluable for debugging and monitoring your HTTP communications. If you need to track any of this information, there’s no need to introduce new logging statements; the built-in features have you covered.
+If you need to track any of this information, there’s no need to introduce new logging statements; the built-in features have you covered.
 
 ## Setting Up Project Logging
 
