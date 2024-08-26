@@ -82,7 +82,7 @@ namespace Diol.Wpf.Core.ViewModels
             {
                 Key = item?.Key,
                 Method = item?.Request?.Method,
-                Uri = $"{item.Request.Scheme}://{item.Request.Host}{item.Request.Path}"
+                Uri = item.Request.Uri
             };
 
             this.AspnetLogs.Add(vm);

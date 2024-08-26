@@ -76,6 +76,10 @@ namespace Diol.Core.Features
 
             var correlationId = traceEvent.ActivityID.ToString();
 
+            var uri = $"{scheme}://{host}{path}";
+
+            var queryParameters = Utilities.GetQueryParams(uri);
+
             // all other is headers or metadata
             // create event
             return new RequestLogDto
@@ -86,7 +90,9 @@ namespace Diol.Core.Features
                 Scheme = scheme,
                 Host = host,
                 Path = path,
-                Metadata = arguments
+                Metadata = arguments,
+                QueryParameters = queryParameters,
+                Uri = uri
             };
         }
 

@@ -33,6 +33,12 @@ namespace Diol.Wpf.Core.ViewModels
         }
 
         /// <summary>
+        /// Gets the collection of request query parameters.
+        /// </summary>
+        public ObservableCollection<KeyValuePair<string, string>> RequestQueryParameters { get; private set; } =
+            new ObservableCollection<KeyValuePair<string, string>>();
+
+        /// <summary>
         /// Gets the collection of request headers.
         /// </summary>
         public ObservableCollection<KeyValuePair<string, string>> RequestHeaders { get; private set; } =
@@ -113,6 +119,14 @@ namespace Diol.Wpf.Core.ViewModels
             }
 
             this.Request = item.Request;
+
+            if (item.Request.QueryParameters != null) 
+            {
+                foreach (var queryParameter in item.Request.QueryParameters)
+                {
+                    this.RequestQueryParameters.Add(new KeyValuePair<string, string>(queryParameter.Key, queryParameter.Value));
+                }
+            }
 
             if (item.RequestMetadata != null && item.RequestMetadata.Headers != null)
             {
