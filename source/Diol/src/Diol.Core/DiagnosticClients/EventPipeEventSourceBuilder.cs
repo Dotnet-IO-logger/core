@@ -32,7 +32,7 @@ namespace Diol.Core.DiagnosticClients
         /// <summary>
         /// Gets the list of EventPipeProviders.
         /// </summary>
-        public List<EventPipeProvider> Providers => EvenPipeHelper.Providers.ToList();
+        public List<EventPipeProvider> Providers => EventPipeHelper.Providers.ToList();
 
         /// <summary>
         /// Gets or sets the list of consumers.

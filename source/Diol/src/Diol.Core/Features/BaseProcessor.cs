@@ -45,7 +45,7 @@ namespace Diol.Core.Features
         /// <param name="value">The trace event.</param>
         public void OnNext(TraceEvent value)
         {
-            // if you run the app via VS-> for responce's activity ids will be incorrect.
+            // if you run the app via VS-> for response's activity ids will be incorrect.
             var eventId = Convert.ToInt32(value.PayloadByName("EventId"));
             var eventName = value.PayloadByName("EventName")?.ToString();
 

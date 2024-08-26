@@ -25,7 +25,7 @@ namespace Diol.Core.TraceEventProcessors
         /// </summary>
         public void Dispose()
         {
-            if (this.observers != null)
+            if(this.observers != null)
             {
                 this.observers.Clear();
             }
