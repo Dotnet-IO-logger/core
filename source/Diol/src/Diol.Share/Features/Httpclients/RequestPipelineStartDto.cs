@@ -1,4 +1,6 @@
-﻿namespace Diol.Share.Features.Httpclients
+﻿using System.Collections.Generic;
+
+namespace Diol.Share.Features.Httpclients
 {
     /// <summary>
     /// Represents the data transfer object for the start of a request pipeline.
@@ -20,5 +22,10 @@
         /// Gets or sets the URI of the request.
         /// </summary>
         public string Uri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dictionary of query parameters.
+        /// </summary>
+        public Dictionary<string, string> QueryParameters { get; set; }
     }
 }

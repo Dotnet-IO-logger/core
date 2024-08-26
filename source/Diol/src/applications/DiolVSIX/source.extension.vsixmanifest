@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="DiolVSIX.66bbb016-3110-40f6-a936-35f914a663e3" Version="1.21.1" Language="en-US" Publisher="Diol devs" />
+        <Identity Id="DiolVSIX.66bbb016-3110-40f6-a936-35f914a663e3" Version="1.21.2" Language="en-US" Publisher="Diol devs" />
         <DisplayName>Diol</DisplayName>
         <Description xml:space="preserve">Dotnet Input-Output Logger (DIOL) is a free and open-source tool created for .NET developers. 
-
 With DIOL, you can easily see and explore logs during debugging your .NET application in real time. 
-
 Say goodbye to tons of log messages in your code!</Description>
         <MoreInfo>https://github.com/Dotnet-IO-logger/core/wiki</MoreInfo>
         <GettingStartedGuide>https://github.com/Dotnet-IO-logger/core/wiki/1.-Getting-started-guide</GettingStartedGuide>

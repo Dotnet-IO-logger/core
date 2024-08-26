@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
 namespace Diol.Core.Utils
 {
-    public static class Utils
+    public static class Utilities
     {
         /// <summary>
         /// Tries to get the value associated with the specified key from the dictionary and removes the key-value pair if found.
@@ -19,6 +22,16 @@ namespace Diol.Core.Utils
         {
             if (dictionary.TryGetValue(key, out value))
                 dictionary.Remove(key);
+        }
+
+        public static Dictionary<string, string> GetQueryParams(string uriValue) 
+        {
+            var uri = new Uri(uriValue);
+            var queryParams = HttpUtility.ParseQueryString(uri.Query);
+            var result = queryParams.AllKeys
+                .ToDictionary(key => key, key => queryParams[key]);
+
+            return result;
         }
     }
 }

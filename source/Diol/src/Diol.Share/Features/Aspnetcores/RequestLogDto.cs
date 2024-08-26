@@ -14,6 +14,11 @@ namespace Diol.Share.Features.Aspnetcores
         public override string EventName => nameof(RequestLogDto);
 
         /// <summary>
+        /// Gets or sets the URI of the request.
+        /// </summary>
+        public string Uri { get; set; }
+
+        /// <summary>
         /// Gets or sets the protocol of the request.
         /// </summary>
         public string Protocol { get; set; }
@@ -42,5 +47,10 @@ namespace Diol.Share.Features.Aspnetcores
         /// Gets or sets the metadata associated with the request.
         /// </summary>
         public Dictionary<string, string> Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dictionary of query parameters.
+        /// </summary>
+        public Dictionary<string, string> QueryParameters { get; set; }
     }
 }

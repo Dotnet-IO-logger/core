@@ -40,6 +40,53 @@
                             IsReadOnly="True" />
                     </StackPanel>
                 </GroupBox>
+
+                <GroupBox
+                    Header="Request Query Parameters">
+                    <DataGrid
+                        ItemsSource="{Binding RequestQueryParameters}"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        HeadersVisibility="None"
+                        ScrollViewer.CanContentScroll="False"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        PreviewMouseWheel="DataGrid_PreviewMouseWheel">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn
+                                Header="Key"
+                                Width="auto" 
+                                MaxWidth="70">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Text="{Binding Key}"
+                                            TextWrapping="Wrap"
+                                            FontWeight="Bold"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Header="Key"
+                                Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Text="{Binding Value}"
+                                            TextWrapping="Wrap"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                        <DataGrid.InputBindings>
+                            <KeyBinding 
+                                Key="C"
+                                Modifiers="Ctrl"
+                                Command="{Binding CopyCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                        </DataGrid.InputBindings>
+                    </DataGrid>
+                </GroupBox>
+
                 <GroupBox
                     Header="Request headers">
                     <DataGrid

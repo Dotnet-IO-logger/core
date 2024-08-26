@@ -5,7 +5,10 @@ using Microsoft.Diagnostics.Tracing;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Web;
+using Diol.Core.Utils;
 
 namespace Diol.Core.Features
 {
@@ -80,11 +83,14 @@ namespace Diol.Core.Features
 
             var correlationId = traceEvent.ActivityID.ToString();
 
+            var queryParameters = Utilities.GetQueryParams(uri);
+
             return new RequestPipelineStartDto
             {
                 CorrelationId = correlationId,
                 HttpMethod = httpMethod,
-                Uri = uri
+                Uri = uri,
+                QueryParameters = queryParameters
             };
         }
 
