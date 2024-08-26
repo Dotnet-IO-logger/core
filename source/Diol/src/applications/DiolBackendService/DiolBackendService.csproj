@@ -9,7 +9,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>DiolBackendService</ToolCommandName>
     <PackageId>DiolBackendService</PackageId>
-    <Version>1.21.1</Version>
+    <Version>1.21.2</Version>
     <Authors>Diol devs</Authors>
     <Company>Diol devs</Company>
     <PackageDescription>DiolBackendService provides DIOL logic without UX</PackageDescription>
