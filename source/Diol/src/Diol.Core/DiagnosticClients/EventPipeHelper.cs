@@ -7,7 +7,7 @@ namespace Diol.Core.DiagnosticClients
     /// <summary>
     /// Helper class for EventPipe functionality.
     /// </summary>
-    public static class EvenPipeHelper
+    public static class EventPipeHelper
     {
         /// <summary>
         /// Gets a collection of EventPipeProvider instances.

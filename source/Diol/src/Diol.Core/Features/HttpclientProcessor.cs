@@ -122,7 +122,7 @@ namespace Diol.Core.Features
 
             var correlationId = traceEvent.ActivityID.ToString();
 
-            // parse from milisecond to TimeSpan
+            // parse from millisecond to TimeSpan
             return new RequestPipelineEndDto
             {
                 CorrelationId = correlationId,
@@ -157,6 +157,7 @@ namespace Diol.Core.Features
             var headersDictionary = new Dictionary<string, string>();
             foreach (var header in headers)
             {
+                // TODO: use .split(':') instead of IndexOf and Substring
                 var deviderIndex = header.IndexOf(':');
                 if (deviderIndex == -1)
                 {
