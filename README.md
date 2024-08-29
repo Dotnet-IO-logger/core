@@ -22,7 +22,7 @@ DIOL can also be integrated with third-party SDKs that have standard internal im
 
 Start debugging your .NET application, call your endpoint, and watch your logs in the DIOL tool window! [See more](https://github.com/Dotnet-IO-logger/core/wiki)
 
-![main](/content/screenshots/main.png)
+![main](/content/images/diol-main-image.png)
 
 ### DEMOs
 
