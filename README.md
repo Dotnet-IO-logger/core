@@ -36,12 +36,12 @@ We have prepared DEMOs on how to set up and use DIOL, and we’ve divided them b
 
 ## Additional feature
 
-In case if you want to reuse DIOL logic for your application you may want to check [diol backend service doc](https://github.com/Dotnet-IO-logger/core/wiki/1.-Diol-backend-service).
+In case you want to reuse DIOL logic for your application you may want to check [diol backend service doc](https://github.com/Dotnet-IO-logger/core/wiki/1.-Diol-backend-service).
 
 Highlights:
 
-* **Easy to install**: Distributed as a dotnet cli command. Can be installed via `dotnet isntall` command
-* **SignalR service**: Supports realtime notification for each log
+* **Easy to install**: Distributed as a dotnet cli command. Can be installed via `dotnet install` command.
+* **SignalR service**: Supports realtime notification for each log.
 
 ## Feedback and contribution
 
